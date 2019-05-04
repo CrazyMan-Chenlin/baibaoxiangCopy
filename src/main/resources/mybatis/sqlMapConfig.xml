@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 全局配置 settings 需要时再配置 -->
+
+    <!--  别名配置 -->
+    <typeAliases>
+        <!-- 批量扫描别名 -->
+        <package name="com.baibaoxiang.po"/>
+    </typeAliases>
+
+    <!--<properties>-->
+        <!--<property name="mapperLocations" value="classpath:com/baibaohe/mapper/*.xml"></property>-->
+
+    <!--</properties>-->
+
+    <!--<mappers>-->
+        <!--<package name="com.baibaohe.mapper"/>-->
+    <!--</mappers>-->
+
+</configuration>

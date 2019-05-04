@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baibaoxiang.mapper.custom.ArticleMapperCustom">
+
+    <resultMap id="BaseResultMap" type="com.baibaoxiang.po.Article" >
+        <id column="no" property="no" jdbcType="INTEGER" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="area" property="area" jdbcType="VARCHAR" />
+        <result column="read_num" property="readNum" jdbcType="INTEGER" />
+        <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="top" property="top" jdbcType="INTEGER" />
+        <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="ResultMapWithBLOBs" type="com.baibaoxiang.po.Article" extends="BaseResultMap" >
+        <result column="message" property="message" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+      no, author, type, area, read_num, like_num, title, create_time, top, picture_path
+    </sql>
+    <sql id="Blob_Column_List" >
+      message
+    </sql>
+
+    <!-- 类型/地区 置顶/发布时间 查询-->
+    <select id="selectByTypeArea" resultMap="BaseResultMap" >
+        SELECT <include refid="Base_Column_List"/> FROM article WHERE type = #{type} AND area = #{area}  ORDER BY top ASC,create_time DESC
+    </select>
+
+
+</mapper>
