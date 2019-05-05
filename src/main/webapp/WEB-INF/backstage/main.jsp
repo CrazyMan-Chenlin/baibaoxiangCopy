@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet">
-    <script src="../js/jquery.min.js" ></script>
-    <script src="../js/bootstrap.min.js" ></script>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
+    <script src="../../js/jquery.min.js" ></script>
+    <script src="../../js/bootstrap.min.js" ></script>
     <title>Title</title>
 </head>
 <body>

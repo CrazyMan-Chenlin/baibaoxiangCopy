@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,11 +7,11 @@
 
 <frameset cols="15%,85%" border="0" framespacing="0">
 
-    <frame src="left.html" />
+    <frame src="left.jsp" />
 
     <frameset rows="5%,95%" >
-        <frame src="top.html" />
-        <frame src="main.html" name="mainframe"/>
+        <frame src="top.jsp" />
+        <frame src="main.jsp" name="mainframe"/>
     </frameset>
 </frameset>
 
