@@ -11,8 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<script>
-window.location.href="localhost/WEB-INF/backstage/admin_index.jsp";
-</script>
+<h1>hliagnai123456</h1>
 </body>
 </html>
