@@ -1,0 +1,18 @@
+body{
+    margin: 0;
+    background-color:#f5f5f5;
+    padding-top: 100px;
+    text-align: center;
+}
+.table_management{
+    margin: 0 auto;
+    width: 80%;
+    height: 300px;
+    border: 1px solid;
+    overflow: auto;
+}
+/*按钮位置*/
+.btn_management{
+    width: 80%;
+    margin: 0 auto;
+}

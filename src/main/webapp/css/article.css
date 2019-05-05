@@ -1,0 +1,61 @@
+body{
+    background-color: #f5f5f5;
+}
+.container{
+    margin: 50px;
+}
+ul li{
+    list-style-type: none;
+}
+
+
+
+/*编写推文按钮*/
+#new{
+    background-color: #31b0d5;
+    font-size: 20px;
+    height: 34px;
+    color: #f5f5f5;
+    opacity: 0.6;
+}
+#new:hover{
+    opacity: 1;
+}
+
+/*搜索栏*/
+#search{
+    margin-left: 25px;
+}
+
+/*底部点赞数阅读数所在的空间*/
+.panel-footer{
+    height: 50px;
+}
+.manage{
+    display: inline-block;
+    float: right;
+}
+.manage .delete{
+    /*margin-right: 3px;*/
+    /*background-color: red;*/
+    float: right;
+    width: 32px;
+    height: 32px;
+    background: url('/baibaoxiang/images/icon/delete.png') no-repeat;
+}
+.manage .edit{
+    /*background-color: red;*/
+    margin-right: 10px;
+    float: right;
+    width: 32px;
+    height: 32px;
+    background: url('/baibaoxiang/images/icon/edit.png') no-repeat;
+}
+.manage .up{
+    /*background-color: red;*/
+    margin-right: 10px;
+    float: right;
+    width: 60px;
+    height: 32px;
+    background: url('/baibaoxiang/images/icon/up.png') no-repeat;
+}
