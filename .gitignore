@@ -7,3 +7,15 @@
 *.iml
 out
 gen
+colors.scheme.xml
+debugger.renderers.xml
+debugger.xml
+github_settings.xml
+ide.general.xml
+ignore.xml
+markdown.xml
+project.default.xml
+vcs.xml
+README.md
+codestyles
+_windows
