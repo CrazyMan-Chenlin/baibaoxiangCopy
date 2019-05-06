@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>百宝箱</title>
+    <meta name="viewport"
+          content=" height = device-height,
+                    width = device-width,
+                    initial-scale = 1.0,
+                    minimum-scale = 1.0,
+                    maximum-scale = 1.0,
+                    user-scalable = no"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet"  href="../css/css.css"/>
+    <link rel="stylesheet"  href="../css/style.css"/>
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/js.js"></script>
+</head>
+<body>
+<div id="showSearch" style="width:100%;position: absolute;z-index: 1">
+    <div id="nav" class="pos-f-t">
+        <nav class="navbar navbar-dark bg-dark" style="height:2.1rem">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <!--<span class="navbar-toggler-icon"></span>-->
+                <img src="../img/area.svg"/>
+            </button>
+            <h5 class="text-white" style="margin: auto">百宝箱</h5>
+            <a href="search.html"><img src="../img/search.svg"></a>
+        </nav>
+    </div>
+    <div class="find_nav">
+        <div class="find_nav_left">
+            <div class="find_nav_list">
+                <ul>
+                    <li class="find_nav_cur"><a href="javascript:void(0)">推荐</a></li>
+                    <li><a href="javascript:void(0)">攻略</a></li>
+                    <li><a href="javascript:void(0)">二手书</a></li>
+                    <li><a href="javascript:void(0)">校内社团</a></li>
+                    <li><a href="javascript:void(0)">校内组织</a></li>
+                    <li><a href="javascript:void(0)">项目</a></li>
+                    <li><a href="javascript:void(0)">黄页</a></li>
+                    <li><a href="javascript:void(0)">股市</a></li>
+                    <li><a href="javascript:void(0)">经济</a></li>
+                    <li class="sideline"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <tbody>
+        <tr>
+            <td class="firstTd">
+                <div class="Title"><a href="detail.html">十佳球：西蒙斯鹰击长空点燃全场，利拉德绝杀无悬念领衔</a> </div>
+                <div><span>300</span>&nbsp;<img class="littleIcon"  src="../img/love.svg"/>
+                    &nbsp;
+                    <span>68</span>&nbsp;<img class="littleIcon" src="../img/comment.svg"/>
+                </div>
+            </td>
+            <td width="30%"><img src="../img/13.jpg" class="rounded " alt="..."></td>
+        </tr>
+        <tr>
+            <td class="firstTd">
+                <div  class="Title">利拉德50分超远三分绝杀雷霆，总比分4-1晋级下一轮</div>
+                <div>
+                    <span>520</span>&nbsp;<img class="littleIcon" src="../img/love.svg"/>
+                    &nbsp;
+                    <span>1314</span>&nbsp;<img  class="littleIcon" src="../img/comment.svg"/>
+                </div>
+            </td>
+            <td width="30%">
+                <img src="../img/demo2.jpg" class="rounded " alt="..."></td>
+        </tr>
+        <tr>
+            <td class="firstTd"><div  class="Title">7人得分上双，掘金主场大胜马刺，赢得天王山之战</div>
+                <div>
+                    <span>45</span>&nbsp;<img class="littleIcon"  src="../img/love.svg"/>
+                    &nbsp;
+                    <span>360</span>&nbsp;<img class="littleIcon" src="../img/comment.svg"/>
+                </div>
+            </td>
+            <td width="30%"><img src="../img/dog.jpg" class="rounded  " alt="..."></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<div id="chooseSchool" style="position: absolute;z-index: 2;left: 600px">
+    <div style="margin-left: 2rem;padding-top:1.2rem;padding-bottom: 1rem"> <span >地区选择：</span></div>
+    <div  id="school" class="input-group mb-3">
+        <span>学校：</span>
+        <select class="custom-select" id="inputGroupSelect02" STYLE="padding-left: 1rem">
+            <option selected>广东第二师范学院</option>
+            <option value="1">广东行政学院</option>
+            <option value="2">华南师范大学</option>
+        </select>
+    </div>
+    <div id="area" class="input-group mb-3">
+        <span>校区：</span>
+        <select class="custom-select" id="inputGroupSelect03" STYLE="padding-left: 1rem;">
+            <option selected>花都</option>
+            <option value="1">海珠</option>
+        </select>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var $chooseSchool = $("#chooseSchool");
+        $(".navbar-toggler").on("click",function () {
+            if ($chooseSchool.css("left")!='0px'){
+                $chooseSchool.css("display","block")
+                $($chooseSchool).animate({"left":0},500);
+            }
+        })
+        $("#showSearch").on("click",function () {
+            if ($chooseSchool.css("left")=='0px'){
+                $($chooseSchool).animate({"left":600},500);
+                 setTimeout(function f(){$chooseSchool.css("display","none")},500)
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

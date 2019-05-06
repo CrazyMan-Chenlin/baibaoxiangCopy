@@ -7,6 +7,8 @@
 *.iml
 out
 gen
+target
+test
 colors.scheme.xml
 debugger.renderers.xml
 debugger.xml

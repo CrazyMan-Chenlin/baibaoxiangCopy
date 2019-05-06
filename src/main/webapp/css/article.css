@@ -41,7 +41,7 @@ ul li{
     float: right;
     width: 32px;
     height: 32px;
-    background: url('/baibaoxiang/images/icon/delete.png') no-repeat;
+    background: url('/images/icon/delete.png') no-repeat;
 }
 .manage .edit{
     /*background-color: red;*/
@@ -49,7 +49,7 @@ ul li{
     float: right;
     width: 32px;
     height: 32px;
-    background: url('/baibaoxiang/images/icon/edit.png') no-repeat;
+    background: url('/images/icon/edit.png') no-repeat;
 }
 .manage .up{
     /*background-color: red;*/
@@ -57,5 +57,5 @@ ul li{
     float: right;
     width: 60px;
     height: 32px;
-    background: url('/baibaoxiang/images/icon/up.png') no-repeat;
+    background: url('/images/icon/up.png') no-repeat;
 }
