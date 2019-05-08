@@ -31,6 +31,12 @@ public interface ArticleService {
     List<Article> selectByTypeArea(String type, String area) throws Exception;
 
 
+    /** 查询所有的推文 置顶/发布时间 排序
+     * @return
+     * @throws Exception
+     */
+    List<Article> selectAllAticles() throws Exception;
+
     /**
      * 添加文章
      * @param record
@@ -47,6 +53,12 @@ public interface ArticleService {
      * @throws Exception
      */
     int deleteByPrimaryKey(Integer no) throws Exception;
+
+    /** 批量删除文章
+     * @param no
+     * @throws Exception
+     */
+    void deleteArticleBatch(Integer no[]) throws Exception;
 
 
     /**

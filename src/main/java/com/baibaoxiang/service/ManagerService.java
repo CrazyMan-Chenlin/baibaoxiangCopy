@@ -36,7 +36,7 @@ public interface ManagerService {
      * @return
      * @throws Exception
      */
-    int updateByPrimaryKey(Manager record) throws Exception;
+    int updateByPrimaryKeySelective(Manager record) throws Exception;
 
     /** 删除管理员
      * @param username
@@ -44,5 +44,11 @@ public interface ManagerService {
      * @throws Exception
      */
     int deleteByPrimaryKey(String username) throws Exception;
+
+    /** 批量删除管理员
+     * @param usernames
+     * @throws Exception
+     */
+    void deleteManagerBatch(String usernames) throws Exception;
 
 }
