@@ -13,7 +13,8 @@ import java.util.List;
  * @author sheng
  * @create 2019-04-23-00:19
  */
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl
+        implements ArticleService {
 
     @Autowired
     ArticleMapper articleMapper;
@@ -32,6 +33,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> selectAllAticles() throws Exception {
+        return articleMapperCustom.selectAllArticles();
+    }
+
+    @Override
     public int insert(Article record) throws Exception {
         return articleMapper.insert(record);
     }
@@ -39,6 +45,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int deleteByPrimaryKey(Integer no) throws Exception {
         return articleMapper.deleteByPrimaryKey(no);
+    }
+
+    @Override
+    public void deleteArticleBatch(Integer[] no) throws Exception {
+        for(int i = 0; i < no.length; i++){
+            articleMapper.deleteByPrimaryKey(no[i]);
+        }
     }
 
     @Override

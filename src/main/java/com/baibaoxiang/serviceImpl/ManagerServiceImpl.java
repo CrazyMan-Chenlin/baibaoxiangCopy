@@ -31,16 +31,26 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public int insert(Manager record) throws Exception {
-        return managerMapper.insert(record);
+        return managerMapper.insertSelective(record);
     }
 
     @Override
-    public int updateByPrimaryKey(Manager record) throws Exception {
-        return managerMapper.updateByPrimaryKey(record);
+    public int updateByPrimaryKeySelective(Manager record) throws Exception {
+        return managerMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int deleteByPrimaryKey(String username) throws Exception {
         return managerMapper.deleteByPrimaryKey(username);
     }
+
+    @Override
+    public void deleteManagerBatch(String usernames) throws Exception {
+        String arr [] = usernames.split(",");
+        for(int i = 0; i < arr.length; i++){
+            managerMapper.deleteByPrimaryKey(arr[i]);
+        }
+    }
+
+
 }

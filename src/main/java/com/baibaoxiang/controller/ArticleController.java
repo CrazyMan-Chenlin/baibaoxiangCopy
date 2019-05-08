@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public class ArticleController {
         Article article = articleService.selectByPrimaryKey(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("article",article);
-        modelAndView.setViewName("articledetail");
+        modelAndView.setViewName("backstage/articledetail");
         return modelAndView;
     }
 
@@ -44,9 +45,20 @@ public class ArticleController {
      */
     @RequestMapping(value = "/{type}/{area}",method = RequestMethod.GET)
     @ResponseBody
-    public List<Article> selectByTypeArea(@PathVariable String type,@PathVariable String area) throws Exception {
-        List<Article> articles = articleService.selectByTypeArea(type, area);
-        return articles;
+    public  List<Article> selectByTypeArea(@PathVariable String type,@PathVariable String area) throws Exception {
+        type = new String(type.getBytes("ISO-8859-1"), "utf8");
+        area = new String(area.getBytes("ISO-8859-1"), "utf8");
+        List<Article> articleList = articleService.selectByTypeArea(type, area);
+
+        return articleList;
+    }
+
+    @RequestMapping(value = "allArticles",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Article> selectAll() throws Exception{
+        List<Article> articleList = articleService.selectAllAticles();
+
+        return articleList;
     }
 
     /**
@@ -57,9 +69,8 @@ public class ArticleController {
      */
     @RequestMapping(value = "/",method = RequestMethod.POST)
     @ResponseBody
-    public int insert(@RequestBody Article record) throws Exception {
-        int i = articleService.insert(record);
-        return i;
+    public void insert(@RequestBody Article record) throws Exception {
+       articleService.insert(record);
     }
 
     /**
@@ -70,9 +81,22 @@ public class ArticleController {
      */
     @RequestMapping(value = "/{no}",method = RequestMethod.DELETE)
     @ResponseBody
-    public int deleteByPrimaryKey(@PathVariable("no") Integer no) throws Exception {
-        int i = articleService.deleteByPrimaryKey(no);
-        return i;
+    public void deleteByPrimaryKey(@PathVariable("no") Integer no) throws Exception {
+        articleService.deleteByPrimaryKey(no);
+    }
+
+    /** 批量删除文章
+     * @param request
+     * @throws Exception
+     */
+    @RequestMapping(value = "deleteBatch")
+    public void deleteArticleBatch(HttpServletRequest request) throws Exception{
+        String str = request.getParameter("ids");
+        String arr[] = str.split(",");
+        Integer ids [] = new Integer[arr.length];
+        for(int i = 0; i < ids.length; i++){
+            ids[i] = Integer.valueOf(arr[i]);
+        }
     }
 
     /**
@@ -83,8 +107,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "",method = RequestMethod.PUT)
     @ResponseBody
-    public int updateByPrimaryKey(@RequestBody Article record) throws Exception {
-        int i = articleService.updateByPrimaryKey(record);
-        return i;
+    public void updateByPrimaryKey(@RequestBody Article record) throws Exception {
+        articleService.updateByPrimaryKey(record);
     }
 }
