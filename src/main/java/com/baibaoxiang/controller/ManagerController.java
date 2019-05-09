@@ -214,10 +214,13 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/username/{username}",method = RequestMethod.GET)
+    @RequestMapping(value = "/managerInfo",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> findManagerByUsername(@PathVariable String username) throws Exception{
+    public Map<String,Object> findManagerByUsername(HttpServletRequest request) throws Exception{
         Map<String,Object> map = new HashMap<String, Object>(16);
+        //通过session 获取管理员名称 从而查询到 管理员
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("username");
         Manager manager = managerService.findManagerByUsername(username);
         map.put("username",manager.getUsername());
         map.put("name",manager.getName());
