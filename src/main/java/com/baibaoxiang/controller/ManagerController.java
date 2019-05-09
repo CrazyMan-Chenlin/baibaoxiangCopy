@@ -29,7 +29,7 @@ import java.util.Map;
  * @create 2019-04-29-10:08
  */
 @Controller
-@RequestMapping("/manager")
+@RequestMapping(value ="/manager1")
 public class ManagerController {
 
     @Autowired
@@ -91,11 +91,12 @@ public class ManagerController {
         String password = request.getParameter("password");
         String validatecode = request.getParameter("validatecode");
         String rememberme = request.getParameter("rememberme");
-        Manager manager = managerService.findManagerByUsername(username);
+        Manager manager = managerService.findManagerWithPassword_salt(username);
 
         //获取session中保存的 验证码
         HttpSession session = request.getSession();
         String code = (String)session.getAttribute("RANDOMCODEKEY");
+
         if(!code.equals(validatecode)){
             map.put("code",0);
             map.put("msg","验证码有误！");
@@ -165,10 +166,11 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "updateNamePicture")
+    @RequestMapping(value = "updateNamePicture", method = RequestMethod.PUT)
     public void updateNamePicture(HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+        //String username = (String) session.getAttribute("username");
+        String username = "liang123";
         Manager manager = new Manager();
         String name = request.getParameter("name");
         String path = request.getParameter("path");
@@ -213,7 +215,7 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/username/{username}",method = RequestMethod.POST)
+    @RequestMapping(value = "/username/{username}",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> findManagerByUsername(@PathVariable String username) throws Exception{
         Map<String,Object> map = new HashMap<String, Object>(16);
@@ -281,7 +283,7 @@ public class ManagerController {
      * @return
      */
     public static String md5(String salt, String message) {
-        String plainText = salt.concat(message);
+        String plainText = message.concat(salt);
         byte[] secretBytes = null;
         try {
             secretBytes = MessageDigest.getInstance("md5").digest(

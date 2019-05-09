@@ -20,6 +20,7 @@ public interface ArticleMapperCustom {
      */
     List<Article> selectByTypeArea(@Param("type") String type, @Param("area") String area) throws Exception;
 
+
     List<Article> selectAllArticles() throws Exception;
 
 }

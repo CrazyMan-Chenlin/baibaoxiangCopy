@@ -25,6 +25,13 @@ public interface SchoolService {
      */
     int deleteSchool(Integer no) throws Exception;
 
+    /** 批量删除学校
+     * @param no
+     * @return
+     * @throws Exception
+     */
+    void deleteSchoolBatch(Integer no[]) throws Exception;
+
     /** 查询学校信息 通过校区的编号
      * @param no
      * @return

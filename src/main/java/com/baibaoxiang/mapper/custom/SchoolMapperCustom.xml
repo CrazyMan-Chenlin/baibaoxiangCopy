@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace= "com.baibaoxiang.mapper.custom.ManagerMapperCustom">
+<mapper namespace= "com.baibaoxiang.mapper.custom.SchoolMapperCustom">
     <resultMap id="BaseResultMap" type="com.baibaoxiang.po.School" >
         <id column="no" property="no" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="area" property="area" jdbcType="VARCHAR" />
     </resultMap>
 
+    <sql id="Base_Column_List" >
+    no, name, area
+  </sql>
+
+    <select id="selectAllSchool" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM school
+    </select>
 
 </mapper>

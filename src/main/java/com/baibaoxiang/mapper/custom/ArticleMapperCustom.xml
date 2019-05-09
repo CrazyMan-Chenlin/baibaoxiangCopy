@@ -33,7 +33,7 @@
 
     <!-- 查询所有的推文 置顶/发布时间 排序-->
     <select id="selectAllArticles" resultMap="BaseResultMap" >
-        SELECT <include refid="Base_Column_List"/>, <include refid="Blob_Column_List"> FROM article ORDER BY top ASC,create_time DESC
+        SELECT <include refid="Base_Column_List"/> FROM article ORDER BY top ASC,create_time DESC
     </select>
 
 

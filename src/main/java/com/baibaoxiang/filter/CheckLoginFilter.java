@@ -42,7 +42,7 @@ public class CheckLoginFilter implements Filter {
             }
         }
 
-        Object currentUser = req.getSession().getAttribute("manager");
+        Object currentUser = req.getSession().getAttribute("username");
         if (url.endsWith("login") || url.endsWith("loginVerify")
                 || currentUser != null || url.endsWith("userRegister")
                 || url.endsWith("registerVerify") || isIgnoreURI == true) {

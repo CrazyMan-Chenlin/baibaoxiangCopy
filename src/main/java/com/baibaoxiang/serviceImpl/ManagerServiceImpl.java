@@ -25,6 +25,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    public Manager findManagerWithPassword_salt(String username) throws Exception {
+        return managerMapper.selectByPrimaryKey(username);
+    }
+
+    @Override
     public List<Manager> findManagersByTitle(String title) throws Exception {
         return managerMapperCustom.findManagersByTitle(title);
     }

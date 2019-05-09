@@ -10,12 +10,19 @@ import java.util.List;
  */
 public interface ManagerService {
 
-    /** 通过管理员名称 查询管理员
+    /** 通过管理员名称 查询管理员（不携带密码，盐）
      * @param username
      * @return
      * @throws Exception
      */
     Manager findManagerByUsername (String username) throws Exception;
+
+    /**通过管理员名称 查询管理员(携带密码,盐)
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    Manager findManagerWithPassword_salt (String username) throws Exception;
 
     /** 通过权限名 查询所有的地方管理员
      * @param title
