@@ -8,14 +8,30 @@
         <result column="path" property="path" jdbcType="VARCHAR" />
         <result column="title" property="title" jdbcType="VARCHAR" />
     </resultMap>
+
+    <resultMap id="BaseResultMap2" type="com.baibaoxiang.po.Manager" >
+        <id column="username" property="username" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="area" property="area" jdbcType="VARCHAR" />
+        <result column="path" property="path" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+    </resultMap>
     <sql id="Base_Column_List" >
     username, name, area, path, title
+    </sql>
+    <sql id="Base_Column_List2" >
+    username, name, password, area, path, title
     </sql>
 
 
     <!-- 通过管理员名称查询-->
     <select id="findManagerByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT <include refid="Base_Column_List"/> FROM manager WHERE username = #{username}
+    </select>
+
+    <select id="findManagerWithPassword" resultMap="BaseResultMap2" parameterType="java.lang.String">
+        SELECT <include refid="Base_Column_List2"/> FROM manager WHERE username = #{username}
     </select>
 
     <!-- 通过管理员的权限 查询所有的管理员-->

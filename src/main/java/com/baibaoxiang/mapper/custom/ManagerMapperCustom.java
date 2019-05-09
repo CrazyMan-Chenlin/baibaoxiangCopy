@@ -10,12 +10,14 @@ import java.util.List;
  */
 public interface ManagerMapperCustom {
 
-    /** 通过管理员名称查询 管理员信息
+    /** 通过管理员名称查询 管理员信息 (不携带密码,盐)
      * @param username 管理员名称
      * @return Manager:管理员
      * @throws Exception
      */
     Manager findManagerByUsername(String username) throws Exception;
+
+
 
     /** 通过权限名 查询所有的地方管理员
      * @param title

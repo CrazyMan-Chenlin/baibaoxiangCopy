@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.css">
-    <link href="../css/school.css" rel="stylesheet">
-    <script src="../js/jquery.min.js" ></script>
-    <script src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="../js/bootstrap.min.js" ></script>
-    <script src="../js/school.js"></script>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/jquery.mCustomScrollbar.css">
+    <link href="../../css/school.css" rel="stylesheet">
+    <script src="../../js/jquery.min.js" ></script>
+    <script src="../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../../js/bootstrap.min.js" ></script>
+    <script src="../../js/school.js"></script>
     <title>学校管理</title>
 </head>
 <body>
