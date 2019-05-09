@@ -169,8 +169,7 @@ public class ManagerController {
     @RequestMapping(value = "updateNamePicture", method = RequestMethod.PUT)
     public void updateNamePicture(HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
-        //String username = (String) session.getAttribute("username");
-        String username = "liang123";
+        String username = (String) session.getAttribute("username");
         Manager manager = new Manager();
         String name = request.getParameter("name");
         String path = request.getParameter("path");
