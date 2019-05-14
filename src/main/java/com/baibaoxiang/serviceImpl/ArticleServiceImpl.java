@@ -38,8 +38,8 @@ public class ArticleServiceImpl
     }
 
     @Override
-    public int insert(Article record) throws Exception {
-        return articleMapper.insert(record);
+    public int insertSelective(Article record) throws Exception {
+        return articleMapper.insertSelective(record);
     }
 
     @Override

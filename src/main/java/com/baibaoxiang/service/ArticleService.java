@@ -43,7 +43,7 @@ public interface ArticleService {
      * @return int
      * @throws Exception
      */
-    int insert(Article record) throws Exception;
+    int insertSelective(Article record) throws Exception;
 
 
     /**
