@@ -34,4 +34,5 @@
     <mvc:resources mapping="/js/**" location="/js/"/>
     <mvc:resources mapping="/images/**" location="/images/"/>
     <mvc:resources mapping="/backstage/**" location="WEB-INF/backstage"/>
+    <mvc:resources mapping="/images/**" location="/images/"/>
 </beans>

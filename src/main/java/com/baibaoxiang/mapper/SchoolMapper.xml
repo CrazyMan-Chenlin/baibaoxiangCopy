@@ -87,6 +87,10 @@
     from school
     where no = #{no,jdbcType=INTEGER}
   </select>
+  <!--添加查询学校名称方法-->
+  <select id="selectDifferentSchoolName"  resultType="java.lang.String">
+    select distinct name from school
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from school
     where no = #{no,jdbcType=INTEGER}

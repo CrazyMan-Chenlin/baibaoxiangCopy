@@ -95,7 +95,7 @@ public class ArticleController {
     @RequestMapping(value = "/",method = RequestMethod.POST)
     @ResponseBody
     public void insert(@RequestBody Article record) throws Exception {
-       articleService.insert(record);
+       articleService.insertSelective(record);
     }
 
     /**

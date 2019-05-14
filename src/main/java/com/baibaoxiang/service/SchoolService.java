@@ -39,10 +39,23 @@ public interface SchoolService {
      */
     School selectSchoolByNo(Integer no) throws Exception;
 
-    /** 获取所以学校的信息 （超级管理员干的）
+    /** 获取所有学校的信息 （超级管理员干的）
      * @return
      * @throws Exception
      */
     List<School> selectAllSchool() throws Exception;
 
+    /**
+     * 查询所有不重复的学校名称
+     * @return
+     * @throws Exception
+     */
+    List<String> selectDifferentSchoolName() throws Exception;
+
+    /**
+     * 查询校区
+     * @return
+     * @throws Exception
+     */
+    List<String> selectSchoolArea(String schoolName) throws Exception;
 }
