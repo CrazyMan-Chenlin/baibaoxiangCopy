@@ -28,4 +28,7 @@ public interface SchoolMapper {
     int updateByPrimaryKeySelective(School record);
 
     int updateByPrimaryKey(School record);
+
+    List<String> selectDifferentSchoolName() throws Exception;
+
 }

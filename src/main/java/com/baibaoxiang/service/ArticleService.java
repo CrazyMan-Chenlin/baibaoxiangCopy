@@ -70,6 +70,13 @@ public interface ArticleService {
     int updateByPrimaryKey(Article record) throws Exception;
 
 
+    /**
+     * 查询所有顶置文章
+     * @param area
+     * @return
+     * @throws Exception
+     */
+    List<Article> selectTopArticle(String area) throws Exception;
 }
 
 

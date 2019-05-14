@@ -4,6 +4,7 @@ package com.baibaoxiang.serviceImpl;
 import com.baibaoxiang.mapper.ArticleMapper;
 import com.baibaoxiang.mapper.custom.ArticleMapperCustom;
 import com.baibaoxiang.po.Article;
+import com.baibaoxiang.po.ArticleExample;
 import com.baibaoxiang.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,8 +14,7 @@ import java.util.List;
  * @author sheng
  * @create 2019-04-23-00:19
  */
-public class ArticleServiceImpl
-        implements ArticleService {
+public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     ArticleMapper articleMapper;
@@ -57,5 +57,15 @@ public class ArticleServiceImpl
     @Override
     public int updateByPrimaryKey(Article record) throws Exception {
         return articleMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Article> selectTopArticle(String area) throws Exception {
+        ArticleExample example = new ArticleExample();
+        example.setOrderByClause("top");
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andTopNotEqualTo(4);
+        criteria.andAreaEqualTo(area);
+        return articleMapper.selectByExample(example);
     }
 }
