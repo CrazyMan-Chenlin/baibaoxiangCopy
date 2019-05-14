@@ -36,13 +36,19 @@ public class SchoolController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "allSchool",method = RequestMethod.GET)
+    @RequestMapping(value = "/allSchool",method = RequestMethod.GET)
     @ResponseBody
     public List<School> findAllSchool() throws Exception{
         List<School> schoolList = schoolService.selectAllSchool();
         return schoolList;
     }
 
+
+    /**
+     * 添加学校
+     * @param school
+     * @throws Exception
+     */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void addSchool(@RequestBody School school) throws Exception{
         schoolService.insertSchool(school);
