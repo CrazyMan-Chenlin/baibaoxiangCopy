@@ -1,14 +1,16 @@
 package com.baibaoxiang.jedis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 /**
  * @author chenlin
  */
-public class JedisClientPool implements JedisClient {
 
+@Service("jedisClient")
+public class JedisClientPool implements JedisClient {
     @Autowired
     JedisPool jedisPool;
     @Override
@@ -35,6 +37,14 @@ public class JedisClientPool implements JedisClient {
         resource.close();
         return exists;
 
+    }
+
+    @Override
+    public Long del(String key) {
+        Jedis resource = jedisPool.getResource();
+        Long del = resource.del(key);
+        resource.close();
+        return del;
     }
 
     @Override

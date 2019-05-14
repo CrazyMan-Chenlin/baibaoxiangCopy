@@ -7,6 +7,7 @@ public interface JedisClient {
     String set(String key, String value);
     String get(String key);
     Boolean exists(String key);
+    Long del(String key);
     Long expire(String key, int second);
     Long ttl(String key);
     Long incr(String key);
