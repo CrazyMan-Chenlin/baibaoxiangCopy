@@ -1,11 +1,11 @@
-package com.baibaoxiang.serviceImpl;
-
+package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.SchoolMapperCustom;
 import com.baibaoxiang.po.School;
 import com.baibaoxiang.po.SchoolExample;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import redis.clients.jedis.JedisPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,8 @@ import java.util.List;
  * @create 2019-05-03-15:44
  */
 public class SchoolServiceImpl implements SchoolService {
-
+    @Autowired
+    JedisPool jedisPool ;
     @Autowired
     SchoolMapper schoolMapper;
     @Autowired
@@ -50,9 +51,6 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public List<String> selectDifferentSchoolName() throws Exception {
-        SchoolExample example = new SchoolExample();
-        example.setDistinct(true);
-        SchoolExample.Criteria criteria = example.createCriteria();
         return schoolMapper.selectDifferentSchoolName();
     }
 
