@@ -3,15 +3,10 @@ package com.baibaoxiang.controller;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.tool.RandomValidateCode;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.management.RuntimeErrorException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
