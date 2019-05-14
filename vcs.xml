@@ -6,6 +6,10 @@
           <option name="url" value="https://github.com/jonizhenshuai/baibaoxiang.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/lyssheng/baibaoxiang.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="D:\develop\IDEA\Project" />
