@@ -65,10 +65,11 @@ public class ArticleController {
     @ResponseBody
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
+//        System.out.println(type);
         //获取session 中的username
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
-        Manager manager = managerService.findManagerByUsername(username);
+        Manager manager = managerService.findManagerByUsername("chen123");
         String area = manager.getArea();
         List<Article> articleList = articleService.selectByTypeArea(type, area);
         return articleList;
