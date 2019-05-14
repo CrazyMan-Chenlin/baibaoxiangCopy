@@ -1,5 +1,4 @@
-package com.baibaoxiang.serviceimpl;
-
+package com.baibaoxiang.serviceImpl;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.SchoolMapperCustom;
@@ -8,7 +7,6 @@ import com.baibaoxiang.po.SchoolExample;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
  * @author sheng
  * @create 2019-05-03-15:44
  */
-@Service
+
 public class SchoolServiceImpl implements SchoolService {
     @Autowired
     JedisClient jedisClient;
@@ -59,6 +57,11 @@ public class SchoolServiceImpl implements SchoolService {
         return schoolMapperCustom.selectAllSchool();
     }
 
+    /**
+     * 添加缓存机制
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<String> selectDifferentSchoolName() throws Exception {
         List<String> schoolName;
@@ -67,7 +70,6 @@ public class SchoolServiceImpl implements SchoolService {
             String array = jedisClient.get(key);
             String[] split = array.split(",");
             schoolName = Arrays.asList(split);
-            System.out.println("使用缓存");
             return schoolName;
         } else {
             schoolName = schoolMapper.selectDifferentSchoolName();

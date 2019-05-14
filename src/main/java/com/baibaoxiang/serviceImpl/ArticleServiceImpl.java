@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceimpl;
+package com.baibaoxiang.serviceImpl;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.ArticleMapper;
 import com.baibaoxiang.mapper.custom.ArticleMapperCustom;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author sheng
  * @create 2019-04-23-00:19
  */
-@Service
+
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired

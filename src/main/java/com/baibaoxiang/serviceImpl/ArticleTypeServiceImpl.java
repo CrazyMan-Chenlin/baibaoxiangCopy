@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceimpl;
+package com.baibaoxiang.serviceImpl;
 
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.ArticleTypeMapper;
@@ -7,7 +7,6 @@ import com.baibaoxiang.po.ArticleType;
 import com.baibaoxiang.service.ArticleTypeService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  * @author sheng
  * @create 2019-05-03-11:25
  */
-@Service
+
 public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     @Autowired
