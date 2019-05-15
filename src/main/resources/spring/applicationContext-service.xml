@@ -8,11 +8,11 @@
 		http://www.springframework.org/schema/context/spring-context-4.0.xsd ">
 
     <!-- 包扫描器 -->
-    <context:component-scan base-package="com.baibaoxiang.serviceimpl"/>
-    <bean id="articleService" class="com.baibaoxiang.serviceimpl.ArticleServiceImpl"/>
-    <bean id="managerService" class="com.baibaoxiang.serviceimpl.ManagerServiceImpl"/>
-    <bean id="articleTypeService" class="com.baibaoxiang.serviceimpl.ArticleTypeServiceImpl"/>
-    <bean id="dayTotalService" class="com.baibaoxiang.serviceimpl.DayTotalServiceImpl"/>
-    <bean id="schoolService" class="com.baibaoxiang.serviceimpl.SchoolServiceImpl"/>
+    <context:component-scan base-package="com.baibaoxiang.serviceImpl"/>
+    <bean id="articleService" class="com.baibaoxiang.serviceImpl.ArticleServiceImpl"/>
+    <bean id="managerService" class="com.baibaoxiang.serviceImpl.ManagerServiceImpl"/>
+    <bean id="articleTypeService" class="com.baibaoxiang.serviceImpl.ArticleTypeServiceImpl"/>
+    <bean id="dayTotalService" class="com.baibaoxiang.serviceImpl.DayTotalServiceImpl"/>
+    <bean id="schoolService" class="com.baibaoxiang.serviceImpl.SchoolServiceImpl"/>
     <bean id="jedisClient" class="com.baibaoxiang.jedis.JedisClientPool"/>
 </beans>
