@@ -1,5 +1,4 @@
-package com.baibaoxiang.serviceImpl;
-
+package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.po.DayTotal;
 import com.baibaoxiang.service.RedisService;
