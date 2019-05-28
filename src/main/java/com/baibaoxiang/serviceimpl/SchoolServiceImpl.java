@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceim;
+package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.SchoolMapperCustom;

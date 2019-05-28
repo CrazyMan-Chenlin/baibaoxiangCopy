@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceim;
+package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.po.Article;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.SearchService;
