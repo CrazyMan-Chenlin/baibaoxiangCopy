@@ -1,11 +1,9 @@
-package com.baibaoxiang.serviceimpl;
-
+package com.baibaoxiang.serviceim;
 import com.baibaoxiang.mapper.ManagerMapper;
 import com.baibaoxiang.mapper.custom.ManagerMapperCustom;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 /** ManagerService接口 的实现类
