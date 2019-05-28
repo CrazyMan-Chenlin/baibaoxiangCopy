@@ -3,7 +3,6 @@ package com.baibaoxiang.mapper;
 import com.baibaoxiang.po.School;
 import com.baibaoxiang.po.SchoolExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface SchoolMapper {

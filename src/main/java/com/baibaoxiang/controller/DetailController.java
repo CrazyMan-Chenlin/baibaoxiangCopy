@@ -15,7 +15,7 @@ public class DetailController {
     @Autowired
     ArticleService articleService;
     @RequestMapping(value = "/detail",method= RequestMethod.GET)
-    public ModelAndView showDetail(Integer no) throws Exception {
+    public ModelAndView showDetail(String no) throws Exception {
         ModelAndView modelAndView = new ModelAndView("/detail");
         //根据id查文章的具体内容
         Article article = articleService.selectByPrimaryKey(no);

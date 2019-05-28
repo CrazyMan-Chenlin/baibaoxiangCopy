@@ -2,6 +2,7 @@ package com.baibaoxiang.controller;
 
 import com.baibaoxiang.po.ReadLikeNumber;
 import com.baibaoxiang.service.DayTotalService;
+import com.baibaoxiang.tool.StringDateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,10 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * @author sheng
@@ -25,9 +24,6 @@ public class DayTotalController {
 
     @Autowired
     DayTotalService dayTotalService;
-    //添加 零点定时插入  点击触发，检查到表没有就立即插入
-
-
 
     /** 更新 某篇推文 今天的阅读量
      * @param request
@@ -35,11 +31,10 @@ public class DayTotalController {
      */
     @RequestMapping(value = "/updateReadNum", method = RequestMethod.POST)
     public void updateReadNum(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        //将请求的 推文编号和阅读量 Sstring转换成Integer
+        //将请求的 推文编号和阅读量 String转换成Integer
         String stringNum = request.getParameter("num");
         Integer num = Integer.parseInt(stringNum);
-        String stringNo = request.getParameter("no");
-        Integer no = Integer.parseInt(stringNo);
+        String no = request.getParameter("no");
         //date 自动获取 java.util.Date;
         Date date = new Date();
         java.sql.Date date1 = new java.sql.Date(date.getTime());
@@ -56,13 +51,11 @@ public class DayTotalController {
         //将请求的 推文编号和阅读量 String转换成Integer
         String stringNum = request.getParameter("num");
         Integer num = Integer.parseInt(stringNum);
-        String stringNo = request.getParameter("no");
-        Integer no = Integer.parseInt(stringNo);
+        String no = request.getParameter("no");
         //date 自动获取
         Date date = new Date();
         java.sql.Date date1 = new java.sql.Date(date.getTime());
         // java.sql.Date 转 java.sql.Date
-
         dayTotalService.updateLikeNum(date1,num,no);
 
     }
@@ -79,7 +72,7 @@ public class DayTotalController {
     public ReadLikeNumber dayTotal(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
         String dateString = request.getParameter("time");
-        java.sql.Date date = stringToDate(dateString);
+        java.sql.Date date = StringDateUtils.stringToDate(dateString);
         ReadLikeNumber readLikeNumber = dayTotalService.dayTotal(date);
         return readLikeNumber;
     }
@@ -94,7 +87,7 @@ public class DayTotalController {
     public ReadLikeNumber dayTotalArea(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
         String dateString = request.getParameter("time");
-        java.sql.Date date = stringToDate(dateString);
+        java.sql.Date date = StringDateUtils.stringToDate(dateString);
         String area = request.getParameter("area");
         ReadLikeNumber readLikeNumber = dayTotalService.dayTotalArea(date, area);
         return readLikeNumber;
@@ -110,7 +103,7 @@ public class DayTotalController {
     public ReadLikeNumber dayTotalType(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
         String dateString = request.getParameter("time");
-        java.sql.Date date = stringToDate(dateString);
+        java.sql.Date date = StringDateUtils.stringToDate(dateString);
         String type = request.getParameter("type");
         ReadLikeNumber readLikeNumber = dayTotalService.dayTotalType(date, type);
         return readLikeNumber;
@@ -127,7 +120,7 @@ public class DayTotalController {
     public ReadLikeNumber dayTotalTypeArea(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
         String dateString = request.getParameter("time");
-        java.sql.Date date = stringToDate(dateString);
+        java.sql.Date date = StringDateUtils.stringToDate(dateString);
         String type = request.getParameter("type");
         String area = request.getParameter("area");
         ReadLikeNumber readLikeNumber = dayTotalService.dayTotalTypeArea(date, area, type);
@@ -146,24 +139,12 @@ public class DayTotalController {
     public ReadLikeNumber dayTotalNo(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
         String dateString = request.getParameter("time");
-        java.sql.Date date = stringToDate(dateString);
-        String noString = request.getParameter("no");
-        Integer no = Integer.parseInt(noString);
+        java.sql.Date date = StringDateUtils.stringToDate(dateString);
+        String no = request.getParameter("no");
         ReadLikeNumber readLikeNumber = dayTotalService.dayTotalNo(date, no);
         return readLikeNumber;
     }
 
 
-    /** 将String 类型转换为 Date
-     * @param dateString
-     * @return
-     * @throws Exception
-     */
-    public static java.sql.Date stringToDate(String dateString) throws Exception{
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date date = df.parse(dateString);
-        //再将 java.util.Date 型 转换成 java.sql.Date型
-        java.sql.Date date1 = new java.sql.Date(date.getTime());
-        return date1;
-    }
+
 }

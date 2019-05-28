@@ -2,7 +2,9 @@ package com.baibaoxiang.service;
 
 
 import com.baibaoxiang.po.Article;
+import org.apache.ibatis.annotations.Param;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -18,9 +20,15 @@ public interface ArticleService {
      * @return Article
      * @throws Exception
      */
-    Article selectByPrimaryKey(Integer no) throws Exception;
+    Article selectByPrimaryKey(String no) throws Exception;
 
-
+    /** 通过 创建的时间段 找出批量文章的编号
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List<String> selectNoByCreateTime(Date startTime, Date endTime) throws Exception;
     /**
      * 按文章的类型(type），地区(area)查询文章
      * 顺序依据:置顶号（号数低的在前面），文章发表时间（最近发表的在前面）
@@ -35,7 +43,7 @@ public interface ArticleService {
      * @return
      * @throws Exception
      */
-    List<Article> selectAllAticles() throws Exception;
+    List<Article> selectAllArticles() throws Exception;
 
     /**
      * 添加文章
@@ -52,13 +60,13 @@ public interface ArticleService {
      * @return
      * @throws Exception
      */
-    int deleteByPrimaryKey(Integer no) throws Exception;
+    int deleteByPrimaryKey(String no) throws Exception;
 
     /** 批量删除文章
      * @param no
      * @throws Exception
      */
-    void deleteArticleBatch(Integer no[]) throws Exception;
+    void deleteArticleBatch(String no[]) throws Exception;
 
 
     /**
@@ -69,6 +77,27 @@ public interface ArticleService {
      */
     int updateByPrimaryKey(Article record) throws Exception;
 
+    /** 更新 阅读量
+     * @param no
+     * @param readNum
+     * @throws Exception
+     */
+    void updateReadNum(String no, Integer readNum) throws Exception;
+
+    /** 更新 点赞量
+     * @param no
+     * @param likeNum
+     * @throws Exception
+     */
+    void updateLikeNum(String no, Integer likeNum) throws Exception;
+
+    /** 同时更新 阅读量和点赞量
+     * @param no
+     * @param readNum
+     * @param likeNum
+     * @throws Exception
+     */
+    void updateReadLikeNum(String no, Integer readNum, Integer likeNum) throws Exception;
 
     /**
      * 查询所有顶置文章
@@ -77,6 +106,7 @@ public interface ArticleService {
      * @throws Exception
      */
     List<Article> selectTopArticle(String area) throws Exception;
+
 }
 
 

@@ -4,7 +4,6 @@ import com.baibaoxiang.po.DayTotal;
 import com.baibaoxiang.po.DayTotalExample;
 import com.baibaoxiang.po.DayTotalKey;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface DayTotalMapper {

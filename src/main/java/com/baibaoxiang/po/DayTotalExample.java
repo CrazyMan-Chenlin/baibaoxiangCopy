@@ -142,52 +142,62 @@ public class DayTotalExample {
             return (Criteria) this;
         }
 
-        public Criteria andNoEqualTo(Integer value) {
+        public Criteria andNoEqualTo(String value) {
             addCriterion("no =", value, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoNotEqualTo(Integer value) {
+        public Criteria andNoNotEqualTo(String value) {
             addCriterion("no <>", value, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoGreaterThan(Integer value) {
+        public Criteria andNoGreaterThan(String value) {
             addCriterion("no >", value, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoGreaterThanOrEqualTo(Integer value) {
+        public Criteria andNoGreaterThanOrEqualTo(String value) {
             addCriterion("no >=", value, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoLessThan(Integer value) {
+        public Criteria andNoLessThan(String value) {
             addCriterion("no <", value, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoLessThanOrEqualTo(Integer value) {
+        public Criteria andNoLessThanOrEqualTo(String value) {
             addCriterion("no <=", value, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoIn(List<Integer> values) {
+        public Criteria andNoLike(String value) {
+            addCriterion("no like", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoNotLike(String value) {
+            addCriterion("no not like", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoIn(List<String> values) {
             addCriterion("no in", values, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoNotIn(List<Integer> values) {
+        public Criteria andNoNotIn(List<String> values) {
             addCriterion("no not in", values, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoBetween(Integer value1, Integer value2) {
+        public Criteria andNoBetween(String value1, String value2) {
             addCriterion("no between", value1, value2, "no");
             return (Criteria) this;
         }
 
-        public Criteria andNoNotBetween(Integer value1, Integer value2) {
+        public Criteria andNoNotBetween(String value1, String value2) {
             addCriterion("no not between", value1, value2, "no");
             return (Criteria) this;
         }

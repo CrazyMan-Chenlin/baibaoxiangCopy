@@ -4,6 +4,8 @@ import com.baibaoxiang.po.Article;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
+import com.baibaoxiang.service.RedisService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author sheng
  * @create 2019-04-26-09:59
  */
-@Controller
+@RestController
 @RequestMapping("/article")
 public class ArticleController {
 
@@ -26,6 +29,11 @@ public class ArticleController {
     @Autowired
     ManagerService managerService;
 
+    @Autowired
+    RedisService redisService;
+
+//    private Map<>
+
     /**
      * 按主键查询文章
      * @param id
@@ -33,9 +41,9 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    @ResponseBody
-    public Article selectByPrimaryKey(@PathVariable("id") Integer id) throws Exception{
+    public Article selectByPrimaryKey(@PathVariable("id") String id) throws Exception{
         Article article = articleService.selectByPrimaryKey(id);
+        redisService.saveReadNumRedis(id);
         return article;
     }
 
@@ -47,7 +55,6 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/type_area",method = RequestMethod.POST)
-    @ResponseBody
     public  List<Article> selectByTypeArea(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
         String area = request.getParameter("area");
@@ -62,7 +69,6 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/type",method = RequestMethod.POST)
-    @ResponseBody
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
 //        System.out.println(type);
@@ -80,9 +86,8 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "allArticles",method = RequestMethod.GET)
-    @ResponseBody
     public List<Article> selectAll() throws Exception{
-        List<Article> articleList = articleService.selectAllAticles();
+        List<Article> articleList = articleService.selectAllArticles();
 
         return articleList;
     }
@@ -94,9 +99,10 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    @ResponseBody
     public void insert(@RequestBody Article record) throws Exception {
-       articleService.insertSelective(record);
+        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+        record.setNo(uuid);
+        articleService.insertSelective(record);
     }
 
     /**
@@ -106,8 +112,7 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/{no}",method = RequestMethod.DELETE)
-    @ResponseBody
-    public void deleteByPrimaryKey(@PathVariable("no") Integer no) throws Exception {
+    public void deleteByPrimaryKey(@PathVariable("no") String no) throws Exception {
         articleService.deleteByPrimaryKey(no);
     }
 
@@ -118,11 +123,7 @@ public class ArticleController {
     @RequestMapping(value = "deleteBatch",method = RequestMethod.POST)
     public void deleteArticleBatch(HttpServletRequest request) throws Exception{
         String str = request.getParameter("ids");
-        String arr[] = str.split(",");
-        Integer ids [] = new Integer[arr.length];
-        for(int i = 0; i < ids.length; i++){
-            ids[i] = Integer.valueOf(arr[i]);
-        }
+        String []ids= str.split(",");
         articleService.deleteArticleBatch(ids);
     }
 
@@ -133,8 +134,16 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "",method = RequestMethod.PUT)
-    @ResponseBody
     public void updateByPrimaryKey(@RequestBody Article record) throws Exception {
         articleService.updateByPrimaryKey(record);
+    }
+
+    /** 点赞行为
+     * @param no
+     * @throws Exception
+     */
+    @RequestMapping(value = "like/{no}", method = RequestMethod.GET)
+    public void onclickLike(@PathVariable("no") String no) throws Exception{
+       redisService.saveLikeNumRedis(no);
     }
 }
