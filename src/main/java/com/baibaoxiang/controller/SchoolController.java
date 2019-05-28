@@ -28,8 +28,8 @@ public class SchoolController {
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     @ResponseBody
     public School findSchoolById(@PathVariable("id") Integer id) throws Exception{
-        School school= schoolService.selectSchoolByNo(id);
-        return school;
+        return schoolService.selectSchoolByNo(id);
+
     }
 
     /** 查询所有的学校信息
@@ -39,8 +39,8 @@ public class SchoolController {
     @RequestMapping(value = "/allSchool",method = RequestMethod.GET)
     @ResponseBody
     public List<School> findAllSchool() throws Exception{
-        List<School> schoolList = schoolService.selectAllSchool();
-        return schoolList;
+        return  schoolService.selectAllSchool();
+
     }
 
 

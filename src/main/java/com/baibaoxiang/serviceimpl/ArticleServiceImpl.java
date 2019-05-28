@@ -1,4 +1,5 @@
 package com.baibaoxiang.serviceimpl;
+import com.baibaoxiang.dao.SearchDao;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.ArticleMapper;
 import com.baibaoxiang.mapper.custom.ArticleMapperCustom;
@@ -7,13 +8,13 @@ import com.baibaoxiang.po.ArticleExample;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.sql.Date;
 import java.util.List;
 
 /**
  * @author sheng
  * @create 2019-04-23-00:19
  */
+
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
@@ -22,32 +23,38 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleMapperCustom articleMapperCustom;
     @Autowired
     JedisClient jedisClient;
+    @Autowired
+    SearchDao searchDao;
     private String articleInfoKey = "Article_INFO";
+
     @Override
-    public Article selectByPrimaryKey(String no) throws Exception {
+    public Article selectByPrimaryKey(Integer no) throws Exception {
         String key = articleInfoKey + ":" + no + ":" + "BASE";
         if (no!=null){
             if (jedisClient.exists(key)){
-                String jsonString = jedisClient.get(key);
-                return  JsonUtils.jsonToPojo(jsonString,Article.class);}
+            String jsonString = jedisClient.get(key);
+            return  JsonUtils.jsonToPojo(jsonString,Article.class);}
         }
         Article article = articleMapper.selectByPrimaryKey(no);
         jedisClient.set(key,JsonUtils.objectToJson(article));
         return article;
-}
-
-    @Override
-    public List<String> selectNoByCreateTime(Date startTime, Date endTime) throws Exception {
-        return articleMapperCustom.selectNoByCreateTime(startTime,endTime);
     }
 
     @Override
     public List<Article> selectByTypeArea(String type, String area) throws Exception {
-        return articleMapperCustom.selectByTypeArea(type,area);
+        String key = articleInfoKey + ":" + type + ":" + area;
+        if (jedisClient.exists(key)) {
+            String jsonString = jedisClient.get(key);
+            return JsonUtils.jsonToList(jsonString, Article.class);
+        } else {
+            List<Article> articles = articleMapperCustom.selectByTypeArea(type, area);
+            jedisClient.set(key, JsonUtils.objectToJson(articles));
+            return articles;
+        }
     }
 
     @Override
-    public List<Article> selectAllArticles() throws Exception {
+    public List<Article> selectAllAticles() throws Exception {
         return articleMapperCustom.selectAllArticles();
     }
 
@@ -64,7 +71,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int deleteByPrimaryKey(String no) throws Exception {
+    public int deleteByPrimaryKey(Integer no) throws Exception {
         Article article = articleMapper.selectByPrimaryKey(no);
         String key = articleInfoKey + ":" + article.getType() + ":" + article.getArea();
         String key2 = articleInfoKey + ":" + no + ":" + "BASE";
@@ -90,7 +97,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void deleteArticleBatch(String[] no) throws Exception {
+    public void deleteArticleBatch(Integer[] no) throws Exception {
         Article article;
         String key;
         String key2;
@@ -98,9 +105,6 @@ public class ArticleServiceImpl implements ArticleService {
         for (int i = 0; i < no.length; i++) {
             article = articleMapper.selectByPrimaryKey(no[i]);
             key = articleInfoKey + ":" + article.getType() + ":" + article.getArea();
-            if (jedisClient.exists(key)) {
-                jedisClient.del(key);
-            }
             key2 = articleInfoKey + articleInfoKey +  article.getArea();
             key3 = articleInfoKey + ":" + article.getNo() + ":" + "BASE";
             delKey(key,key2,key3);
@@ -114,55 +118,8 @@ public class ArticleServiceImpl implements ArticleService {
         String key2 = articleInfoKey +  record.getArea();
         String key3 = articleInfoKey + ":" + record.getNo() + ":" + "BASE";
         delKey(key, key2, key3);
+        searchDao.updateArticleById(record.getNo());
         return articleMapper.updateByPrimaryKey(record);
-    }
-
-    /**
-     *  更新阅读量
-     * @param no
-     * @param readNum
-     * @throws Exception
-     */
-    @Override
-    public void updateReadNum(String no, Integer readNum) throws Exception {
-
-        if(jedisClient.hexists("readnum", no)){
-           jedisClient.hdel("readnum", no);
-        }
-        articleMapperCustom.updateReadNum(no,readNum);
-    }
-
-    /**
-     *  更新点赞量
-     * @param no
-     * @param likeNum
-     * @throws Exception
-     */
-    @Override
-    public void updateLikeNum(String no, Integer likeNum) throws Exception {
-
-        if(jedisClient.hexists("likenum", no)){
-            jedisClient.hdel("likenum", no);
-        }
-        articleMapperCustom.updateLikeNum(no,likeNum);
-    }
-
-    /**
-     * 同时更新 浏览量和点赞量
-     * @param no
-     * @param readNum
-     * @param likeNum
-     * @throws Exception
-     */
-    @Override
-    public void updateReadLikeNum(String no, Integer readNum, Integer likeNum) throws Exception {
-        if(jedisClient.hexists("readnum", no)){
-            jedisClient.hdel("readnum", no);
-        }
-        if(jedisClient.hexists("likenum", no)){
-            jedisClient.hdel("likenum", no);
-        }
-        articleMapperCustom.updateReadLikeNum(no,readNum,likeNum);
     }
 
     /**
@@ -188,6 +145,4 @@ public class ArticleServiceImpl implements ArticleService {
             return articles;
         }
     }
-
-
 }

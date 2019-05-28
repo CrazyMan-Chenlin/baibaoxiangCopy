@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceImpl;
+package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.SchoolMapperCustom;
@@ -6,7 +6,6 @@ import com.baibaoxiang.po.School;
 import com.baibaoxiang.po.SchoolExample;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.List;
  * @author sheng
  * @create 2019-05-03-15:44
  */
-
 public class SchoolServiceImpl implements SchoolService {
     @Autowired
     JedisClient jedisClient;
@@ -33,10 +31,6 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public int deleteSchool(Integer no) throws Exception {
-        /*删除学校名的缓存*/
-        /*if (jedisClient.exists(key)){
-            jedisClient.del(key);
-        }*/
         return schoolMapper.deleteByPrimaryKey(no);
     }
 

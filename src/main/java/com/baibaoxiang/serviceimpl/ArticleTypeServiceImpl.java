@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceImpl;
+package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.ArticleTypeMapper;
@@ -7,7 +7,6 @@ import com.baibaoxiang.po.ArticleType;
 import com.baibaoxiang.service.ArticleTypeService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -33,19 +32,25 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     @Override
     public int updateByPrimaryKey(ArticleType record) throws Exception {
-        jedisClient.del(key);
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         return articleTypeMapper.updateByPrimaryKey(record);
     }
 
     @Override
     public int deleteByPrimaryKey(Integer id) throws Exception {
-        jedisClient.del(key);
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         return articleTypeMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public int insert(ArticleType record) throws Exception {
-        jedisClient.del(key);
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         return articleTypeMapper.insert(record);
     }
 

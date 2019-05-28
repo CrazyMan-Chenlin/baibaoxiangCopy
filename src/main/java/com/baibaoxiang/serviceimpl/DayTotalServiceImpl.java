@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceImpl;
+package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.mapper.DayTotalMapper;
 import com.baibaoxiang.mapper.custom.DayTotalMapperCustom;
