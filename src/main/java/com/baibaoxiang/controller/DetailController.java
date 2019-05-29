@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * @author chenlin
  */
@@ -22,11 +19,7 @@ public class DetailController {
         ModelAndView modelAndView = new ModelAndView("/detail");
         //根据id查文章的具体内容
         Article article = articleService.selectByPrimaryKey(no);
-        /**/
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String timeFormat = sdf.format(article.getCreateTime());
         modelAndView.addObject("article",article);
-        modelAndView.addObject("timeFormat",timeFormat);
         return modelAndView;
     }
 }
