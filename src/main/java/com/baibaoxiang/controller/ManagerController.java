@@ -189,13 +189,15 @@ public class ManagerController {
      * @throws Exception
      */
     @RequestMapping(value = "updatepassword", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String,Object> updatePassword(HttpServletRequest request) throws Exception{
         Map<String,Object> map = new HashMap<String, Object>(16);
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+//        String username = (String) session.getAttribute("username");
+        String username = "liang123";
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
-        Manager manager = managerService.findManagerByUsername(username);
+        Manager manager = managerService.findManagerWithPassword_salt(username);
         String salt = manager.getSalt();
         if(!manager.getPassword().equals(md5(salt,oldPassword))){
             map.put("code",0);
@@ -302,7 +304,7 @@ public class ManagerController {
      * @return
      */
     public static String md5(String salt, String message) {
-        String plainText = salt.concat(message);
+        String plainText = message.concat(salt);
         byte[] secretBytes = null;
         try {
             secretBytes = MessageDigest.getInstance("md5").digest(
