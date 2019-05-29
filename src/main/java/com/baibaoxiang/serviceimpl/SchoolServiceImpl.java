@@ -6,9 +6,8 @@ import com.baibaoxiang.po.School;
 import com.baibaoxiang.po.SchoolExample;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * @author sheng
@@ -23,6 +22,7 @@ public class SchoolServiceImpl implements SchoolService {
     SchoolMapperCustom schoolMapperCustom;
     private String schoolInfoKey = "School_INFO";
     private String key = schoolInfoKey + ":" + "SCHOOLNAME";
+
 
     @Override
     public int insertSchool(School record) throws Exception {
@@ -39,6 +39,11 @@ public class SchoolServiceImpl implements SchoolService {
         for (int i = 0; i < no.length; i++) {
             schoolMapper.deleteByPrimaryKey(no[i]);
         }
+    }
+
+    @Override
+    public void deleteSchoolBySchoolName(String name) throws Exception {
+        schoolMapperCustom.deleteSchoolBySchoolName(name);
     }
 
     @Override
@@ -119,5 +124,10 @@ public class SchoolServiceImpl implements SchoolService {
             e.printStackTrace();
         }
         return areaName;
+    }
+
+    @Override
+    public List<Integer> selectNosBySchoolName(String name) throws Exception {
+        return schoolMapperCustom.seleteNosBySchoolName(name);
     }
 }
