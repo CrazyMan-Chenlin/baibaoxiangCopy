@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/editpwd.css">
     <script src="../js/jquery.min.js" ></script>
     <script src="../js/bootstrap.min.js" ></script>
+    <script src="../js/editpwd.js" ></script>
     <title>密码管理</title>
 </head>
 <body>
@@ -21,24 +22,24 @@
         <div class="form-group">
             <label for="initial_password" class="col-sm-2 control-label">原始密码</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="initial_password" placeholder="请输入原始密码">
+                <input type="password" class="form-control" id="initial_password" placeholder="请输入原始密码">
             </div>
         </div>
         <div class="form-group">
             <label for="new_password" class="col-sm-2 control-label">新密码</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="new_password" placeholder="请输入新密码">
+                <input type="password" class="form-control" id="new_password" placeholder="请输入新密码">
             </div>
         </div>
         <div class="form-group">
             <label for="confirm_password" class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="confirm_password" placeholder="再次输入新密码">
+                <input type="password" class="form-control" id="confirm_password" placeholder="再次输入新密码">
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">修改</button>
+                <button type="button" class="btn btn-default" id="change">修改</button>
             </div>
         </div>
     </form>

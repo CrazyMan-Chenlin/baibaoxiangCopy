@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author sheng
@@ -154,5 +155,55 @@ public class ManagerController {
         return managers;
     }
 
+    /**
+     * 删除单个管理员 通过管理员名称删除
+     * @param username
+     * @throws Exception
+     */
+    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
+    public void deleteManager(@PathVariable("username") String username) throws Exception{
+        managerService.deleteByPrimaryKey(username);
+    }
+
+    /** 批量删除管理员
+     * @param request
+     * @throws Exception
+     */
+    @RequestMapping(value = "/deleteBatch")
+    public void deleteManagerBatch(HttpServletRequest request) throws Exception{
+        String usernames = request.getParameter("usernames");
+        managerService.deleteManagerBatch(usernames);
+    }
+
+    /** 更改密码
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "updatepassword", method = RequestMethod.POST)
+    public Map<String,Object> updatePassword(HttpServletRequest request) throws Exception{
+        Map<String,Object> map = new HashMap<String, Object>(16);
+        System.out.println("updatepassword");
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        System.out.println(oldPassword);
+        username="chen123";
+        Manager manager = managerService.findManagerByUsername(username);
+        String salt = manager.getSalt();
+        if(!manager.getPassword().equals(md5(salt,oldPassword))){
+            map.put("code",0);
+            map.put("msg","原密码有误！");
+        }else{
+            //密码正确
+            manager.setPassword(md5(salt,newPassword));
+            managerService.updateByPrimaryKeySelective(manager);
+            map.put("code",1);
+            map.put("msg","密码更改成功！");
+        }
+
+        return map;
+    }
 
 }
