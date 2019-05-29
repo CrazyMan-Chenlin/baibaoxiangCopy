@@ -8,13 +8,13 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 /**
  * @author chenlin
  */
@@ -64,12 +64,13 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public void deleteIndex(String id) throws Exception {
             httpSolrClient.deleteById(id) ;
-
+            httpSolrClient.commit();
     }
 
     @Override
     public void deleteAllIndex() throws Exception {
         httpSolrClient.deleteByQuery("*:*");
+        httpSolrClient.commit();
     }
 
     @Override
@@ -101,5 +102,6 @@ public class SearchServiceImpl implements SearchService {
         document.addField("type", article.getType());
         document.addField("author", article.getAuthor());
         httpSolrClient.add(document);
+        httpSolrClient.commit();
     }
 }
