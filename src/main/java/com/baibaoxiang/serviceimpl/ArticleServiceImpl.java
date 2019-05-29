@@ -5,23 +5,24 @@ import com.baibaoxiang.mapper.custom.ArticleMapperCustom;
 import com.baibaoxiang.po.Article;
 import com.baibaoxiang.po.ArticleExample;
 import com.baibaoxiang.service.ArticleService;
+import com.baibaoxiang.service.SearchService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Date;
 import java.util.List;
-
 /**
  * @author sheng
  * @create 2019-04-23-00:19
  */
 public class ArticleServiceImpl implements ArticleService {
-
     @Autowired
     ArticleMapper articleMapper;
     @Autowired
     ArticleMapperCustom articleMapperCustom;
     @Autowired
     JedisClient jedisClient;
+    @Autowired
+    SearchService searchService;
     private String articleInfoKey = "Article_INFO";
     @Override
     public Article selectByPrimaryKey(String no) throws Exception {
@@ -67,6 +68,8 @@ public class ArticleServiceImpl implements ArticleService {
         }else if (jedisClient.exists(key2)){
             jedisClient.del(key2);
         }
+        //添加索引
+        /*searchService.addIndex(record);*/
         return articleMapper.insertSelective(record);
     }
 
@@ -77,6 +80,8 @@ public class ArticleServiceImpl implements ArticleService {
         String key2 = articleInfoKey + ":" + no + ":" + "BASE";
         String key3 = articleInfoKey + ":" + article.getArea();
         delKey(key, key2, key3);
+        //删除索引
+        /*searchService.deleteIndex(no);*/
         return articleMapper.deleteByPrimaryKey(no);
     }
 
@@ -112,6 +117,8 @@ public class ArticleServiceImpl implements ArticleService {
             key3 = articleInfoKey + ":" + article.getNo() + ":" + "BASE";
             delKey(key,key2,key3);
             articleMapper.deleteByPrimaryKey(no[i]);
+            //变量删除索引
+            /*searchService.deleteIndex(no[i]);*/
         }
     }
 
@@ -121,6 +128,9 @@ public class ArticleServiceImpl implements ArticleService {
         String key2 = articleInfoKey +  record.getArea();
         String key3 = articleInfoKey + ":" + record.getNo() + ":" + "BASE";
         delKey(key, key2, key3);
+        //修改索引
+        /*searchService.deleteIndex(record.getNo());
+        searchService.addIndex(record);*/
         return articleMapper.updateByPrimaryKey(record);
     }
 
@@ -132,7 +142,6 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public void updateReadNum(String no, Integer readNum) throws Exception {
-
         if(jedisClient.hexists("readnum", no)){
            jedisClient.hdel("readnum", no);
         }
@@ -147,7 +156,6 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public void updateLikeNum(String no, Integer likeNum) throws Exception {
-
         if(jedisClient.hexists("likenum", no)){
             jedisClient.hdel("likenum", no);
         }
@@ -195,6 +203,4 @@ public class ArticleServiceImpl implements ArticleService {
             return articles;
         }
     }
-
-
 }
