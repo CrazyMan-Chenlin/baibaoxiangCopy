@@ -13,8 +13,8 @@
                     user-scalable = no"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css"/>
-    <script src="../js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="/css/front/style.css"/>
+    <script src="/js/front/jquery-3.2.1.js"></script>
 </head>
 <style>
     .rounded-circle {
