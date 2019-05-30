@@ -34,6 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         Article article = articleMapper.selectByPrimaryKey(no);
         jedisClient.set(key,JsonUtils.objectToJson(article));
+        jedisClient.expire(key,60*60);
         return article;
 }
 
