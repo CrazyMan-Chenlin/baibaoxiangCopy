@@ -5,9 +5,7 @@ import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.RedisService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +30,6 @@ public class ArticleController {
     @Autowired
     RedisService redisService;
 
-//    private Map<>
 
     /**
      * 按主键查询文章
@@ -120,7 +117,7 @@ public class ArticleController {
      * @param request
      * @throws Exception
      */
-    @RequestMapping(value = "deleteBatch",method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteBatch",method = RequestMethod.POST)
     public void deleteArticleBatch(HttpServletRequest request) throws Exception{
         String str = request.getParameter("ids");
         String []ids= str.split(",");
@@ -133,7 +130,7 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "",method = RequestMethod.PUT)
+    @RequestMapping(value = "/",method = RequestMethod.PUT)
     public void updateByPrimaryKey(@RequestBody Article record) throws Exception {
         articleService.updateByPrimaryKey(record);
     }
@@ -142,7 +139,7 @@ public class ArticleController {
      * @param no
      * @throws Exception
      */
-    @RequestMapping(value = "like/{no}", method = RequestMethod.GET)
+    @RequestMapping(value = "/like/{no}", method = RequestMethod.GET)
     public void onclickLike(@PathVariable("no") String no) throws Exception{
         redisService.saveLikeNumRedis(no);
     }

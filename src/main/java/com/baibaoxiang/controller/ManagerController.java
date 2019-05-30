@@ -3,7 +3,6 @@ package com.baibaoxiang.controller;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.tool.RandomValidateCode;
-import org.apache.commons.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class ManagerController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView loginView() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("backstage/login");
         return modelAndView;
     }
 
@@ -84,33 +83,36 @@ public class ManagerController {
      * @throws Exception
      */
     @RequestMapping(value = "/loginVerify", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String,Object> loginVerify(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
+    public ModelAndView loginVerify(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> map = new HashMap<String, Object>();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String validatecode = request.getParameter("validatecode");
         String rememberme = request.getParameter("rememberme");
         Manager manager = managerService.findManagerWithPassword_salt(username);
-        System.out.println(username+"------------"+password+validatecode);
+
         //获取session中保存的 验证码
-//        HttpSession session = request.getSession();
         String code = (String)session.getAttribute("randomcode_key");
 
         if(!code.equals(validatecode)){
             map.put("code",0);
             map.put("msg","验证码有误！");
+            modelAndView.setViewName("backstage/login");
         }else{
             if(manager == null){
                 map.put("code",0);
                 map.put("msg","用户名无效！");
+                modelAndView.setViewName("backstage/login");
             }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
                 map.put("code",0);
                 map.put("msg","密码出错!");
+                modelAndView.setViewName("backstage/login");
             }else{
                 //登录成功
                 map.put("code",1);
                 map.put("msg","");
+                modelAndView.setViewName("backstage/admin_index");
                 //添加session 将用户名添加到session
                 request.getSession().setAttribute("username", username);
                 //添加cookie
@@ -126,7 +128,8 @@ public class ManagerController {
                 }
             }
         }
-        return  map;
+        modelAndView.addAllObjects(map);
+        return  modelAndView;
     }
 
 
@@ -141,7 +144,7 @@ public class ManagerController {
     public String logout(HttpSession session) throws Exception {
         session.removeAttribute("username");
         session.invalidate();
-        return "redirect:/login";
+        return "redirect:login";
     }
 
 
@@ -169,20 +172,13 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/updateNamePicture", method = RequestMethod.POST)
+    @RequestMapping(value = "updateNamePicture", method = RequestMethod.PUT)
     public void updateNamePicture(HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
-//        System.out.println("+++++comming");
         String username = (String) session.getAttribute("username");
-
-
-
         Manager manager = new Manager();
         String name = request.getParameter("name");
         String path = request.getParameter("path");
-
-//        System.out.println(name+path+".......");
-
         manager.setUsername(username);
         manager.setName(name);
         manager.setPath(path);
@@ -195,17 +191,14 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
+    @RequestMapping(value = "updatepassword", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String,Object> updatePassword(HttpServletRequest request) throws Exception{
         Map<String,Object> map = new HashMap<String, Object>(16);
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
-
-        System.out.println("old:"+oldPassword+"new:"+newPassword);
-        System.out.println("username="+username);
-
         Manager manager = managerService.findManagerWithPassword_salt(username);
         String salt = manager.getSalt();
         if(!manager.getPassword().equals(md5(salt,oldPassword))){
