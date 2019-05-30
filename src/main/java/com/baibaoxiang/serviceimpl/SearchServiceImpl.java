@@ -11,10 +11,9 @@ import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 /**
  * @author chenlin
  */
@@ -24,7 +23,7 @@ public class SearchServiceImpl implements SearchService {
     ArticleService articleService;
     @Autowired
     HttpSolrClient httpSolrClient;
-
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public List<Article> searchIndex(String queryString) throws Exception {
         //1.定义一个搜索对象
@@ -36,22 +35,13 @@ public class SearchServiceImpl implements SearchService {
         QueryResponse response = httpSolrClient.query(solrQuery);
         //2.获取文章列表
         SolrDocumentList results = response.getResults();
-        //取高亮
-        Map<String, Map<String, List<String>>> highlighting = response.getHighlighting();
         //3.封装商品列表
         List<Article> searchArticle = new ArrayList<>();
         Article article ;
         for (SolrDocument solrDocument : results){
             article = new Article();
-            article.setNo( solrDocument.get("id").toString());
-            List<String> list = highlighting.get(solrDocument.get("id")).get("title");
-            String hightLight;
-            if (list !=null && list.size() > 0){
-                hightLight = list.get(0);
-            }else{
-                hightLight = solrDocument.get("title").toString();
-            }
-            article.setTitle(hightLight);
+            article.setNo(solrDocument.get("id").toString());
+            article.setTitle(solrDocument.get("title").toString());
             article.setAuthor(solrDocument.get("author").toString());
             article.setCreateTime(Date.valueOf(solrDocument.get("create_time").toString()));
             article.setLikeNum(Integer.parseInt(solrDocument.get("like_num").toString()));
@@ -64,12 +54,13 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public void deleteIndex(String id) throws Exception {
             httpSolrClient.deleteById(id) ;
-
+            httpSolrClient.commit();
     }
 
     @Override
     public void deleteAllIndex() throws Exception {
         httpSolrClient.deleteByQuery("*:*");
+        httpSolrClient.commit();
     }
 
     @Override
@@ -81,7 +72,7 @@ public class SearchServiceImpl implements SearchService {
             document.addField("title", article.getTitle());
             document.addField("message", article.getMessage());
             document.addField("id", article.getNo());
-            document.addField("create_time", article.getCreateTime());
+            document.addField("create_time",sdf.format(article.getCreateTime()));
             document.addField("like_num", article.getLikeNum());
             document.addField("type", article.getType());
             document.addField("author", article.getAuthor());
@@ -101,5 +92,6 @@ public class SearchServiceImpl implements SearchService {
         document.addField("type", article.getType());
         document.addField("author", article.getAuthor());
         httpSolrClient.add(document);
+        httpSolrClient.commit();
     }
 }

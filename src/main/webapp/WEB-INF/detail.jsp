@@ -13,8 +13,8 @@
                     user-scalable = no"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css"/>
-    <script src="../js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="/css/front/style.css"/>
+    <script src="/js/front/jquery-3.2.1.js"></script>
 </head>
 <style>
     .rounded-circle {
@@ -73,7 +73,7 @@
     <div style="float: left;width: 15%"><img src="/images/front/who.jpg" class="rounded-circle"></div>
     <div style="float: left;font-size: 0.8rem;width: 80%;margin-top: 0.1rem" class="text-dark"><span
             style="">${article.author}</span></div>
-    <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">${timeFormat} 阅读量：${article.readNum}</span>
+    <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">${article.createTime} 阅读量：${article.readNum}</span>
     </div>
 </div>
 <div id="content">
@@ -94,6 +94,8 @@
     $(document).ready(function () {
         $("#love").on("click", function () {
             $("#love").attr("src", "/images/front/love.svg")
+            $.post("like/",{no:${article.no}},function(data){
+            })
         })
         $("#return img").on("touchend", function () {
             $("#return").css("background-color","#cccccc")

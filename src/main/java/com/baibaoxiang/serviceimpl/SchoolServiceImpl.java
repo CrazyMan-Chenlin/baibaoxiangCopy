@@ -31,18 +31,33 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public int deleteSchool(Integer no) throws Exception {
+        deleteKey(schoolMapper.selectByPrimaryKey(no).getName());
         return schoolMapper.deleteByPrimaryKey(no);
+    }
+
+    private void deleteKey(String schoolName) {
+        String key2 = schoolInfoKey + ":" + schoolName + ":BASE1";
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }else if(jedisClient.exists(key2)){
+            jedisClient.del(key2);
+        }
     }
 
     @Override
     public void deleteSchoolBatch(Integer[] no) throws Exception {
         for (int i = 0; i < no.length; i++) {
+            deleteKey(schoolMapper.selectByPrimaryKey(no[i]).getName());
             schoolMapper.deleteByPrimaryKey(no[i]);
         }
     }
 
     @Override
     public void deleteSchoolBySchoolName(String name) throws Exception {
+        //删除学校主键
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         schoolMapperCustom.deleteSchoolBySchoolName(name);
     }
 
