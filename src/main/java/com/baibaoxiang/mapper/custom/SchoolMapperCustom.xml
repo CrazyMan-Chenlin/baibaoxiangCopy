@@ -8,19 +8,11 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        no, name, area
-    </sql>
+    no, name, area
+  </sql>
 
     <select id="selectAllSchool" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/> FROM school
-    </select>
-
-    <delete id="deleteSchoolBySchoolName" parameterType="java.lang.String">
-        DELETE FROM school WHERE name = #{name}
-    </delete>
-
-    <select id="seleteNosBySchoolName" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT no FROM school WHERE name = #{name}
     </select>
 
 </mapper>

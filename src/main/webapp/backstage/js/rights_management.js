@@ -1,4 +1,5 @@
 $(function () {
+    //查询管理员
     $("#query").on("click",function () {
         var title = {title:'BBBBB'};
         $.ajax({
@@ -9,7 +10,7 @@ $(function () {
             success :function (data) {
                 $("#information").children().remove();
                 $.each(data,function (index,item) {
-                    $("#information").append("<tr><td><input type=\"checkbox\" name=\"cur_right\">"+item.username+"</td>\n" +
+                    $("#information").append("<tr><td><input type=\"checkbox\" name=\"username\">"+item.username+"</td>\n" +
                         "<td>"+item.name+"</td>\n" +
                         "<td>"+item.area+"</td></tr>>");
                 });
@@ -19,11 +20,7 @@ $(function () {
 
     });
 
-    // var chk_value =[];//定义一个数组
-    // $('input[name="cur_right"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数
-    //     chk_value.push($(this).val());//将选中的值添加到数组chk_value中
-    // });
-
+    //添加管理员
     $("#add").on('click',function () {
 
         var username = $("#username").val();
@@ -47,6 +44,25 @@ $(function () {
                 } else {
                     alert("失败");
                 }
+            }
+        });
+    });
+
+    //删除管理员
+    $("#delete").on('click',function () {
+        var checked=[];
+        $("input[name='username']:checked").each(function (i) {
+            checked[i]=$(this).parents("td").text();
+        });
+        var usernames = checked.join(",");
+        // console.log(usernames);
+        $.ajax({
+            url:"/manager1/deleteBatch",
+            type:"POST",
+            data: "usernames="+usernames,
+            error:function (data) {
+                alert("删除成功");
+                $("#query").trigger('click');
             }
         });
     });

@@ -1,6 +1,6 @@
 package com.baibaoxiang.po;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Article {
     private String no;

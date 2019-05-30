@@ -13,7 +13,7 @@ $(function () {
                 url:"/manager1/updatepassword",
                 data:{oldPassword:initial_password,newPassword:new_password },
                 success:function (data) {
-                    console.log(data.get("msg"));
+                    console.log(data["msg"]);
                 }
             });
         }else {

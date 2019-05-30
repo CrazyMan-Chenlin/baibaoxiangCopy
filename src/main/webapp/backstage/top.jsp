@@ -10,7 +10,7 @@
     <title>top</title>
 </head>
 <body>
-    <div class="username"><a href="#">sadsadsadasdsad</a></div>
+    <div class="username"><a href="#">${sessionScope.username}</a></div>
     <div class="portrait"></div>
 </body>
 </html>

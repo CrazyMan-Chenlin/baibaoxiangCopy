@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
+
 /**
  * @author chenlin
  */
@@ -39,6 +40,7 @@ public class IndexController {
         model.addObject("articleList",articleList);
         return model;
     }
+
     /**
      * 查询地区名
      * @param schoolName
@@ -51,6 +53,7 @@ public class IndexController {
     public List<String> queryAreaName(String schoolName,String type) throws Exception{
        return schoolService.selectSchoolArea(schoolName);
     }
+
     /**
      * 得到地区文章
      * @param area
@@ -67,6 +70,7 @@ public class IndexController {
         }
         return articleService.selectByTypeArea(type,area);
     }
+
     /**
      * 改变地区时，文章相应改变
      * @param area

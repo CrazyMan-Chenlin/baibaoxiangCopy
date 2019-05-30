@@ -49,6 +49,7 @@ $(function () {
                         "<div class='panel panel-default'>"+
                         "<div class='panel-heading'>"+item.title+"</div>"+
                         "<div class='panel-body' id='no'>"+item.no+"</div>"+
+                        "<div >作者："+item.author+" 区域："+item.area+" 类型："+item.type+"</div>"+
                         "<div class='panel-footer'><span>点赞数"+item.likeNum+"</span><span>阅读数"+item.readNum+"</span>"+
                         "<div class='manage'>"+
                         "<div class='delete'></div>"+

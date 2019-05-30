@@ -3,6 +3,7 @@ package com.baibaoxiang.controller;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.tool.RandomValidateCode;
+import org.apache.commons.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -84,17 +85,17 @@ public class ManagerController {
      */
     @RequestMapping(value = "/loginVerify", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> loginVerify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Map<String,Object> loginVerify(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String validatecode = request.getParameter("validatecode");
         String rememberme = request.getParameter("rememberme");
         Manager manager = managerService.findManagerWithPassword_salt(username);
-
+        System.out.println(username+"------------"+password+validatecode);
         //获取session中保存的 验证码
-        HttpSession session = request.getSession();
-        String code = (String)session.getAttribute("RANDOMCODEKEY");
+//        HttpSession session = request.getSession();
+        String code = (String)session.getAttribute("randomcode_key");
 
         if(!code.equals(validatecode)){
             map.put("code",0);
@@ -125,8 +126,7 @@ public class ManagerController {
                 }
             }
         }
-
-        return map;
+        return  map;
     }
 
 
@@ -169,13 +169,20 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "updateNamePicture", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateNamePicture", method = RequestMethod.POST)
     public void updateNamePicture(HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
+//        System.out.println("+++++comming");
         String username = (String) session.getAttribute("username");
+
+
+
         Manager manager = new Manager();
         String name = request.getParameter("name");
         String path = request.getParameter("path");
+
+//        System.out.println(name+path+".......");
+
         manager.setUsername(username);
         manager.setName(name);
         manager.setPath(path);
@@ -188,15 +195,17 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "updatepassword", method = RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     public Map<String,Object> updatePassword(HttpServletRequest request) throws Exception{
         Map<String,Object> map = new HashMap<String, Object>(16);
         HttpSession session = request.getSession();
-//        String username = (String) session.getAttribute("username");
-        String username = "liang123";
+        String username = (String) session.getAttribute("username");
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
+
+        System.out.println("old:"+oldPassword+"new:"+newPassword);
+        System.out.println("username="+username);
+
         Manager manager = managerService.findManagerWithPassword_salt(username);
         String salt = manager.getSalt();
         if(!manager.getPassword().equals(md5(salt,oldPassword))){

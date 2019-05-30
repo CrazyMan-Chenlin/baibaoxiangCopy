@@ -15,14 +15,4 @@ public interface SchoolMapperCustom {
      * @throws Exception
      */
     List<School> selectAllSchool () throws Exception;
-
-    /**通过校名删除学校（即是 删除该校名的所有校区）
-     * @param name
-     */
-    void deleteSchoolBySchoolName(String name);
-
-    /** 通过校名 获取所有校区的编号
-     * @param name
-     */
-    List<Integer> seleteNosBySchoolName(String name);
 }

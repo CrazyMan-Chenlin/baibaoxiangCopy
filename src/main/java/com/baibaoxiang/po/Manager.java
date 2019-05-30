@@ -63,6 +63,19 @@ public class Manager {
         this.title = title == null ? null : title.trim();
     }
 
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", area='" + area + '\'' +
+                ", path='" + path + '\'' +
+                ", title='" + title + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
+    }
+
     public String getSalt() {
         return salt;
     }
@@ -70,4 +83,5 @@ public class Manager {
     public void setSalt(String salt) {
         this.salt = salt == null ? null : salt.trim();
     }
+
 }

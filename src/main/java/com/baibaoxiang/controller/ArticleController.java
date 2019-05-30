@@ -71,12 +71,12 @@ public class ArticleController {
     @RequestMapping(value = "/type",method = RequestMethod.POST)
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
-//        System.out.println(type);
         //获取session 中的username
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
-        Manager manager = managerService.findManagerByUsername("chen123");
+        Manager manager = managerService.findManagerByUsername(username);
         String area = manager.getArea();
+//        String area="广东第二师范学院花都校区";
         List<Article> articleList = articleService.selectByTypeArea(type, area);
         return articleList;
     }

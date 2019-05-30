@@ -16,33 +16,8 @@
 
 <div class="btn_management">
     <button type="button" class="btn btn-primary"  id="query">查询所有管理员</button>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">删除所选管理员</button>
-    <!-- 弹出对话框-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">×
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        警告!
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    数据一旦删除将无法恢复（按下 ESC 按钮退出。）
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        删除
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button type="button" class="btn btn-danger" id="delete">删除所选管理员</button>
+
 </div>
 
 

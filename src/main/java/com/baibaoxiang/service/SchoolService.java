@@ -3,7 +3,6 @@ package com.baibaoxiang.service;
         import com.baibaoxiang.po.School;
 
         import java.util.List;
-        import java.util.Map;
 
 /**
  * @author sheng
@@ -33,12 +32,6 @@ public interface SchoolService {
      */
     void deleteSchoolBatch(Integer no[]) throws Exception;
 
-    /** 通过校名删除学校（即是 删除该校名的所有校区）
-     * @param name
-     * @throws Exception
-     */
-   void deleteSchoolBySchoolName(String name) throws Exception;
-
     /** 查询学校信息 通过校区的编号
      * @param no
      * @return
@@ -65,11 +58,4 @@ public interface SchoolService {
      * @throws Exception
      */
     List<String> selectSchoolArea(String schoolName) throws Exception;
-
-    /** 通过校名 获取该校名所有校区的编号
-     * @param name
-     * @return
-     * @throws Exception
-     */
-    List<Integer> selectNosBySchoolName(String name) throws Exception;
 }

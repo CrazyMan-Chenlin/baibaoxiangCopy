@@ -5,7 +5,6 @@ import com.baibaoxiang.mapper.custom.ArticleMapperCustom;
 import com.baibaoxiang.po.Article;
 import com.baibaoxiang.po.ArticleExample;
 import com.baibaoxiang.service.ArticleService;
-import com.baibaoxiang.service.SearchService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Date;
@@ -21,8 +20,7 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleMapperCustom articleMapperCustom;
     @Autowired
     JedisClient jedisClient;
-    @Autowired
-    SearchService searchService;
+
     private String articleInfoKey = "Article_INFO";
     @Override
     public Article selectByPrimaryKey(String no) throws Exception {
