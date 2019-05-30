@@ -11,7 +11,9 @@ import java.io.IOException;
  * @create 2019-05-06-23:10
  */
 public class CheckLoginFilter implements Filter {
-
+    /**
+     * 不拦截的资源类型
+     */
     private static String[] ignoreCheckURIs;
 
     @Override
