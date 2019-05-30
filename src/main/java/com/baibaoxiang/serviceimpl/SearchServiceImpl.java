@@ -11,6 +11,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -22,7 +23,7 @@ public class SearchServiceImpl implements SearchService {
     ArticleService articleService;
     @Autowired
     HttpSolrClient httpSolrClient;
-
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public List<Article> searchIndex(String queryString) throws Exception {
         //1.定义一个搜索对象
@@ -71,7 +72,7 @@ public class SearchServiceImpl implements SearchService {
             document.addField("title", article.getTitle());
             document.addField("message", article.getMessage());
             document.addField("id", article.getNo());
-            document.addField("create_time",article.getCreateTime());
+            document.addField("create_time",sdf.format(article.getCreateTime()));
             document.addField("like_num", article.getLikeNum());
             document.addField("type", article.getType());
             document.addField("author", article.getAuthor());
