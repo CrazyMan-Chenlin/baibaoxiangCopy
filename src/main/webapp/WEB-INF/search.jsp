@@ -52,7 +52,6 @@
 <div>
     <table class="table">
         <tbody id="content">
-
         </tbody>
     </table>
 </div>

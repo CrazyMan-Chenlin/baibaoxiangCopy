@@ -14,7 +14,7 @@ import java.util.Set;
  * @author sheng
  * @create 2019-05-27-19:13
  */
-public class RedisServiceImpl implements RedisService {
+public class  RedisServiceImpl implements RedisService {
 
     @Autowired
     JedisClient jedisClient;
@@ -37,7 +37,6 @@ public class RedisServiceImpl implements RedisService {
      */
     @Override
     public void saveLikeNumRedis(String no) {
-
         if(jedisClient.hexists("likenum", no)){
             //value 值 自增1
             jedisClient.hincrBy("likenum", no,1);

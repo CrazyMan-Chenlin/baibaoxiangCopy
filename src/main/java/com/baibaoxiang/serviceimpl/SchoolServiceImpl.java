@@ -52,6 +52,14 @@ public class SchoolServiceImpl implements SchoolService {
         }
     }
 
+    @Override
+    public void deleteSchoolBySchoolName(String name) throws Exception {
+        //删除学校主键
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        schoolMapperCustom.deleteSchoolBySchoolName(name);
+    }
 
     @Override
     public School selectSchoolByNo(Integer no) throws Exception {
@@ -133,4 +141,8 @@ public class SchoolServiceImpl implements SchoolService {
         return areaName;
     }
 
+    @Override
+    public List<Integer> selectNosBySchoolName(String name) throws Exception {
+        return schoolMapperCustom.seleteNosBySchoolName(name);
+    }
 }

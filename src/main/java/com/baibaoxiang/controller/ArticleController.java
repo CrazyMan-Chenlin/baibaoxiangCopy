@@ -144,6 +144,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "like/{no}", method = RequestMethod.GET)
     public void onclickLike(@PathVariable("no") String no) throws Exception{
-       redisService.saveLikeNumRedis(no);
+        redisService.saveLikeNumRedis(no);
     }
 }
+

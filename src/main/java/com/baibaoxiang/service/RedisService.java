@@ -32,6 +32,4 @@ public interface RedisService {
      * @throws Exception
      */
     List<DayTotal> getLikeDataFromRedis() throws Exception;
-
-
 }

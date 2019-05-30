@@ -6,12 +6,12 @@ import com.baibaoxiang.service.ArticleTypeService;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
-
 /**
  * @author chenlin
  */
@@ -40,7 +40,15 @@ public class IndexController {
         model.addObject("articleList",articleList);
         return model;
     }
-
+    /**
+     * 显示查询的页面
+     *  url:/item-list
+     * @return
+     */
+    @RequestMapping("/{page}")
+    public String showPage(@PathVariable String page){
+        return page;
+    }
     /**
      * 查询地区名
      * @param schoolName
@@ -53,7 +61,6 @@ public class IndexController {
     public List<String> queryAreaName(String schoolName,String type) throws Exception{
        return schoolService.selectSchoolArea(schoolName);
     }
-
     /**
      * 得到地区文章
      * @param area
@@ -70,7 +77,6 @@ public class IndexController {
         }
         return articleService.selectByTypeArea(type,area);
     }
-
     /**
      * 改变地区时，文章相应改变
      * @param area
