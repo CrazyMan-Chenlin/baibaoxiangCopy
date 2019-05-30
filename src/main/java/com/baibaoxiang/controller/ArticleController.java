@@ -32,7 +32,6 @@ public class ArticleController {
     @Autowired
     RedisService redisService;
 
-//    private Map<>
 
     /**
      * 按主键查询文章
@@ -46,6 +45,12 @@ public class ArticleController {
         redisService.saveReadNumRedis(id);
         return article;
     }
+//    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+//    public  selectById(@PathVariable("id") String id) throws Exception{
+//        Article article = articleService.selectByPrimaryKey(id);
+//        redisService.saveReadNumRedis(id);
+//        return article;
+//    }
 
     /**
      * 按地区，类型查询 并按置顶号，发布时间排序 （手机前端应用）

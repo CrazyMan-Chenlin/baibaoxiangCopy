@@ -96,6 +96,7 @@ public class RedisServiceImpl implements RedisService {
             dayTotal.setNo(like_hkey);
             dayTotal.setTime(date1);
             dayTotal.setDayLikeNum(likenum);
+            dayTotal.setDayReadNum(0);
             dayTotals.add(dayTotal);
         }
         return dayTotals;
