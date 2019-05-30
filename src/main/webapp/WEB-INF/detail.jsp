@@ -73,7 +73,7 @@
     <div style="float: left;width: 15%"><img src="/images/front/who.jpg" class="rounded-circle"></div>
     <div style="float: left;font-size: 0.8rem;width: 80%;margin-top: 0.1rem" class="text-dark"><span
             style="">${article.author}</span></div>
-    <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">${timeFormat} 阅读量：${article.readNum}</span>
+    <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">${article.createTime} 阅读量：${article.readNum}</span>
     </div>
 </div>
 <div id="content">
@@ -94,6 +94,8 @@
     $(document).ready(function () {
         $("#love").on("click", function () {
             $("#love").attr("src", "/images/front/love.svg")
+            $.post("like/",{no:${article.no}},function(data){
+            })
         })
         $("#return img").on("touchend", function () {
             $("#return").css("background-color","#cccccc")
