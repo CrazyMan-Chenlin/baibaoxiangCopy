@@ -19,20 +19,5 @@ $(function () {
         }else {
             alert("用户名不能空");
         }
-        
-        
-        // $.ajax({
-        //     type:"post",
-        //     url:"/manager1/loginVerify",
-        //     data:{username:username,password:password,validatecode:validatecode},
-        //     success:function (data) {
-        //         if (data.code==1){
-        //             window.location.href="../backstage/admin_index.jsp";
-        //         }else {
-        //             alert("用户名或密码错误！");
-        //             window.location.href="../login.jsp";
-        //         }
-        //     }
-        // });
     });
 });
