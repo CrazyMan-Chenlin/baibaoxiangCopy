@@ -8,7 +8,7 @@ $(function () {
             type:'delete',
             url:'/article/'+no,
             success:function () {
-                window.location.href="/backstage/article.jsp";
+                window.location.href="../article.jsp";
             },
             error:function () {
                 alert("删除失败");

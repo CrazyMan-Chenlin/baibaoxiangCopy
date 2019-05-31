@@ -83,12 +83,11 @@ public class ManagerController {
      * @throws Exception
      */
     @RequestMapping(value = "/loginVerify", method = RequestMethod.POST)
-    public ModelAndView loginVerify(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
+    public ModelAndView loginVerify(@RequestParam String username,
+                                    @RequestParam String password,
+                                    @RequestParam String validatecode, HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> map = new HashMap<String, Object>();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String validatecode = request.getParameter("validatecode");
         String rememberme = request.getParameter("rememberme");
         Manager manager = managerService.findManagerWithPassword_salt(username);
 
@@ -98,16 +97,16 @@ public class ManagerController {
         if(!code.equals(validatecode)){
             map.put("code",0);
             map.put("msg","验证码有误！");
-            modelAndView.setViewName("backstage/login");
+            modelAndView.setViewName("../login");
         }else{
             if(manager == null){
                 map.put("code",0);
                 map.put("msg","用户名无效！");
-                modelAndView.setViewName("backstage/login");
+                modelAndView.setViewName("../login");
             }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
                 map.put("code",0);
                 map.put("msg","密码出错!");
-                modelAndView.setViewName("backstage/login");
+                modelAndView.setViewName("../login");
             }else{
                 //登录成功
                 map.put("code",1);
@@ -115,6 +114,8 @@ public class ManagerController {
                 modelAndView.setViewName("backstage/admin_index");
                 //添加session 将用户名添加到session
                 request.getSession().setAttribute("username", username);
+                Manager manager2 = managerService.findManagerByUsername(username);
+                request.getSession().setAttribute("area",manager.getArea());
                 //添加cookie
                 if(rememberme!=null) {
                     //创建两个Cookie对象
@@ -156,16 +157,27 @@ public class ManagerController {
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public Boolean addManager(@RequestBody Manager manager) throws Exception{
-        System.out.println(manager.getUsername());
-        String salt = getRandomSalt();
-        manager.setTitle("BBBBB");
-        manager.setPath("/img");
-        String s = md5(salt, manager.getPassword());
-        manager.setSalt(salt);
-        manager.setPassword(s);
-        int i = managerService.insert(manager);
-        return i==1;
+    public Map<String,String> addManager(@RequestBody Manager manager,HttpServletRequest request) throws Exception{
+        int i = checkRight(request);        //该参数判断当前是否超级管理员
+        Map<String,String> map = new HashMap();
+        if (i==1){
+            String salt = getRandomSalt();
+            manager.setTitle("BBBBB");
+            manager.setPath("/img");
+            String s = md5(salt, manager.getPassword());
+            manager.setSalt(salt);
+            manager.setPassword(s);
+            int isInsert = managerService.insert(manager);
+            if (isInsert==1){
+                map.put("msg","添加成功");
+                return map;
+            }else {
+                map.put("msg","用户名已注册");
+                return map;
+            }
+        }
+        map.put("msg","权限不足");
+        return map;
     }
 
     /** 完善/更新 管理员的昵称，头像信息
@@ -191,7 +203,7 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "updatepassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> updatePassword(HttpServletRequest request) throws Exception{
         Map<String,Object> map = new HashMap<String, Object>(16);
@@ -211,7 +223,6 @@ public class ManagerController {
             map.put("code",1);
             map.put("msg","密码更改成功！");
         }
-
         return map;
     }
 
@@ -280,9 +291,18 @@ public class ManagerController {
      * @throws Exception
      */
     @RequestMapping(value = "/deleteBatch")
-    public void deleteManagerBatch(HttpServletRequest request) throws Exception{
-        String usernames = request.getParameter("usernames");
-        managerService.deleteManagerBatch(usernames);
+    @ResponseBody
+    public Map<String,String> deleteManagerBatch(HttpServletRequest request) throws Exception{
+        int i = checkRight(request);        //该参数判断当前是否超级管理员
+        Map<String,String> map = new HashMap();
+        if (i==1){
+            String usernames = request.getParameter("usernames");
+            managerService.deleteManagerBatch(usernames);
+            map.put("msg","删除成功");
+            return map;
+        }
+        map.put("msg","权限不足");
+        return map;
     }
 
     /**
@@ -321,4 +341,19 @@ public class ManagerController {
         return md5codeString;
     }
 
+
+    /**
+     * 对权限进行认证
+     * 用以对删除与添加时的认证
+     * @return
+     */
+    public int checkRight(HttpServletRequest request) throws Exception{
+        //该参数用以获取当前用户的用户名
+        String cur_username = (String)request.getSession().getAttribute("username");
+        Manager manager = managerService.findManagerByUsername(cur_username);
+        if (manager.getTitle().equals("AAAAA")){
+            return 1;
+        }
+        return  0;
+    }
 }

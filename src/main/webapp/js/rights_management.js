@@ -35,15 +35,11 @@ $(function () {
             dataType:"json",
             contentType:"application/json; charset=utf-8",
             success:function (data) {
-                if (data==1){
-                    alert("添加成功");
-                    $("#username").val("");
-                    $("#name").val("");
-                    $("#password").val("");
-                    $("#area").val("");
-                } else {
-                    alert("失败");
-                }
+                alert(data["msg"]);
+                $("#username").val("");
+                $("#name").val("");
+                $("#password").val("");
+                $("#area").val("");
             }
         });
     });
@@ -59,9 +55,10 @@ $(function () {
         $.ajax({
             url:"/manager1/deleteBatch",
             type:"POST",
-            data: "usernames="+usernames,
-            error:function (data) {
-                alert("删除成功");
+            data: {usernames:usernames},
+            async:false,
+            success:function (data) {
+                alert(data["msg"]);
                 $("#query").trigger('click');
             }
         });

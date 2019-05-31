@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,17 +12,13 @@ pageEncoding="UTF-8"%>
 <body>
 <div class="information">
     <img src="../../images/a7691515_s.jpg" alt="修改头像" class="img-thumbnail ">
-    <form class="form-horizontal" role="form">
+    <br><br><br>
+    <form class="form-horizontal" action="/manager1/updateNamePicture"  method="POST" enctype="multipart/form-data">
+        更改头像<input type="file" name="path"  id="path"><br>
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label">昵称</label>
+            <label for="name" class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="firstname">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="qianming" class="col-sm-2 control-label">个性签名</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" id="qianming">
+                <input type="text" class="form-control" id="name" name="name">
             </div>
         </div>
         <div class="form-group">

@@ -3,14 +3,19 @@
 <head>
     <title>登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-    <script src="../js/jquery.min.js" ></script>
-    <script src="../js/bootstrap.min.js" ></script>
-    <script src="../js/login.js" ></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <script src="/js/jquery.min.js" ></script>
+    <script src="/js/bootstrap.min.js" ></script>
+    <script src="/js/login.js" ></script>
 </head>
 <body>
-<form class="form-horizontal" role="form">
+<div class="jumbotron" >
+    <div class="container" >
+        <h1>欢迎登陆百宝箱后台管理系统！</h1>
+    </div>
+</div>
+<form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/manager1/loginVerify" METHOD="post" id="form">
     <div class="form-group">
         <label for="username" class="col-sm-2 control-label">用户名</label>
         <div class="col-sm-6">
@@ -27,7 +32,7 @@
         <label for="password" class="col-sm-2 control-label">验证码</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" name="validatecode" id="validatecode" placeholder="请输入验证码"><br>
-            <img src="/manager1/checkCode" width="180" height="30" class="textinput" style="height:30px;" id="img" />
+            验证图片<img src="/manager1/checkCode" width="180" height="30" class="textinput" style="height:30px;" id="img" />
         </div>
     </div>
 

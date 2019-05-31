@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <script src="../js/jquery.min.js" ></script>
-    <script src="../js/bootstrap.min.js" ></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
     <title>Title</title>
 </head>
 <body>

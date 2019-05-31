@@ -1,6 +1,8 @@
 package com.baibaoxiang.controller;
 
+import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.po.School;
+import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/school")
 public class SchoolController {
+
+    @Autowired
+    ManagerService managerService;
 
     @Autowired
     SchoolService schoolService;
@@ -52,8 +57,17 @@ public class SchoolController {
      * @throws Exception
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void addSchool(@RequestBody School school) throws Exception{
-        schoolService.insertSchool(school);
+    @ResponseBody
+    public Map<String,String> addSchool(@RequestBody School school,HttpServletRequest request) throws Exception{
+        int isCheck = checkRight(request);//该参数判断当前是否超级管理员
+        Map<String,String> map = new HashMap<>();
+        if (isCheck==1){
+            schoolService.insertSchool(school);
+            map.put("msg","添加成功");
+            return map;
+        }
+        map.put("msg","权限不足");
+        return map;
     }
 
     /** 删除学校
@@ -82,30 +96,37 @@ public class SchoolController {
      * @param request
      * @throws Exception
      */
-    @RequestMapping(value = "deleteBatch",method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteBatch",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteSchoolBatch(HttpServletRequest request) throws Exception{
         Map<String,Object> map = new HashMap<String,Object>(16);
         List<Integer> nos = schoolService.selectNosBySchoolName(defSchoolName);
-        //接受前端传来的 ids字符串  将ids拆分成数组
-        String str = request.getParameter("ids");
-        //将ids拆分成数组
-        String arr[] = str.split(",");
-        Integer ids [] = new Integer[arr.length];
-        for(int i = 0; i < ids.length; i++){
-            ids[i] = Integer.valueOf(arr[i]);
-            for(Integer no : nos){
-                if(no.equals(ids[i])){
-                    map.put("code",0);
-                    map.put("msg","广东第二师范学院为默认保留学校，不可删除");
-                    return map;
+        int isCheck = checkRight(request);//该参数判断当前是否超级管理员
+        if (isCheck==1){
+            //接受前端传来的 ids字符串  将ids拆分成数组
+            String str = request.getParameter("ids");
+            //将ids拆分成数组
+            String arr[] = str.split(",");
+            Integer ids [] = new Integer[arr.length];
+            for(int i = 0; i < ids.length; i++){
+                ids[i] = Integer.valueOf(arr[i]);
+                for(Integer no : nos){
+                    if(no.equals(ids[i])){
+                        map.put("code",0);
+                        map.put("msg","广东第二师范学院为默认保留学校，不可删除");
+                        System.out.println(map.get("msg"));
+                        return map;
+                    }
                 }
             }
+            schoolService.deleteSchoolBatch(ids);
+            map.put("code", 1);
+            map.put("msg", "删除成功");
+            return map;
         }
-        schoolService.deleteSchoolBatch(ids);
-        map.put("code", 1);
-        map.put("msg", "删除成功");
-        return map;
+            map.put("msg","权限不足");
+            return map;
+
     }
 
     @RequestMapping(value = "deleteSchoolBySchoolName",method = RequestMethod.POST)
@@ -124,4 +145,19 @@ public class SchoolController {
         return map;
     }
 
+
+    /**
+     * 对权限进行认证
+     * 用以对删除与添加时的认证
+     * @return
+     */
+    public int checkRight(HttpServletRequest request) throws Exception{
+        //该参数用以获取当前用户的用户名
+        String cur_username = (String)request.getSession().getAttribute("username");
+        Manager manager = managerService.findManagerByUsername(cur_username);
+        if (manager.getTitle().equals("AAAAA")){
+            return 1;
+        }
+        return  0;
+    }
 }

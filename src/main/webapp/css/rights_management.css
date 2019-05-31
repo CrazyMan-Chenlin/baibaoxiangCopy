@@ -1,8 +1,6 @@
 body{
-    margin: 0;
     background-color:#f5f5f5;
-    padding-top: 100px;
-    text-align: center;
+    padding-top: 30px;
 }
 .table_management{
     margin: 0 auto;
@@ -13,6 +11,15 @@ body{
 }
 /*按钮位置*/
 .btn_management{
+    /*margin: 10px;*/
+    padding-left: 80%;
+}
+
+
+.new_form{
+    text-align: center;
+    border: 1px solid;
+    padding: 10px;
     width: 80%;
     margin: 0 auto;
 }

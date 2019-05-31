@@ -6,10 +6,10 @@ $(function() {
     $(".submitVal").on('click',function () {
         var title = $("#title").val();
         var type = $("#type").val();
-        var area = $("#area").val();
+        var area = $("#area").text();
         var message = $("textarea").val();
         var picture = "/aaaa";
-        var author = "ll";
+        var author = $("#username").text();
         var date = new Date();
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 
@@ -35,7 +35,7 @@ $(function() {
                 contentType:"application/json",
                 data:JSON.stringify(data1),
                 success:function (data) {
-                    window.location.href="/backstage/success.jsp";
+                    window.location.href="../success.jsp";
                 }
             });
         }

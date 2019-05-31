@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +7,7 @@
     <link href="../../css/left.css" rel="stylesheet">
     <script src="../../js/jquery.min.js" ></script>
     <script src="../../js/bootstrap.min.js" ></script>
+    <script src="../../js/left.js" ></script>
     <title>Title</title>
 </head>
 <body>
@@ -20,15 +20,15 @@
     <!--功能选项-->
     <ul class="nav nav-pills nav-stacked" id="func">
         <h3 style="color: white">管理功能</h3>
-        <li><a href="article.jsp" target="mainframe">推文管理</a></li>
-        <li><a href="rights_management.jsp" target="mainframe">权限管理</a></li>
-        <li><a href="school.jsp" target="mainframe">学校管理</a></li>
-        <li><a href="editpwd.jsp" target="mainframe">密码管理</a></li>
+        <li><a href="/jsp/article" target="mainframe">推文管理</a></li>
+        <li><a href="/jsp/rights_management" target="mainframe">权限管理</a></li>
+        <li><a href="/jsp/school" target="mainframe">学校管理</a></li>
+        <li><a href="/jsp/editpwd" target="mainframe">密码管理</a></li>
         <h3 style="color: white">账号信息</h3>
-        <li><a href="personal_Information.jsp" target="mainframe">个人资料</a></li>
-        <li><a href="javascript:;" target="mainframe">账号注销</a></li>
+        <li><a href="/jsp/personal_Information" target="mainframe">个人资料</a></li>
+        <li><a href="/jsp/main" target="mainframe">账号注销</a></li>
         <hr>
-        <li><a href="main.jsp" target="mainframe">使用说明书</a></li>
+        <li><a href="/jsp/main" target="mainframe">使用说明书</a></li>
     </ul>
 </div>
 </body>
