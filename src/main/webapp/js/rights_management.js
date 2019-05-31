@@ -23,10 +23,10 @@ $(function () {
     //添加管理员
     $("#add").on('click',function () {
 
-        var username = $("#username").val();
-        var name = $("#name").val();
-        var password = $("#password").val();
-        var area = $("#area").val();
+        var username = $.trim($("#username").val());
+        var name = $.trim($("#name").val());
+        var password = $.trim($("#password").val());
+        var area = $.trim($("#area").val());
         var data1 = {username:username,name:name,password:password,area:area};
         $.ajax({
             url:'/manager1',

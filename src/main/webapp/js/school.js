@@ -25,8 +25,8 @@ $(function () {
     
     //添加学校
     $("#add").on('click',function () {
-        var name = $("#name").val();
-        var area = $("#area").val();
+        var name = $.trim($("#name").val());
+        var area = $.trim($("#area").val());
         var data1 = {name:name,area:area};
         $.ajax({
             url:'/school/',

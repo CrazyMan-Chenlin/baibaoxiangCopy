@@ -1,5 +1,6 @@
 $(function () {
-
+    //加载今日点赞数
+    ReadLikeNumber();
 
     //删除操作
     $(document).on("click",'.delete',function () {
@@ -8,7 +9,7 @@ $(function () {
             type:'delete',
             url:'/article/'+no,
             success:function () {
-                window.location.href="../article.jsp";
+                $(".modular").trigger('click');
             },
             error:function () {
                 alert("删除失败");
@@ -23,9 +24,9 @@ $(function () {
             url: "/articleType",
             // dataType:'json',
             success :function (data) {
-                $(".dropdown-menu").children().remove();
+                $("#articleList").children().remove();
                 $.each(data,function (index,item) {
-                    $(".dropdown-menu").append("<li><a href='#' class='modular'>"+item.type+"</a></li>");
+                    $("#articleList").append("<li><a href='#' class='modular'>"+item.type+"</a></li>");
                 });
             }
         });
@@ -48,13 +49,21 @@ $(function () {
                         "<li> " +
                         "<div class='panel panel-default'>"+
                         "<div class='panel-heading'>"+item.title+"</div>"+
-                        "<div class='panel-body' id='no'>"+item.no+"</div>"+
-                        "<div >作者："+item.author+" 区域："+item.area+" 类型："+item.type+"</div>"+
+                        "<div class='panel-body' id='no' hidden>"+item.no+"</div>"+
+                        "<div>作者："+item.author+" 区域："+item.area+" 类型："+item.type+"</div>"+
                         "<div class='panel-footer'><span>点赞数"+item.likeNum+"</span><span>阅读数"+item.readNum+"</span>"+
                         "<div class='manage'>"+
                         "<div class='delete'></div>"+
                         "<div class='edit'></div>"+
-                        "<div class='up'></div>"+
+                        "<div class='up'><div class=\"dropdown\">\n" +
+                        "        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" id=\"classification\">\n" +
+                        "            置顶权限\n" +
+                        "            <b class=\"caret\"></b>\n" +
+                        "        </a>\n" +
+                        "        <ul class=\"dropdown-menu\">\n" +
+                        "<li>1</li><li>2</li><li>3</li><li>4</li> \n" +
+                        "        </ul>\n" +
+                        "    </div></div>"+
                         "</div>"+
                         "</div>"+
                         "</li>"
@@ -65,3 +74,21 @@ $(function () {
     });
 
 });
+
+function ReadLikeNumber(){
+    var date = new Date();
+    var time = date.getFullYear()+"-";
+    time +=(date.getMonth()+1)+"-";
+    time+= (date.getDate()+1);
+    $.ajax({
+        url:"/dayTotal/all",
+        type:"post",
+        data:{time:time},
+        async:false,
+        success:function(data){
+            console.log();
+            $("#readNum").text(data.readNum);
+            $("#likeNum").text(data.likeNum);
+        }
+    });
+}
