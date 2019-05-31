@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -85,7 +86,7 @@ public class DayTotalController {
     @RequestMapping(value = "/area" ,method = RequestMethod.POST)
     @ResponseBody
     public ReadLikeNumber dayTotalArea(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
+        //将字符串形式的日期 转换为 java.util.Date 型 再转成java.sql.Date
         String dateString = request.getParameter("time");
         java.sql.Date date = StringDateUtils.stringToDate(dateString);
         String area = request.getParameter("area");
@@ -101,7 +102,7 @@ public class DayTotalController {
     @RequestMapping(value = "/type" ,method = RequestMethod.POST)
     @ResponseBody
     public ReadLikeNumber dayTotalType(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        //将字符串形式的日期 转换为 java.util.Date 型 再转成j ava.sql.Date
+        //将字符串形式的日期 转换为 java.util.Date 型 再转成java.sql.Date
         String dateString = request.getParameter("time");
         java.sql.Date date = StringDateUtils.stringToDate(dateString);
         String type = request.getParameter("type");

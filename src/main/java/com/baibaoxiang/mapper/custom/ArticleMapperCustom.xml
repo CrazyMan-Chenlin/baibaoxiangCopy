@@ -55,4 +55,9 @@
     <update id="updateReadLikeNum">
         UPDATE article SET read_num = read_rum + #{readNum,jdbcType=INTEGER} , like_num = like_num + #{likeNum,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR}
     </update>
+
+    <!--设置置顶-->
+    <update id="setTopArticle" >
+        UPDATE article SET top = #{top,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR}
+    </update>
 </mapper>

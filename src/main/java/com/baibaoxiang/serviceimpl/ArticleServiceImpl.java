@@ -204,4 +204,14 @@ public class ArticleServiceImpl implements ArticleService {
             return articles;
         }
     }
+
+    /** 设置 置顶文章
+     * @param no
+     * @param top
+     * @throws Exception
+     */
+    @Override
+    public void setTopArticle(String no, Integer top) throws Exception {
+        articleMapperCustom.setTopArticle(no,top);
+    }
 }

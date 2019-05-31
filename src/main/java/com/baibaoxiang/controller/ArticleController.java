@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.UUID;
@@ -82,7 +83,7 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "allArticles",method = RequestMethod.GET)
+    @RequestMapping(value = "/allArticles",method = RequestMethod.GET)
     public List<Article> selectAll() throws Exception{
         List<Article> articleList = articleService.selectAllArticles();
 
@@ -143,5 +144,19 @@ public class ArticleController {
     public void onclickLike(@PathVariable("no") String no) throws Exception{
         redisService.saveLikeNumRedis(no);
     }
+
+    /** 设置 置顶文章
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value="/setTop", method = RequestMethod.POST)
+    public void setTopArticle(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String no = request.getParameter("no");
+        String topStr = request.getParameter("top");
+        Integer top = Integer.valueOf(topStr);
+        articleService.setTopArticle(no,top);
+    }
+
 }
 
