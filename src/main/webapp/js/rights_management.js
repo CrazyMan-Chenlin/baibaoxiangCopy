@@ -16,8 +16,6 @@ $(function () {
                 });
             }
         });
-
-
     });
 
     //添加管理员
@@ -46,21 +44,23 @@ $(function () {
 
     //删除管理员
     $("#delete").on('click',function () {
-        var checked=[];
-        $("input[name='username']:checked").each(function (i) {
-            checked[i]=$(this).parents("td").text();
-        });
-        var usernames = checked.join(",");
-        // console.log(usernames);
-        $.ajax({
-            url:"/manager1/deleteBatch",
-            type:"POST",
-            data: {usernames:usernames},
-            async:false,
-            success:function (data) {
-                alert(data["msg"]);
-                $("#query").trigger('click');
-            }
-        });
+        if(confirm("是否决定删除管理员?")){
+            var checked=[];
+            $("input[name='username']:checked").each(function (i) {
+                checked[i]=$(this).parents("td").text();
+            });
+            var usernames = checked.join(",");
+            // console.log(usernames);
+            $.ajax({
+                url:"/manager1/deleteBatch",
+                type:"POST",
+                data: {usernames:usernames},
+                async:false,
+                success:function (data) {
+                    alert(data["msg"]);
+                    $("#query").trigger('click');
+                }
+            });
+        }
     });
 });

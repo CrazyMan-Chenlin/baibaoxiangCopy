@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -152,14 +154,25 @@ public class ArticleController {
      * 用以对删除与添加时的认证
      * @return
      */
-    public int checkRight(HttpServletRequest request) throws Exception{
+    public int checkRight(HttpServletRequest request) throws Exception {
         //该参数用以获取当前用户的用户名
-        String cur_username = (String)request.getSession().getAttribute("username");
+        String cur_username = (String) request.getSession().getAttribute("username");
         Manager manager = managerService.findManagerByUsername(cur_username);
-        if (manager.getTitle().equals("AAAAA")){
+        if (manager.getTitle().equals("AAAAA")) {
             return 1;
         }
-        return  0;
+        return 0;
+    }
+
+    @RequestMapping(value="/setTop", method = RequestMethod.POST)
+    public Map<String,String> setTopArticle(HttpServletRequest request) throws Exception{
+        String no = request.getParameter("no");
+        String topStr = request.getParameter("top");
+        Map map = new HashMap();
+        Integer top = Integer.valueOf(topStr);
+        articleService.setTopArticle(no,top);
+        map.put("msg","修改成功");
+        return map;
     }
 }
 

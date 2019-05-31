@@ -4,17 +4,20 @@ $(function () {
 
     //删除操作
     $(document).on("click",'.delete',function () {
-        var no=$(this).parent().parent().parent().children(".panel-body").text();
-        $.ajax({
-            type:'delete',
-            url:'/article/'+no,
-            success:function () {
-                $(".modular").trigger('click');
-            },
-            error:function () {
-                alert("删除失败");
-            }
-        });
+        if(confirm("是否决定删除?")){
+            var no=$(this).parent().parent().parent().children(".panel-body").text();
+            $.ajax({
+                type:'delete',
+                url:'/article/'+no,
+                success:function () {
+                    $(".modular").trigger('click');
+                },
+                error:function () {
+                    alert("删除失败");
+                }
+            });
+        }
+
     });
 
     //查询文章类型
@@ -56,11 +59,11 @@ $(function () {
                         "<div class='delete'></div>"+
                         "<div class='edit'></div>"+
                         "<div class='up'><div class=\"dropdown\">\n" +
-                        "        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" id=\"classification\">\n" +
+                        "        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" >\n" +
                         "            置顶权限\n" +
                         "            <b class=\"caret\"></b>\n" +
                         "        </a>\n" +
-                        "        <ul class=\"dropdown-menu\">\n" +
+                        "        <ul class=\"dropdown-menu\" id=\"level\">\n" +
                         "<li>1</li><li>2</li><li>3</li><li>4</li> \n" +
                         "        </ul>\n" +
                         "    </div></div>"+
@@ -71,6 +74,20 @@ $(function () {
                 });
             }
         });
+    });
+
+    //修改权限
+    $(document).on('click','#level li',function () {
+        if(confirm("是否决定修改置顶?")){
+            $.ajax({
+                type:"POST",
+                url:"/article/setTop",
+                data:{no:$("#no").text(),top:$(this).text()},
+                success:function (data) {
+                    alert(data["msg"]);
+                }
+            });
+        };
     });
 
 });

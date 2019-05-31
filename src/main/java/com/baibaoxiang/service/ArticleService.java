@@ -107,6 +107,13 @@ public interface ArticleService {
      */
     List<Article> selectTopArticle(String area) throws Exception;
 
+    /** 设置 文章置顶
+     * @param no
+     * @param top
+     * @throws Exception
+     */
+    void setTopArticle(String no, Integer top) throws Exception;
+
 }
 
 

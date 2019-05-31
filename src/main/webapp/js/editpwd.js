@@ -8,18 +8,20 @@ $(function () {
         var confirm_password = $.trim($("#confirm_password").val());
 
         if (new_password==confirm_password){
-            $.ajax({
-                type : "post",
-                url:"/manager1/updatepassword",
-                data:{oldPassword:initial_password,newPassword:new_password },
-                async:false,
-                success:function (data) {
-                    alert(data["msg"]);
-                    $("#initial_password").val("");
-                    $("#new_password").val("");
-                    $("#confirm_password").val("");
-                }
-            });
+            if(confirm("是否决定修改密码?")){
+                $.ajax({
+                    type : "post",
+                    url:"/manager1/updatepassword",
+                    data:{oldPassword:initial_password,newPassword:new_password },
+                    async:false,
+                    success:function (data) {
+                        alert(data["msg"]);
+                        $("#initial_password").val("");
+                        $("#new_password").val("");
+                        $("#confirm_password").val("");
+                    }
+                });
+            }
         }else {
             alert("确认密码不正确");
         }

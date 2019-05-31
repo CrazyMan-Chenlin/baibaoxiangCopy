@@ -52,4 +52,6 @@ public interface ArticleMapperCustom {
     void updateReadLikeNum(@Param("no") String no, @Param("readNum") Integer readNum, @Param("likeNum") Integer likeNum);
 
 
+    void setTopArticle(@Param("no") String no,@Param("top") Integer top);
+
 }
