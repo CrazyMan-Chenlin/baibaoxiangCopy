@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -72,6 +73,10 @@ public class ArticleController {
         //获取session 中的username
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
+        int isCheck = checkRight(request);
+        if(isCheck==1){
+            return selectAll();
+        }
         Manager manager = managerService.findManagerByUsername(username);
         String area = manager.getArea();
 //        String area="广东第二师范学院花都校区";
@@ -83,10 +88,9 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/allArticles",method = RequestMethod.GET)
+    @RequestMapping(value = "allArticles",method = RequestMethod.GET)
     public List<Article> selectAll() throws Exception{
         List<Article> articleList = articleService.selectAllArticles();
-
         return articleList;
     }
 
@@ -145,18 +149,30 @@ public class ArticleController {
         redisService.saveLikeNumRedis(no);
     }
 
-    /** 设置 置顶文章
-     * @param request
-     * @param response
-     * @throws Exception
+    /**
+     * 对权限进行认证
+     * 用以对删除与添加时的认证
+     * @return
      */
-    @RequestMapping(value="/setTop", method = RequestMethod.POST)
-    public void setTopArticle(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String no = request.getParameter("no");
-        String topStr = request.getParameter("top");
-        Integer top = Integer.valueOf(topStr);
-        articleService.setTopArticle(no,top);
+    public int checkRight(HttpServletRequest request) throws Exception {
+        //该参数用以获取当前用户的用户名
+        String cur_username = (String) request.getSession().getAttribute("username");
+        Manager manager = managerService.findManagerByUsername(cur_username);
+        if (manager.getTitle().equals("AAAAA")) {
+            return 1;
+        }
+        return 0;
     }
 
+    @RequestMapping(value="/setTop", method = RequestMethod.POST)
+    public Map<String,String> setTopArticle(HttpServletRequest request) throws Exception{
+        String no = request.getParameter("no");
+        String topStr = request.getParameter("top");
+        Map map = new HashMap();
+        Integer top = Integer.valueOf(topStr);
+        articleService.setTopArticle(no,top);
+        map.put("msg","修改成功");
+        return map;
+    }
 }
 

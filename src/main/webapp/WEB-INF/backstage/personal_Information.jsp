@@ -7,14 +7,15 @@
     <link href="../../css/personal_Information.css" rel="stylesheet">
     <script src="../../js/jquery.min.js" ></script>
     <script src="../../js/bootstrap.min.js" ></script>
+    <script src="../../js/personal_Information.js" ></script>
     <title>我的资料-个人中心</title>
 </head>
 <body>
 <div class="information">
-    <img src="../../images/a7691515_s.jpg" alt="修改头像" class="img-thumbnail ">
+    <img src="../../images/upload/${sessionScope.username}.jpg" alt="修改头像" class="img-thumbnail " id="portrait">
     <br><br><br>
     <form class="form-horizontal" action="/manager1/updateNamePicture"  method="POST" enctype="multipart/form-data">
-        更改头像<input type="file" name="path"  id="path"><br>
+        <label for="file">更改头像</label><input type="file" name="file"  id="file"><br>
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-8">
@@ -23,7 +24,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
-                <button type="submit" class="btn btn-default">修改</button>
+                <button type="button" class="btn btn-default" id="change">修改</button>
             </div>
         </div>
 

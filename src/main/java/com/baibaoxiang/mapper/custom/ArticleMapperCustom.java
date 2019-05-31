@@ -52,10 +52,6 @@ public interface ArticleMapperCustom {
     void updateReadLikeNum(@Param("no") String no, @Param("readNum") Integer readNum, @Param("likeNum") Integer likeNum);
 
 
-    /** 设置置顶
-     * @param no
-     * @param top
-     */
-    void setTopArticle(@Param("no") String no, @Param("top") Integer top);
+    void setTopArticle(@Param("no") String no,@Param("top") Integer top);
 
 }

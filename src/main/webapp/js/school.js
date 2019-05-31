@@ -2,7 +2,6 @@ $(function () {
     //加载滚动条
     $(".left").mCustomScrollbar();
 
-
     //查询学校
     $("#query").on('click',function () {
         $.ajax({
@@ -25,8 +24,8 @@ $(function () {
     
     //添加学校
     $("#add").on('click',function () {
-        var name = $("#name").val();
-        var area = $("#area").val();
+        var name = $.trim($("#name").val());
+        var area = $.trim($("#area").val());
         var data1 = {name:name,area:area};
         $.ajax({
             url:'/school/',
@@ -46,25 +45,22 @@ $(function () {
 
     //删除学校
     $("#delete").on('click',function () {
-        var checked=[];
-        $("input[name='schoolNo']:checked").each(function (i) {
-            checked[i]=$(this).parents("td").text();
-        });
-        var ids = checked.join(",");
-        // console.log(ids);
-        // for (var i=0;i<checkkids.length;i++){
-        //     console.log(checkkids[i]);
-        // }
-
-        $.ajax({
-            url:"/school/deleteBatch",
-            type:"POST",
-            data: {ids:ids},
-            async:false,
-            success:function(data) {
-                alert(data["msg"]);
-                $("#query").trigger('click');
-            }
-        });
+        if(confirm("是否决定删除学校?")){
+            var checked=[];
+            $("input[name='schoolNo']:checked").each(function (i) {
+                checked[i]=$(this).parents("td").text();
+            });
+            var ids = checked.join(",");
+            $.ajax({
+                url:"/school/deleteBatch",
+                type:"POST",
+                data: {ids:ids},
+                async:false,
+                success:function(data) {
+                    alert(data["msg"]);
+                    $("#query").trigger('click');
+                }
+            });
+        }
     });
 });
