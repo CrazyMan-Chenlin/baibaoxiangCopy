@@ -3,48 +3,51 @@ package com.baibaoxiang.service;
 import com.baibaoxiang.po.DayTotal;
 import com.baibaoxiang.po.DayTotalKey;
 import com.baibaoxiang.po.ReadLikeNumber;
-import org.apache.ibatis.annotations.Param;
 
 import java.sql.Date;
 
 /**
- * @create 2019-05-03-15:45
  * @author sheng
+ * @create 2019-05-03-15:45
  */
 public interface DayTotalService {
 
 
-    /**
-     * 查询 DayTotal
-     *
+    /** 查询 DayTotal
      * @param key = no + day
      * @return
      */
-    DayTotal selectByPrimaryKey(DayTotalKey key);
 
-    /**
-     * 删除 DayTotal
-     *
+
+
+    DayTotal selectByPrimaryKey(DayTotalKey key) throws Exception;
+
+
+    /** 删除 DayTotal
      * @param key = no + day
      * @return
      */
-    int deleteByPrimaryKey(DayTotalKey key);
+    int deleteByPrimaryKey(DayTotalKey key) throws Exception;
 
-    /**
-     * 添加 DayTotal
-     *
+    /** 根据日期 批量删除 DayTotal
+     * @param time
+     */
+    void deleteDayTotalByTime(Date time) throws Exception;
+
+    /** 添加 DayTotal
      * @param record
      * @return
      */
-    int insert(DayTotal record);
+    int insert(DayTotal record) throws Exception;
 
-    /**
-     * 修改 DayTotal
-     *
+    /** 修改 DayTotal
      * @param record
      * @return
      */
-    int updateByPrimaryKey(DayTotal record);
+
+
+
+    int updateByPrimaryKey(DayTotal record) throws Exception;
 
     /**
      * 更新某天 某推文的阅读量
@@ -54,7 +57,7 @@ public interface DayTotalService {
      * @param num
      * @throws Exception
      */
-    void updateReadNum(Date time, Integer num, Integer no) throws Exception;
+    void updateReadNum(Date time, Integer num, String no) throws Exception;
 
     /**
      * 更新某天 某推文的点赞数
@@ -64,7 +67,7 @@ public interface DayTotalService {
      * @param num
      * @throws Exception
      */
-    void updateLikeNum(Date time, Integer num, Integer no) throws Exception;
+    void updateLikeNum(Date time, Integer num, String no) throws Exception;
 
     /**
      * 网站一天的总点赞数和阅读量 （超级管理员使用）
@@ -113,7 +116,8 @@ public interface DayTotalService {
      * @return
      * @throws Exception
      */
-    ReadLikeNumber dayTotalNo(Date time, Integer no) throws Exception;
+    ReadLikeNumber dayTotalNo(Date time, String no) throws Exception;
+
 
 
 }

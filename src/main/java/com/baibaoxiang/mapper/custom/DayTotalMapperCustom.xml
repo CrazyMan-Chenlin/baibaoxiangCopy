@@ -27,19 +27,23 @@
     </select>
 
     <select id="dayTotalNo" resultMap="BaseResultMap" >
-        SELECT day_read_num AS read_num, day_like_num AS like_num FROM day_total WHERE no = #{no,jdbcType=INTEGER} AND time = #{time,jdbcType=DATE}
+        SELECT day_read_num AS read_num, day_like_num AS like_num FROM day_total WHERE no = #{no,jdbcType=VARCHAR} AND time = #{time,jdbcType=DATE}
     </select>
 
     <update id="updateReadNum" >
-        UPDATE day_total SET day_read_num = day_read_num + #{num,jdbcType=INTEGER} where no = #{no,jdbcType=INTEGER} and time = #{time,jdbcType=DATE}
+        UPDATE day_total SET day_read_num = day_read_num + #{num,jdbcType=INTEGER} where no = #{no,jdbcType=VARCHAR} and time = #{time,jdbcType=DATE}
     </update>
 
     <update id="updateLikeNum" >
-        UPDATE day_total SET day_like_num = day_like_num + #{num,jdbcType=INTEGER} WHERE no = #{no,jdbcType=INTEGER} AND time = #{time,jdbcType=DATE}
+        UPDATE day_total SET day_like_num = day_like_num + #{num,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR} AND time = #{time,jdbcType=DATE}
     </update>
 
     <select id="dayTotalNos" resultType="java.lang.Integer" >
-        SELECT day_read_num FROM day_total WHERE no = #{no,jdbcType=INTEGER} AND time = #{time,jdbcType=DATE}
+        SELECT day_read_num FROM day_total WHERE no = #{no,jdbcType=VARCHAR} AND time = #{time,jdbcType=DATE}
     </select>
+
+    <delete id="deleteDayTotalByTime" parameterType="java.sql.Date">
+        DELETE FROM day_total WHERE time = #{time,jdbcType=DATE}
+    </delete>
 
 </mapper>

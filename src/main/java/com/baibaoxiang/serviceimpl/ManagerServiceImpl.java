@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceImpl;
+package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.mapper.ManagerMapper;
 import com.baibaoxiang.mapper.custom.ManagerMapperCustom;

@@ -12,6 +12,11 @@ import java.sql.Date;
  */
 public interface DayTotalMapperCustom {
 
+    /** 根据日期批量删除 DayTotal
+     * @param time
+     * @throws Exception
+     */
+    void deleteDayTotalByTime(Date time);
     /**
      * 更新某天 某推文的阅读量
      *
@@ -20,7 +25,7 @@ public interface DayTotalMapperCustom {
      * @param num
      * @throws Exception
      */
-    void updateReadNum(@Param("time") Date time, @Param("num") Integer num, @Param("no") Integer no) throws Exception;
+    void updateReadNum(@Param("time") Date time, @Param("num") Integer num, @Param("no") String no) throws Exception;
 
     /**
      * 更新某天 某推文的点赞数
@@ -30,7 +35,7 @@ public interface DayTotalMapperCustom {
      * @param num
      * @throws Exception
      */
-    void updateLikeNum(@Param("time") Date time, @Param("num") Integer num, @Param("no") Integer no) throws Exception;
+    void updateLikeNum(@Param("time") Date time, @Param("num") Integer num, @Param("no") String no) throws Exception;
 
     /**
      * 网站一天的总点赞数和阅读量 （超级管理员使用）
@@ -80,7 +85,7 @@ public interface DayTotalMapperCustom {
      * @return
      * @throws Exception
      */
-    ReadLikeNumber dayTotalNo(@Param("time") Date time, @Param("no") Integer no) throws Exception;
+    ReadLikeNumber dayTotalNo(@Param("time") Date time, @Param("no") String no) throws Exception;
 
 
 }

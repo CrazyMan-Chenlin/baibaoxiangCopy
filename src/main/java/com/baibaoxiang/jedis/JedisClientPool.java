@@ -5,11 +5,15 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author chenlin
  */
 
-@Service("jedisClient")
+
 public class JedisClientPool implements JedisClient {
     @Autowired
     JedisPool jedisPool;
@@ -94,5 +98,45 @@ public class JedisClientPool implements JedisClient {
         Long hdel = jedis.hdel(key, field);
         jedis.close();
         return hdel;
+    }
+
+    @Override
+    public Boolean hexists(String key, String field) {
+        Jedis jedis = jedisPool.getResource();
+        Boolean hexists = jedis.hexists(key, field);
+        jedis.close();
+        return hexists;
+    }
+
+    @Override
+    public Long hincrBy(String key, String field, long value) {
+        Jedis jedis = jedisPool.getResource();
+        Long hincr = jedis.hincrBy(key, field, value);
+        jedis.close();
+        return hincr;
+    }
+
+    @Override
+    public Map<String, String> hgetAll(String key) {
+        Jedis jedis = jedisPool.getResource();
+        Map<String, String> hgetAll = jedis.hgetAll(key);
+        jedis.close();
+        return hgetAll;
+    }
+
+    @Override
+    public Set<String> hkeys(String key) {
+        Jedis jedis = jedisPool.getResource();
+        Set<String> hkeys = jedis.hkeys(key);
+        jedis.close();
+        return hkeys;
+    }
+
+    @Override
+    public List<String> hmget(String key, String... fields) {
+        Jedis jedis = jedisPool.getResource();
+        List<String> hmget = jedis.hmget(key, fields);
+        jedis.close();
+        return hmget;
     }
 }

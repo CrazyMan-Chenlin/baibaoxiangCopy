@@ -3,7 +3,6 @@ package com.baibaoxiang.mapper;
 import com.baibaoxiang.po.ArticleType;
 import com.baibaoxiang.po.ArticleTypeExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface ArticleTypeMapper {

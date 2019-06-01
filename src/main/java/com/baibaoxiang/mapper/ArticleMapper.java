@@ -3,7 +3,6 @@ package com.baibaoxiang.mapper;
 import com.baibaoxiang.po.Article;
 import com.baibaoxiang.po.ArticleExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapper {
@@ -11,7 +10,7 @@ public interface ArticleMapper {
 
     int deleteByExample(ArticleExample example);
 
-    int deleteByPrimaryKey(Integer no);
+    int deleteByPrimaryKey(String no);
 
     int insert(Article record);
 
@@ -21,7 +20,7 @@ public interface ArticleMapper {
 
     List<Article> selectByExample(ArticleExample example);
 
-    Article selectByPrimaryKey(Integer no);
+    Article selectByPrimaryKey(String no);
 
     int updateByExampleSelective(@Param("record") Article record, @Param("example") ArticleExample example);
 

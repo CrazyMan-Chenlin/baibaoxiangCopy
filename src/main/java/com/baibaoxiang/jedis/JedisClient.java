@@ -1,5 +1,9 @@
 package com.baibaoxiang.jedis;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author chenlin
  */
@@ -14,4 +18,9 @@ public interface JedisClient {
     Long hset(String key, String file, String value);
     String hget(String key, String filed);
     Long hdel(String key, String... field);//删除hkey
+    Boolean hexists(String key, String field);
+    Long hincrBy(String key, String field, long value);
+    Map<String, String> hgetAll(String key);
+    Set<String> hkeys(String key);
+    List<String> hmget(String key, String... fields);
 }

@@ -1,12 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: chenlin
-  Date: 2019.5.14
-  Time: 10:43
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +16,12 @@
     <link rel="stylesheet" href="/css/front/style.css"/>
     <link rel="stylesheet" href="/css/front/detail.css"/>
     <script src="/js/front/jquery-3.2.1.js"></script>
+    <script src="/js/front/jquery.history.js"></script>
+    <script src="/js/front/search.js"></script>
 </head>
 <body>
 <div id="nav">
-    <div id="return" style="width: 15%;float: left;height: 100%;" onclick="javascript:history.back(-1)"><img src="/images/front/left.svg"></div>
+    <div id="return" style="width: 15%;float: left;height: 100%;" onclick="window.history.back(-1)"><img src="/images/front/left.svg"></div>
     <div style="float: left;width: 70%">
         <p style="font-size: 1.2rem;margin-top: 0.62rem;margin-bottom: 0;color: #141414">${article.type}</p>
     </div>
@@ -45,15 +39,9 @@
     </div>
 </div>
 <div id="content">
-    <img style="width: 100%;margin-bottom: 1rem" src="/images/front/killer.jpg" class="rounded mx-auto d-block"/>
-    <%--<p class="text-justify">
-        今日，开拓者官方在Instagram上发布了一张合成图，记录了后卫达米安-利拉德在2014年季后赛首轮G6中0.9秒命中绝杀，将火箭淘汰出局。
-    </p>
-    <p class="text-justify">
-        以及今年季后赛首轮G5中最后时刻命中超远距离三分，
-        绝杀淘汰雷霆的出手瞬间（见新闻配图）。
-    </p>--%>
-    ${article.message}
+    <img  src="/images/front/dali.jpg"/>
+        ${article.message}
+    <img  src="/images/front/dali.jpg"/>
 </div>
 <div style="text-align: right;margin-right: 1rem;margin-bottom: 0.7rem">
     <span class="text-muted" style="font-size: 0.75rem">点赞</span>
@@ -65,16 +53,23 @@
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+</body>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#love").on("click", function () {
             $("#love").attr("src", "/images/front/love.svg")
+            $.get("/article/like/${article.no}")
         })
         $("#return img").on("touchend", function () {
             $("#return").css("background-color","#cccccc")
             setTimeout(function f(){$("#return").css("background-color","#ffffff")},100)
         })
+        $(function () {
+            $("#content img").addClass("rounded")
+            $("#content img").addClass("mx-auto")
+            $("#content img").addClass("d-block")
+            $("#content  p").addClass("text-justify");
+        })
     })
 </script>
-</body>
 </html>

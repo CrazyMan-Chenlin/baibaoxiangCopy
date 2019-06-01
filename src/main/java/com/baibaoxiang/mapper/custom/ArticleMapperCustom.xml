@@ -3,7 +3,7 @@
 <mapper namespace="com.baibaoxiang.mapper.custom.ArticleMapperCustom">
 
     <resultMap id="BaseResultMap" type="com.baibaoxiang.po.Article" >
-        <id column="no" property="no" jdbcType="INTEGER" />
+        <id column="no" property="no" jdbcType="VARCHAR" />
         <result column="author" property="author" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="VARCHAR" />
         <result column="area" property="area" jdbcType="VARCHAR" />
@@ -36,5 +36,28 @@
         SELECT <include refid="Base_Column_List"/> FROM article ORDER BY top ASC,create_time DESC
     </select>
 
+    <!-- 通过 创建的时间段 找出批量文章的编号-->
+    <select id="selectNoByCreateTime" parameterType="java.sql.Date" resultType="java.lang.String" >
+        SELECT no FROM article WHERE create_time BETWEEN #{startTime,jdbcType=DATE} AND #{endTime,jdbcType=DATE}
+    </select>
 
+    <!-- 更新阅读量-->
+    <update id="updateReadNum" >
+        UPDATE article SET read_num = read_num + #{readNum,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR}
+    </update>
+
+    <!-- 更新点赞量-->
+    <update id="updateLikeNum" >
+        UPDATE article SET like_num = like_num + #{likeNum,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR}
+    </update>
+
+    <!-- 同时更新阅读量 和 点赞量-->
+    <update id="updateReadLikeNum">
+        UPDATE article SET read_num = read_rum + #{readNum,jdbcType=INTEGER} , like_num = like_num + #{likeNum,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR}
+    </update>
+
+    <!--设置置顶-->
+    <update id="setTopArticle" >
+        UPDATE article SET top = #{top,jdbcType=INTEGER} WHERE no = #{no,jdbcType=VARCHAR}
+    </update>
 </mapper>

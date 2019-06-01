@@ -3,7 +3,7 @@ package com.baibaoxiang.po;
 import java.sql.Date;
 
 public class Article {
-    private Integer no;
+    private String no;
 
     private String author;
 
@@ -25,12 +25,12 @@ public class Article {
 
     private String message;
 
-    public Integer getNo() {
+    public String getNo() {
         return no;
     }
 
-    public void setNo(Integer no) {
-        this.no = no;
+    public void setNo(String no) {
+        this.no = no == null ? null : no.trim();
     }
 
     public String getAuthor() {

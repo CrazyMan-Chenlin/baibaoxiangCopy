@@ -6,11 +6,8 @@ import com.baibaoxiang.po.School;
 import com.baibaoxiang.po.SchoolExample;
 import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author sheng
@@ -18,14 +15,15 @@ import java.util.List;
  */
 public class SchoolServiceImpl implements SchoolService {
     @Autowired
-    JedisClient jedisClient ;
+    JedisClient jedisClient;
     @Autowired
     SchoolMapper schoolMapper;
     @Autowired
     SchoolMapperCustom schoolMapperCustom;
-    @Value("${SchoolInfoKey}")
-    private  String schoolInfoKey;
+    private String schoolInfoKey = "School_INFO";
     private String key = schoolInfoKey + ":" + "SCHOOLNAME";
+
+
     @Override
     public int insertSchool(School record) throws Exception {
         return schoolMapper.insert(record);
@@ -33,16 +31,34 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public int deleteSchool(Integer no) throws Exception {
-        /*删除学校名的缓存*/
-       /* jedisClient.del(key);*/
+        deleteKey(schoolMapper.selectByPrimaryKey(no).getName());
         return schoolMapper.deleteByPrimaryKey(no);
+    }
+
+    private void deleteKey(String schoolName) {
+        String key2 = schoolInfoKey + ":" + schoolName + ":BASE1";
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }else if(jedisClient.exists(key2)){
+            jedisClient.del(key2);
+        }
     }
 
     @Override
     public void deleteSchoolBatch(Integer[] no) throws Exception {
-        for(int i = 0; i < no.length; i++){
+        for (int i = 0; i < no.length; i++) {
+            deleteKey(schoolMapper.selectByPrimaryKey(no[i]).getName());
             schoolMapper.deleteByPrimaryKey(no[i]);
         }
+    }
+
+    @Override
+    public void deleteSchoolBySchoolName(String name) throws Exception {
+        //删除学校主键
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        schoolMapperCustom.deleteSchoolBySchoolName(name);
     }
 
     @Override
@@ -55,23 +71,28 @@ public class SchoolServiceImpl implements SchoolService {
         return schoolMapperCustom.selectAllSchool();
     }
 
+    /**
+     * 添加缓存机制
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<String> selectDifferentSchoolName() throws Exception {
         List<String> schoolName;
         StringBuilder value = new StringBuilder();
-        if (jedisClient.exists(key)){
+        if (jedisClient.exists(key)) {
             String array = jedisClient.get(key);
             String[] split = array.split(",");
             schoolName = Arrays.asList(split);
             return schoolName;
-        }else{
-             schoolName = schoolMapper.selectDifferentSchoolName();
-            for (String str : schoolName){
+        } else {
+            schoolName = schoolMapper.selectDifferentSchoolName();
+            for (String str : schoolName) {
                 value.append(str);
                 value.append(",");
             }
-            value.delete(schoolName.size()-1,schoolName.size());
-             jedisClient.set(key,value.toString());
+            value.delete(value.length() - 1, value.length());
+            jedisClient.set(key, value.toString());
             return schoolName;
         }
     }
@@ -86,7 +107,7 @@ public class SchoolServiceImpl implements SchoolService {
             if (schoolName != null) {
                 // 从缓存中查询
                 String areaNameString = jedisClient.get(schoolInfoKey + ":" + schoolName + ":BASE1");
-                if (!"".equals(areaNameString) && areaNameString!=null) {
+                if (!"".equals(areaNameString) && areaNameString != null) {
                     String[] split = areaNameString.split(",");
                     areaName = Arrays.asList(split);
                     return areaName;
@@ -99,24 +120,29 @@ public class SchoolServiceImpl implements SchoolService {
         SchoolExample.Criteria criteria = example.createCriteria();
         criteria.andNameEqualTo(schoolName);
         List<School> schools = schoolMapper.selectByExample(example);
-        for(School school : schools){
+        for (School school : schools) {
             areaName.add(school.getArea());
         }
         /*添加缓存*/
         try {
             // 注入redisjedisCluster
             StringBuilder value = new StringBuilder();
-            if (schoolName != null){
-                for (String str : areaName){
+            if (schoolName != null) {
+                for (String str : areaName) {
                     value.append(str);
                     value.append(",");
                 }
-                value.delete(areaName.size()-1,areaName.size());
-                jedisClient.set(jedisClient + ":" + schoolName + ":BASE1", value.toString());
+                value.delete(value.length() - 1, value.length());
+                jedisClient.set(schoolInfoKey + ":" + schoolName + ":BASE1", value.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return areaName;
+    }
+
+    @Override
+    public List<Integer> selectNosBySchoolName(String name) throws Exception {
+        return schoolMapperCustom.seleteNosBySchoolName(name);
     }
 }

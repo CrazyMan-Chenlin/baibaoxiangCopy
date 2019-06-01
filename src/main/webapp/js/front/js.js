@@ -64,23 +64,23 @@ $(function(){
 });
 function navName(c_nav) {
     switch (c_nav) {
-        case "资讯":
-            sessionStorage.pagecount = "资讯";
+        case "推荐":
+            sessionStorage.pagecount = "推荐";
             break;
-        case "分析":
-            sessionStorage.pagecount = "分析";
+        case "攻略":
+            sessionStorage.pagecount = "攻略";
             break;
-        case "黄页":
-            sessionStorage.pagecount = "黄页";
+        case "二手书":
+            sessionStorage.pagecount = "二手书";
             break;
-        case "技术":
-            sessionStorage.pagecount = "技术";
+        case "校内组织":
+            sessionStorage.pagecount = "校内组织";
             break;
-        case "项目":
-            sessionStorage.pagecount = "项目";
+        case "校内社团":
+            sessionStorage.pagecount = "校内社团";
             break;
-        case "股市":
-            sessionStorage.pagecount = "股市";
+        case "快递站":
+            sessionStorage.pagecount = "快递站";
             break;
         case "原创":
             sessionStorage.pagecount = "原创";

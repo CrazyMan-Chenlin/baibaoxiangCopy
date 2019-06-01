@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baibaoxiang.mapper.ArticleMapper" >
   <resultMap id="BaseResultMap" type="com.baibaoxiang.po.Article" >
-    <id column="no" property="no" jdbcType="INTEGER" />
+    <id column="no" property="no" jdbcType="VARCHAR" />
     <result column="author" property="author" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
@@ -110,17 +110,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from article
-    where no = #{no,jdbcType=INTEGER}
+    where no = #{no,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from article
-    where no = #{no,jdbcType=INTEGER}
+    where no = #{no,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.baibaoxiang.po.ArticleExample" >
     delete from article
@@ -133,7 +133,7 @@
       area, read_num, like_num, 
       title, create_time, top, 
       picture_path, message)
-    values (#{no,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+    values (#{no,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{readNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER}, 
       #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{top,jdbcType=INTEGER}, 
       #{picturePath,jdbcType=VARCHAR}, #{message,jdbcType=LONGVARCHAR})
@@ -177,7 +177,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="no != null" >
-        #{no,jdbcType=INTEGER},
+        #{no,jdbcType=VARCHAR},
       </if>
       <if test="author != null" >
         #{author,jdbcType=VARCHAR},
@@ -221,7 +221,7 @@
     update article
     <set >
       <if test="record.no != null" >
-        no = #{record.no,jdbcType=INTEGER},
+        no = #{record.no,jdbcType=VARCHAR},
       </if>
       <if test="record.author != null" >
         author = #{record.author,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update article
-    set no = #{record.no,jdbcType=INTEGER},
+    set no = #{record.no,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
@@ -277,7 +277,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update article
-    set no = #{record.no,jdbcType=INTEGER},
+    set no = #{record.no,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
         message = #{message,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where no = #{no,jdbcType=INTEGER}
+    where no = #{no,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.baibaoxiang.po.Article" >
     update article
@@ -339,7 +339,7 @@
       top = #{top,jdbcType=INTEGER},
       picture_path = #{picturePath,jdbcType=VARCHAR},
       message = #{message,jdbcType=LONGVARCHAR}
-    where no = #{no,jdbcType=INTEGER}
+    where no = #{no,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baibaoxiang.po.Article" >
     update article
@@ -352,6 +352,6 @@
       create_time = #{createTime,jdbcType=DATE},
       top = #{top,jdbcType=INTEGER},
       picture_path = #{picturePath,jdbcType=VARCHAR}
-    where no = #{no,jdbcType=INTEGER}
+    where no = #{no,jdbcType=VARCHAR}
   </update>
 </mapper>

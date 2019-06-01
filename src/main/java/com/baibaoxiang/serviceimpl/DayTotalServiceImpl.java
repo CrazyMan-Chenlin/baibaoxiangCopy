@@ -1,4 +1,4 @@
-package com.baibaoxiang.serviceImpl;
+package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.mapper.DayTotalMapper;
 import com.baibaoxiang.mapper.custom.DayTotalMapperCustom;
@@ -22,32 +22,38 @@ public class DayTotalServiceImpl implements DayTotalService {
     DayTotalMapperCustom dayTotalMapperCustom;
 
     @Override
-    public DayTotal selectByPrimaryKey(DayTotalKey key) {
+    public DayTotal selectByPrimaryKey(DayTotalKey key) throws Exception {
         return dayTotalMapper.selectByPrimaryKey(key);
     }
 
     @Override
-    public int deleteByPrimaryKey(DayTotalKey key) {
+    public int deleteByPrimaryKey(DayTotalKey key) throws Exception {
         return dayTotalMapper.deleteByPrimaryKey(key);
     }
 
     @Override
-    public int insert(DayTotal record) {
+    public void deleteDayTotalByTime(Date time) throws Exception{
+            dayTotalMapperCustom.deleteDayTotalByTime(time);
+    }
+
+    @Override
+    public int insert(DayTotal record) throws Exception {
         return dayTotalMapper.insert(record);
     }
 
     @Override
-    public int updateByPrimaryKey(DayTotal record) {
+    public int updateByPrimaryKey(DayTotal record) throws Exception {
         return dayTotalMapper.updateByPrimaryKey(record);
     }
 
+
     @Override
-    public void updateReadNum( Date time, Integer num,Integer no) throws Exception {
+    public void updateReadNum( Date time, Integer num,String no) throws Exception {
         dayTotalMapperCustom.updateReadNum(time,num,no);
     }
 
     @Override
-    public void updateLikeNum(Date time, Integer num, Integer no) throws Exception {
+    public void updateLikeNum(Date time, Integer num, String no) throws Exception {
         dayTotalMapperCustom.updateLikeNum(time,num,no);
     }
 
@@ -72,10 +78,8 @@ public class DayTotalServiceImpl implements DayTotalService {
     }
 
     @Override
-    public ReadLikeNumber dayTotalNo(Date time, Integer no) throws Exception {
+    public ReadLikeNumber dayTotalNo(Date time, String no) throws Exception {
         return dayTotalMapperCustom.dayTotalNo(time,no);
     }
-
-
 
 }
