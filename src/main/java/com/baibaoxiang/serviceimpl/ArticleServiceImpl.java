@@ -51,8 +51,14 @@ public class ArticleServiceImpl implements ArticleService {
             String jsonString = jedisClient.get(key);
             return JsonUtils.jsonToList(jsonString,Article.class);
         }
-        List<Article> articles = articleMapperCustom.selectByTypeArea(type, area);
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.setOrderByClause("create_time  desc");
+        ArticleExample.Criteria criteria = articleExample.createCriteria();
+        criteria.andAreaEqualTo(area);
+        criteria.andTypeEqualTo(type);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
         jedisClient.set(key,JsonUtils.objectToJson(articles));
+        jedisClient.expire(key,60*60*6);
         return articles;
     }
 
@@ -202,6 +208,7 @@ public class ArticleServiceImpl implements ArticleService {
             criteria.andAreaEqualTo(area);
             List<Article> articles = articleMapper.selectByExample(example);
             jedisClient.set(key, JsonUtils.objectToJson(articles));
+            jedisClient.expire(key,60*60*6);
             return articles;
         }
     }
