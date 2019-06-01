@@ -9,6 +9,7 @@
 
     <!-- 包扫描器 -->
     <context:component-scan base-package="com.baibaoxiang.serviceimpl"/>
+    <bean id="fastDfsClient" class="com.baibaoxiang.tool.FastDfsClient"/>
     <bean id="articleService" class="com.baibaoxiang.serviceimpl.ArticleServiceImpl"/>
     <bean id="managerService" class="com.baibaoxiang.serviceimpl.ManagerServiceImpl"/>
     <bean id="articleTypeService" class="com.baibaoxiang.serviceimpl.ArticleTypeServiceImpl"/>
