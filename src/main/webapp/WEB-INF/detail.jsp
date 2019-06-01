@@ -14,52 +14,14 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/front/style.css"/>
+    <link rel="stylesheet" href="/css/front/detail.css"/>
     <script src="/js/front/jquery-3.2.1.js"></script>
+    <script src="/js/front/jquery.history.js"></script>
+    <script src="/js/front/search.js"></script>
 </head>
-<style>
-    .rounded-circle {
-        height: 2.5rem;
-        width: 2.5rem;
-    }
-
-    #nav {
-        height: 3rem;
-        text-align: center;
-    }
-
-    #nav img {
-        width: 1rem;
-        height: 1rem;
-        margin-top: 1rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-
-    #message {
-        margin: 1rem;
-        height: 3rem;
-    }
-
-    hr {
-        margin: 0;
-    }
-
-    #content {
-        margin: 0.8rem;
-    }
-
-    #content p {
-        font-size: 1.1rem;
-        text-indent: 1.5em
-    }
-
-    .rounded {
-        height: 100%;
-    }
-</style>
 <body>
 <div id="nav">
-    <div id="return" style="width: 15%;float: left;height: 100%;" onclick="javascript:history.back(-1)"><img src="/images/front/left.svg"></div>
+    <div id="return" style="width: 15%;float: left;height: 100%;" onclick="window.history.back(-1)"><img src="/images/front/left.svg"></div>
     <div style="float: left;width: 70%">
         <p style="font-size: 1.2rem;margin-top: 0.62rem;margin-bottom: 0;color: #141414">${article.type}</p>
     </div>
@@ -77,8 +39,9 @@
     </div>
 </div>
 <div id="content">
-    <img style="width: 100%;margin-bottom: 1rem" src="/images/front/killer.jpg" class="rounded mx-auto d-block"/>
+    <img  src="/images/front/dali.jpg"/>
         ${article.message}
+    <img  src="/images/front/dali.jpg"/>
 </div>
 <div style="text-align: right;margin-right: 1rem;margin-bottom: 0.7rem">
     <span class="text-muted" style="font-size: 0.75rem">点赞</span>
@@ -90,18 +53,23 @@
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+</body>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#love").on("click", function () {
             $("#love").attr("src", "/images/front/love.svg")
-            $.post("like/",{no:${article.no}},function(data){
-            })
+            $.get("/article/like/${article.no}")
         })
         $("#return img").on("touchend", function () {
             $("#return").css("background-color","#cccccc")
             setTimeout(function f(){$("#return").css("background-color","#ffffff")},100)
         })
+        $(function () {
+            $("#content img").addClass("rounded")
+            $("#content img").addClass("mx-auto")
+            $("#content img").addClass("d-block")
+            $("#content  p").addClass("text-justify");
+        })
     })
 </script>
-</body>
 </html>
