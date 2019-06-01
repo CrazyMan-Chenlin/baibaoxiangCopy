@@ -58,12 +58,12 @@ li{
     /*background-color: red;*/
     margin-right: 10px;
     float: right;
-    width: 60px;
+    /*width: 60px;*/
     height: 32px;
-    background-image: url('/images/icon/up.png') ;
-    background-repeat:no-repeat;
+    /*background-image: url('/images/icon/up.png') ;*/
+    /*background-repeat:no-repeat;*/
 }
-.manage .up:hover{
-    background-image: url('/images/icon/down.png') ;
-    background-repeat:no-repeat;
-}
+/*.manage .up:hover{*/
+    /*background-image: url('/images/icon/down.png') ;*/
+    /*background-repeat:no-repeat;*/
+/*}*/

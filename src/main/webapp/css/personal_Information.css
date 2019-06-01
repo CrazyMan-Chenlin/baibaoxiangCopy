@@ -3,8 +3,8 @@
     padding: 0;
 }
 img{
-    width: 150px;
-    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
 }
 div p{
     text-align: left;

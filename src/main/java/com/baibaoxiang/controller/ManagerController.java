@@ -6,6 +6,7 @@ import com.baibaoxiang.tool.RandomValidateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.management.RuntimeErrorException;
@@ -21,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.*;
 
 /**
  * @author sheng
@@ -32,6 +34,8 @@ public class ManagerController {
 
     @Autowired
     ManagerService managerService;
+
+    private File file;
 
     /**
      * 返回登录页面
@@ -184,18 +188,41 @@ public class ManagerController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "updateNamePicture", method = RequestMethod.PUT)
-    public void updateNamePicture(HttpServletRequest request) throws Exception{
+    @RequestMapping(value = "/updateNamePicture", method = RequestMethod.POST)
+    public ModelAndView updateNamePicture(HttpServletRequest request, @RequestParam MultipartFile file) throws Exception{
         HttpSession session = request.getSession();
+        ModelAndView modelAndView = new ModelAndView();
         String username = (String) session.getAttribute("username");
-        Manager manager = new Manager();
+        String path = null; //文件路径
+        String type = null; // 文件类型
+        if (file!=null){
+            String fileName = file.getOriginalFilename();// 文件原名称
+            System.out.println("上传的文件原名称:"+fileName);
+            type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
+            if (type!=null){//判断文件类型是否为空
+                if("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
+                    //项目在容器中实际发布运行的根路径
+                    String realPath=request.getSession().getServletContext().getRealPath("/images/upload/");
+                    // 自定义的文件名称
+                    String trueFileName=username+"."+type;
+                    // 设置存放图片文件的路径
+                    path=realPath+"\\"+trueFileName;
+                    System.out.println("存放图片文件的路径:"+path);
+                    // 转存文件到指定的路径
+                    file.transferTo(new File(path));
+                    System.out.println("文件成功上传到指定目录下");
+                }
+            }
+        }
         String name = request.getParameter("name");
-        String path = request.getParameter("path");
+//        String path = request.getParameter("path");
+        Manager manager = new Manager();
         manager.setUsername(username);
         manager.setName(name);
         manager.setPath(path);
         managerService.updateByPrimaryKeySelective(manager);
-
+        modelAndView.setViewName("backstage/personal_Information");
+        return modelAndView;
     }
 
     /** 更改密码

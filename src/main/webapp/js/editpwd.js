@@ -1,11 +1,11 @@
 $(function () {
     $("#change").click(function () {
 
-        var initial_password= $("#initial_password").val();
+        var initial_password= $.trim($("#initial_password").val());
 
-        var new_password = $("#new_password").val();
+        var new_password = $.trim($("#new_password").val());
 
-        var confirm_password = $("#confirm_password").val();
+        var confirm_password = $.trim($("#confirm_password").val());
 
         if (new_password==confirm_password){
             $.ajax({

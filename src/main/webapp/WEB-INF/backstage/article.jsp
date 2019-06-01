@@ -27,12 +27,20 @@
     <a href="/jsp/edit" target="mainframe" class="new">编写新推文</a>
     </div>
     <br><br><br>
+
+    <div id="ReadLikeNumber">
+        <h3>今日网站流览量：</h3><h3 id="readNum"></h3>
+        <h3>今日网站点赞量：</h3><h3 id="likeNum"></h3>
+    </div>
+
+    <br><br><br>
     <div class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
             文章分类
             <b class="caret"></b>
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" id="articleList">
+
         </ul>
     </div>
 

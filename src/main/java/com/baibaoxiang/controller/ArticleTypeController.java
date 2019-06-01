@@ -41,7 +41,6 @@ public class ArticleTypeController {
     @ResponseBody
     public List<ArticleType> findArticleTypes() throws Exception{
         List<ArticleType> articleTypes = articleTypeService.selectArticleTypes();
-        System.out.println("coming...");
         return articleTypes;
     }
 

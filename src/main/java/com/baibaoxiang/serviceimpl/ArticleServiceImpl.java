@@ -10,6 +10,7 @@ import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Date;
 import java.util.List;
+import java.lang.*;
 /**
  * @author sheng
  * @create 2019-04-23-00:19
@@ -203,5 +204,15 @@ public class ArticleServiceImpl implements ArticleService {
             jedisClient.set(key, JsonUtils.objectToJson(articles));
             return articles;
         }
+    }
+
+    /** 设置 置顶文章
+     * @param no
+     * @param top
+     * @throws Exception
+     */
+    @Override
+    public void setTopArticle(String no, Integer top) throws Exception {
+        articleMapperCustom.setTopArticle(no,top);
     }
 }
