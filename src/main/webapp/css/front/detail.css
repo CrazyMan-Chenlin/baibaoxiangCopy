@@ -37,3 +37,7 @@ hr {
 .rounded {
     height: 100%;
 }
+#content img{
+    width: 100%;
+    margin-bottom: 1rem
+}
