@@ -25,6 +25,7 @@
     <link rel="stylesheet"  href="/css/front/style.css"/>
     <script src="/js/front/jquery-3.2.1.js"></script>
     <script src="/js/front/js.js"></script>
+    <script src="/js/front/search.js"></script>
 </head>
 <body>
 <div id="showSearch" style="width:100%;position: absolute;z-index: 1">
@@ -64,12 +65,17 @@
                 </div>
             </td>
             <td width="30%">
-                <img src="/images/front/demo2.jpg" class="rounded " alt="..."></td>
+                <img src="/images/front/dali.jpg" class="rounded " alt="..."></td>
         </tr>
         </c:forEach>
         </tbody>
     </table>
-
+</div>
+<div id="warn" style="position:fixed; bottom:0;z-index:999;margin-bottom: 0;display: none" class="alert alert-warning alert-dismissible fade show" role="alert">
+    为了您更好的浏览体验，我们建议您点击右上角，使用浏览器访问
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <div id="chooseSchool" style="position: absolute;z-index: 2;left: 600px">
     <div style="margin-left: 2rem;padding-top:1.2rem;padding-bottom: 1rem"> <span >地区选择：</span></div>
@@ -149,22 +155,23 @@
         });
         $(".find_nav_list li ").on('click', function(){
             $.post("/index/getAreaArticle",{type:$(this).text(),area:$("#schoolName").val()+$("#areaName").val()},function(data){
-               $(".table tbody").empty();
-               $.each(data,function (i,article) {
-               $(".table tbody").append("<tr>\n" +
-                   "            <td class=\"firstTd\">\n" +
-                   "                <div  class=\"Title\"><a href=\"/detail?no="+article.no+"\">"+article.title+"</a></div>\n" +
-                   "                <div>\n" +
-                   "                    <span>"+article.likeNum+"</span>&nbsp;<img class=\"littleIcon\" src=\"/images/front/love.svg\"/>\n" +
-                   "                    &nbsp;\n" +
-                   "                    \n" +
-                   "                </div>\n" +
-                   "            </td>\n" +
-                   "            <td width=\"30%\">\n" +
-                   "                <img src=\"/images/front/demo2.jpg\" class=\"rounded \" alt=\"...\"></td>\n" +
-                   "        </tr>")
-               })
+                $(".table tbody").empty();
+                $.each(data,function (i,article) {
+                    $(".table tbody").append("<tr>\n" +
+                        "            <td class=\"firstTd\">\n" +
+                        "                <div  class=\"Title\"><a href=\"/detail?no="+article.no+"\">"+article.title+"</a></div>\n" +
+                        "                <div>\n" +
+                        "                    <span>"+article.likeNum+"</span>&nbsp;<img class=\"littleIcon\" src=\"/images/front/love.svg\"/>\n" +
+                        "                    &nbsp;\n" +
+                        "                    \n" +
+                        "                </div>\n" +
+                        "            </td>\n" +
+                        "            <td width=\"30%\">\n" +
+                        "                <img src=\"/images/front/demo2.jpg\" class=\"rounded \" alt=\"...\"></td>\n" +
+                        "        </tr>")
+                })
             });
+
         })
         $("#areaName").change(function () {
             var schoolName= $("#schoolName").val();
@@ -187,6 +194,26 @@
                 })
             });
         })
+        var ua = navigator.userAgent.toLowerCase();
+        var isWeixin = ua.indexOf('micromessenger') != -1;
+        $(".table").on('click','a',function () {
+            if (isWeixin) {
+                var json = new Date().getTime();
+                history.pushState({json}, '', window.location.href + "#" + json);
+                sessionStorage.setItem("MainContent", $("tbody").html())
+            }
+        })
+        $(function () {
+            if (isWeixin) {
+                $("#warn").css("display","block");
+                if ( sessionStorage.getItem("MainContent")!=null && sessionStorage.getItem("MainContent")!=""){
+                    window.history.back(-1)
+                    $("tbody").html(sessionStorage.getItem("MainContent"))
+                    sessionStorage.setItem("MainContent","")
+                }
+            }
+        })
+
     })
 </script>
 </body>
