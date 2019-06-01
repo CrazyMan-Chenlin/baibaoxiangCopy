@@ -34,7 +34,7 @@ public class FastDFSTest {
         // 6、使用StorageClient对象上传图片。
         //扩展名不带“.”
         // 7、返回数组。包含组名和图片的路径。
-        String jpg = storageClient.upload_appender_file1("C:\\Users\\chenlin\\Desktop\\killer.jpg", "jpg", null);
+        String jpg = storageClient.upload_appender_file1("D:\\develop\\IDEA\\Project\\baibaoxiang\\src\\main\\webapp\\images\\a7691515_s.jpg", "jpg", null);
         System.out.println(jpg);
 
     }

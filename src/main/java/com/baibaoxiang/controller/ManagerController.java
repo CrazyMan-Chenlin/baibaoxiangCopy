@@ -2,6 +2,8 @@ package com.baibaoxiang.controller;
 
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
+import com.baibaoxiang.tool.FastDFSTest;
+import com.baibaoxiang.tool.FastDfsClient;
 import com.baibaoxiang.tool.RandomValidateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,9 @@ public class ManagerController {
 
     @Autowired
     ManagerService managerService;
+
+    @Autowired
+    FastDfsClient fastDfsClient;
 
     private File file;
 
@@ -195,31 +200,42 @@ public class ManagerController {
         String username = (String) session.getAttribute("username");
         String path = null; //文件路径
         String type = null; // 文件类型
+        String uploadFilePath ="";
         if (file!=null){
             String fileName = file.getOriginalFilename();// 文件原名称
-            System.out.println("上传的文件原名称:"+fileName);
+            byte[] bytes = file.getBytes();
+//            System.out.println(bytes);
+//            System.out.println("上传的文件原名称:"+fileName);
             type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
             if (type!=null){//判断文件类型是否为空
-                if("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
+                if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
+                    fastDfsClient.deleteFile("http://47.107.42.150/"+(String)request.getSession().getAttribute("path"));
+                    uploadFilePath = fastDfsClient.uploadFile(bytes, type);
+                    request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
                     //项目在容器中实际发布运行的根路径
-                    String realPath=request.getSession().getServletContext().getRealPath("/images/upload/");
-                    // 自定义的文件名称
-                    String trueFileName=username+"."+type;
-                    // 设置存放图片文件的路径
-                    path=realPath+"\\"+trueFileName;
-                    System.out.println("存放图片文件的路径:"+path);
-                    // 转存文件到指定的路径
-                    file.transferTo(new File(path));
-                    System.out.println("文件成功上传到指定目录下");
+//                    String realPath=request.getSession().getServletContext().getRealPath("/images/upload/");
+//                    // 自定义的文件名称
+//                    String trueFileName=username+"."+type;
+//                    // 设置存放图片文件的路径
+//                    path=realPath+"\\"+trueFileName;
+//                    System.out.println("存放图片文件的路径:"+path);
+//                    // 转存文件到指定的路径
+//                    file.transferTo(new File(path));
+//                    System.out.println("文件成功上传到指定目录下");
                 }
             }
         }
         String name = request.getParameter("name");
-//        String path = request.getParameter("path");
         Manager manager = new Manager();
         manager.setUsername(username);
+        //如果传过来的昵称为空，则默认不修改昵称
+        if (name.equals("")){
+            Manager managerByUsername = managerService.findManagerByUsername(username);
+            String name1 = managerByUsername.getName();
+            name = name1;
+        }
         manager.setName(name);
-        manager.setPath(path);
+        manager.setPath(uploadFilePath);
         managerService.updateByPrimaryKeySelective(manager);
         modelAndView.setViewName("backstage/personal_Information");
         return modelAndView;

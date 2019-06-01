@@ -1,9 +1,14 @@
 package com.baibaoxiang.controller;
 
+import com.baibaoxiang.po.Manager;
+import com.baibaoxiang.service.ManagerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author:joe
@@ -12,6 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/jsp")
 public class JspController {
+
+    @Autowired
+    ManagerService managerService;
+
     @RequestMapping(value = "/left")
     public ModelAndView left(){
         ModelAndView modelAndView = new ModelAndView();
@@ -71,9 +80,12 @@ public class JspController {
     }
 
     @RequestMapping(value = "/personal_Information")
-    public ModelAndView personal_Information(){
+    public ModelAndView personal_Information(HttpSession session) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("backstage/personal_Information");
+        String username = (String) session.getAttribute("username");
+        Manager managerByUsername = managerService.findManagerByUsername(username);
+        session.setAttribute("path",managerByUsername.getPath());
         return modelAndView;
     }
 

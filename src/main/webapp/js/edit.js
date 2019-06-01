@@ -6,7 +6,6 @@ $(function() {
     $(".submitVal").on('click',function () {
         var title = $("#title").val();
         var type = $("#type").val();
-        var area = $("#area").text();
         var message = $("textarea").val();
         var picture = "/aaaa";
         var author = $("#username").text();
