@@ -198,30 +198,17 @@ public class ManagerController {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         String username = (String) session.getAttribute("username");
-        String path = null; //文件路径
         String type = null; // 文件类型
         String uploadFilePath ="";
         if (file!=null){
             String fileName = file.getOriginalFilename();// 文件原名称
             byte[] bytes = file.getBytes();
-//            System.out.println(bytes);
-//            System.out.println("上传的文件原名称:"+fileName);
             type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
             if (type!=null){//判断文件类型是否为空
                 if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
                     fastDfsClient.deleteFile("http://47.107.42.150/"+(String)request.getSession().getAttribute("path"));
                     uploadFilePath = fastDfsClient.uploadFile(bytes, type);
                     request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
-                    //项目在容器中实际发布运行的根路径
-//                    String realPath=request.getSession().getServletContext().getRealPath("/images/upload/");
-//                    // 自定义的文件名称
-//                    String trueFileName=username+"."+type;
-//                    // 设置存放图片文件的路径
-//                    path=realPath+"\\"+trueFileName;
-//                    System.out.println("存放图片文件的路径:"+path);
-//                    // 转存文件到指定的路径
-//                    file.transferTo(new File(path));
-//                    System.out.println("文件成功上传到指定目录下");
                 }
             }
         }
