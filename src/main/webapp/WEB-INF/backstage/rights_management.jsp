@@ -17,10 +17,7 @@
 <div class="btn_management">
     <button type="button" class="btn btn-primary"  id="query">查询所有管理员</button>
     <button type="button" class="btn btn-danger" id="delete">删除所选管理员</button>
-
 </div>
-
-
 
 <!--控制表单样式的div-->
 <div class="table_management">
@@ -39,32 +36,31 @@
 </div>
 <br><br>
 
-
 <%--添加管理员--%>
 <div class="new_form">
     <form class="form-horizontal" role="form">
         <div class="form-group ">
-            <label for="username" class="col-sm-2 control-label">新建ID</label>
+            <label for="username" class="col-sm-2 control-label" >新建ID</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="username" placeholder="请输入新ID">
+                <input type="text" class="form-control" id="username" placeholder="请输入新ID" required>
             </div>
         </div>
         <div class="form-group ">
             <label for="name" class="col-sm-2 control-label">管理员昵称</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="name" placeholder="请输入昵称">
+                <input type="text" class="form-control" id="name" placeholder="请输入昵称" required>
             </div>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label">密码</label>
             <div class="col-sm-4">
-                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码" required>
             </div>
         </div>
         <div class="form-group">
             <label for="area" class="col-sm-2 control-label">学校区域</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="area" placeholder="请输入学校">
+                <input type="text" class="form-control" id="area" placeholder="请输入学校" required>
             </div>
         </div>
         <div class="form-group">

@@ -29,14 +29,23 @@ $(function () {
     //添加新的分类，仅超级管理员可用
     $(".new").on('click',function () {
        var newType = $("#new_type").val();
-       $.ajax({
-           type:"post",
-           url:"/articleType/add",
-           data:{TypeNew:newType},
-           success:function (data) {
-               alert(data);
-           }
-       });
+       if (newType!=null&&newType!="") {
+           $.ajax({
+               type:"post",
+               url:"/articleType/add",
+               data:{TypeNew:newType},
+               success:function (data) {
+                   if(data==1){
+                       alert("添加成功")
+                   }else {
+                       alert("权限不足")
+                   }
+               }
+           });
+       }else {
+           alert("添加类型不能为空");
+       }
+
     });
 
     //查询文章类型

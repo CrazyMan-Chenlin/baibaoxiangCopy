@@ -261,6 +261,30 @@ public class ManagerController {
         return map;
     }
 
+    /** 更改密码，供超级管理使用
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updateBy", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> updateBy(HttpServletRequest request) throws Exception{
+        int i = checkRight(request);
+        Map<String,Object> map = new HashMap<>();
+        if (i==1){
+            String username = request.getParameter("id");
+            String password = request.getParameter("password");
+            Manager manager = managerService.findManagerWithPassword_salt(username);
+            String salt = manager.getSalt();
+            manager.setPassword(md5(salt,password));
+            managerService.updateByPrimaryKeySelective(manager);
+            map.put("msg","修改成功");
+            return map;
+        }
+        map.put("msg","权限不足");
+        return map;
+    }
+
     /**
      * 通过管理员名称 查询管理员信息
      * @param request

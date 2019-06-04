@@ -53,7 +53,7 @@ $(function() {
             type:"get",
             success:function (data) {
                 $.each(data,function (index,item) {
-                    $("#article_type").children().remove();
+                    // $("#article_type").children().remove();
                     $("#article_type").append("<li><a href='#' class='type1'>"+item.type+"</a></li>");
                 });
             }
