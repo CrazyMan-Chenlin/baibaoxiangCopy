@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -46,13 +47,16 @@ public class ArticleTypeController {
 
     /**
      * 添加类型
-     * @param articleType
+     *
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public int addArticleType(@RequestBody ArticleType articleType) throws Exception{
+    public int addArticleType(@RequestParam String TypeNew) throws Exception{
+        ArticleType articleType = new ArticleType();
+        articleType.setType(TypeNew);
+//        articleType.setId(1);
         int i = articleTypeService.insert(articleType);
         return i;
     }

@@ -20,6 +20,25 @@ $(function () {
 
     });
 
+    //编辑推文
+    $(document).on('click','.edit',function () {
+        var no=$(this).parent().parent().parent().children(".panel-body").text();
+        $(this).attr('href',"/jsp/editArticle?no="+no);
+    });
+
+    //添加新的分类，仅超级管理员可用
+    $(".new").on('click',function () {
+       var newType = $("#new_type").val();
+       $.ajax({
+           type:"post",
+           url:"/articleType/add",
+           data:{TypeNew:newType},
+           success:function (data) {
+               alert(data);
+           }
+       });
+    });
+
     //查询文章类型
     $("#classification").on('click',function () {
         $.ajax({
@@ -57,7 +76,7 @@ $(function () {
                         "<div class='panel-footer'><span>点赞数"+item.likeNum+"</span><span>阅读数"+item.readNum+"</span>"+
                         "<div class='manage'>"+
                         "<div class='delete'></div>"+
-                        "<div class='edit'></div>"+
+                        "<a target='mainframe' class='edit' href='/jsp/editArticle'></a>"+
                         "<div class='up'><div class=\"dropdown\">\n" +
                         "        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" >\n" +
                         "            置顶权限\n" +
@@ -89,6 +108,7 @@ $(function () {
             });
         };
     });
+
 
 });
 

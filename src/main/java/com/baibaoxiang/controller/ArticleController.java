@@ -5,15 +5,17 @@ import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.RedisService;
+import com.baibaoxiang.tool.FastDfsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
+import java.io.File;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author sheng
@@ -32,6 +34,10 @@ public class ArticleController {
     @Autowired
     RedisService redisService;
 
+    @Autowired
+    FastDfsClient fastDfsClient;
+
+    private File file;
 
     /**
      * 按主键查询文章
@@ -58,7 +64,6 @@ public class ArticleController {
         String type = request.getParameter("type");
         String area = request.getParameter("area");
         List<Article> articleList = articleService.selectByTypeArea(type, area);
-
         return articleList;
     }
 
@@ -101,10 +106,17 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    public void insert(@RequestBody Article record) throws Exception {
+    public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
-        articleService.insertSelective(record);
+        Map<String, String> map = new HashMap<>();
+        try {
+            articleService.insertSelective(record);
+            map.put("msg","发布成功");
+        }catch (Exception e){
+            map.put("msg","发布失败");
+        }
+        return map;
     }
 
     /**
@@ -149,20 +161,6 @@ public class ArticleController {
         redisService.saveLikeNumRedis(no);
     }
 
-    /**
-     * 对权限进行认证
-     * 用以对删除与添加时的认证
-     * @return
-     */
-    public int checkRight(HttpServletRequest request) throws Exception {
-        //该参数用以获取当前用户的用户名
-        String cur_username = (String) request.getSession().getAttribute("username");
-        Manager manager = managerService.findManagerByUsername(cur_username);
-        if (manager.getTitle().equals("AAAAA")) {
-            return 1;
-        }
-        return 0;
-    }
 
     @RequestMapping(value="/setTop", method = RequestMethod.POST)
     public Map<String,String> setTopArticle(HttpServletRequest request) throws Exception{
@@ -174,5 +172,40 @@ public class ArticleController {
         map.put("msg","修改成功");
         return map;
     }
+
+
+    @RequestMapping(value = "/uploadArticleImg", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> uploadArticleImg(@RequestParam MultipartFile file,  //这样接收文件@RequestParam Map<String,String> params,
+            HttpServletRequest request) throws Exception {
+        Map<String,Object> map=new HashMap<String, Object>(16);
+        String type = "jpg";
+        byte fileByte []= file.getBytes();
+        StringBuffer picUrl = new StringBuffer();
+        String picName = fastDfsClient.uploadFile(fileByte, type);
+        picUrl.append("http://");
+        picUrl.append("47.107.42.150/");
+        picUrl.append( picName);
+        map.put("link",picUrl);
+        return map;
+        }
+
+    /**
+     * 对权限进行认证
+     * 用以对删除与添加时的认证
+     * @return
+     */
+    public int checkRight(HttpServletRequest request) throws Exception{
+        //该参数用以获取当前用户的用户名
+        String cur_username = (String)request.getSession().getAttribute("username");
+        Manager manager = managerService.findManagerByUsername(cur_username);
+        if (manager.getTitle().equals("AAAAA")){
+            return 1;
+        }
+        return  0;
+    }
+
 }
+
+
 

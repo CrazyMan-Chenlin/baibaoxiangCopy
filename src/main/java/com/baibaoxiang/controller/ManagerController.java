@@ -2,7 +2,6 @@ package com.baibaoxiang.controller;
 
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
-import com.baibaoxiang.tool.FastDFSTest;
 import com.baibaoxiang.tool.FastDfsClient;
 import com.baibaoxiang.tool.RandomValidateCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,30 +199,36 @@ public class ManagerController {
         String username = (String) session.getAttribute("username");
         String type = null; // 文件类型
         String uploadFilePath ="";
-        if (file!=null){
-            String fileName = file.getOriginalFilename();// 文件原名称
-            byte[] bytes = file.getBytes();
-            type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-            if (type!=null){//判断文件类型是否为空
-                if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
-                    fastDfsClient.deleteFile("http://47.107.42.150/"+(String)request.getSession().getAttribute("path"));
-                    uploadFilePath = fastDfsClient.uploadFile(bytes, type);
-                    request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
+        try{
+            if (file!=null){
+                String fileName = file.getOriginalFilename();// 文件原名称
+                byte[] bytes = file.getBytes();
+                type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
+                if (type!=null){//判断文件类型是否为空
+                    if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
+                        fastDfsClient.deleteFile(managerService.findManagerByUsername(username).getPath());
+                        uploadFilePath = fastDfsClient.uploadFile(bytes, type);
+                        request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
+                        String name = request.getParameter("name");
+                        Manager manager = new Manager();
+                        manager.setUsername(username);
+                        //如果传过来的昵称为空，则默认不修改昵称
+                        if (name.equals("")){
+                            Manager managerByUsername = managerService.findManagerByUsername(username);
+                            String name1 = managerByUsername.getName();
+                            name = name1;
+                        }
+                        manager.setName(name);
+                        manager.setPath(uploadFilePath);
+                        managerService.updateByPrimaryKeySelective(manager);
+                    }else {
+                        modelAndView.addObject("msg","上传失败，文件必须是jpg类型或者是PNG类型!");
+                    }
                 }
             }
+        }catch (Exception e){
+            modelAndView.addObject("msg","上传失败");
         }
-        String name = request.getParameter("name");
-        Manager manager = new Manager();
-        manager.setUsername(username);
-        //如果传过来的昵称为空，则默认不修改昵称
-        if (name.equals("")){
-            Manager managerByUsername = managerService.findManagerByUsername(username);
-            String name1 = managerByUsername.getName();
-            name = name1;
-        }
-        manager.setName(name);
-        manager.setPath(uploadFilePath);
-        managerService.updateByPrimaryKeySelective(manager);
         modelAndView.setViewName("backstage/personal_Information");
         return modelAndView;
     }
@@ -323,7 +328,7 @@ public class ManagerController {
     @RequestMapping(value = "/deleteBatch")
     @ResponseBody
     public Map<String,String> deleteManagerBatch(HttpServletRequest request) throws Exception{
-        int i = checkRight(request);        //该参数判断当前是否超级管理员
+        int i = checkRight(request);      //该参数判断当前是否超级管理员
         Map<String,String> map = new HashMap();
         if (i==1){
             String usernames = request.getParameter("usernames");
@@ -371,7 +376,6 @@ public class ManagerController {
         return md5codeString;
     }
 
-
     /**
      * 对权限进行认证
      * 用以对删除与添加时的认证
@@ -386,4 +390,5 @@ public class ManagerController {
         }
         return  0;
     }
+
 }
