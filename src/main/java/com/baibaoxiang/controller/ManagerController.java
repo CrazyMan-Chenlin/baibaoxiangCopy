@@ -49,7 +49,7 @@ public class ManagerController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView loginView() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("backstage/login");
+        modelAndView.setViewName("/backstage/login");
         return modelAndView;
     }
 
