@@ -70,6 +70,8 @@ public class SchoolController {
         return map;
     }
 
+
+
     /** 删除学校
      * @param id
      * @throws Exception

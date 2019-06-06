@@ -13,9 +13,10 @@ li{
     text-decoration: none;
     text-align: center;
     color: #defffa;
-    background-color: #337ab7;
+    background-color: #37b7b0;
     font-size: 20px;
     padding: 5px;
+    border-radius: 5px;
 }
 
 #classification{
@@ -55,15 +56,17 @@ li{
     background-repeat:no-repeat;
 }
 .manage .up{
-    /*background-color: red;*/
     margin-right: 10px;
     float: right;
-    /*width: 60px;*/
     height: 32px;
-    /*background-image: url('/images/icon/up.png') ;*/
-    /*background-repeat:no-repeat;*/
 }
-/*.manage .up:hover{*/
-    /*background-image: url('/images/icon/down.png') ;*/
-    /*background-repeat:no-repeat;*/
-/*}*/
+
+.new{
+    text-decoration: none;
+    text-align: center;
+    color: #defffa;
+    background-color: #37b7b0;
+    font-size: 16px;
+    padding: 3px;
+    border-radius: 5px;
+}

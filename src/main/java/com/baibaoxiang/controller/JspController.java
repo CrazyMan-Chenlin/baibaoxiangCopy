@@ -1,13 +1,18 @@
 package com.baibaoxiang.controller;
 
+import com.baibaoxiang.po.Article;
 import com.baibaoxiang.po.Manager;
+import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -20,6 +25,9 @@ public class JspController {
 
     @Autowired
     ManagerService managerService;
+
+    @Autowired
+    ArticleService articleService;
 
     @RequestMapping(value = "/left")
     public ModelAndView left(){
@@ -85,7 +93,7 @@ public class JspController {
         modelAndView.setViewName("backstage/personal_Information");
         String username = (String) session.getAttribute("username");
         Manager managerByUsername = managerService.findManagerByUsername(username);
-        session.setAttribute("path",managerByUsername.getPath());
+        session.setAttribute("path","http://47.107.42.150/"+managerByUsername.getPath());
         return modelAndView;
     }
 
@@ -96,4 +104,12 @@ public class JspController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/editArticle")
+    public ModelAndView editArticle(@RequestParam(value = "no") String no) throws Exception {
+        Article article = articleService.selectByPrimaryKey(no);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("article",article);
+        modelAndView.setViewName("backstage/edit");
+        return modelAndView;
+    }
 }

@@ -18,22 +18,22 @@
     <div class="top">
     <div class="col-md-6" id="search">
         <div class="input-group">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" disabled>
             <span class="input-group-btn">
                         <button class="btn btn-default" type="button">Go!</button>
                     </span>
         </div>
     </div>
-    <a href="/jsp/edit" target="mainframe" class="new">编写新推文</a>
+    <a href="/jsp/edit" target="mainframe">编写新推文</a>
     </div>
     <br><br><br>
-
     <div id="ReadLikeNumber">
         <h3>今日网站流览量：</h3><h3 id="readNum"></h3>
         <h3>今日网站点赞量：</h3><h3 id="likeNum"></h3>
     </div>
-
-    <br><br><br>
+    <br>
+        <input type="text" class="input-sm" placeholder="请输入想要添加的分类" id="new_type"><button class="new">添加新分类</button>
+    <br><br>
     <div class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
             文章分类

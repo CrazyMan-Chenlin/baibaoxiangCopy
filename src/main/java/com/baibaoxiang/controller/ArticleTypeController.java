@@ -1,12 +1,16 @@
 package com.baibaoxiang.controller;
 
 import com.baibaoxiang.po.ArticleType;
+import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleTypeService;
+import com.baibaoxiang.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author sheng
@@ -18,6 +22,9 @@ public class ArticleTypeController {
 
     @Autowired
     ArticleTypeService articleTypeService;
+
+    @Autowired
+    ManagerService managerService;
 
     /**
      * 查询 某个articleType
@@ -46,14 +53,22 @@ public class ArticleTypeController {
 
     /**
      * 添加类型
-     * @param articleType
+     *
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public int addArticleType(@RequestBody ArticleType articleType) throws Exception{
-        int i = articleTypeService.insert(articleType);
+    public int addArticleType(@RequestParam String TypeNew,HttpServletRequest request) throws Exception{
+        int isSuper = checkRight(request);
+        int i= 0;
+        if (isSuper==1) {
+            if (!TypeNew.equals("")){
+                ArticleType articleType = new ArticleType();
+                articleType.setType(TypeNew);
+                i = articleTypeService.insert(articleType);
+            }
+        }
         return i;
     }
 
@@ -81,5 +96,20 @@ public class ArticleTypeController {
     public int deleteArticleType(@PathVariable Integer id) throws Exception{
         int i = articleTypeService.deleteByPrimaryKey(id);
         return i;
+    }
+
+    /**
+     * 对权限进行认证
+     * 用以对删除与添加时的认证
+     * @return
+     */
+    public int checkRight(HttpServletRequest request) throws Exception{
+        //该参数用以获取当前用户的用户名
+        String cur_username = (String)request.getSession().getAttribute("username");
+        Manager manager = managerService.findManagerByUsername(cur_username);
+        if (manager.getTitle().equals("AAAAA")){
+            return 1;
+        }
+        return  0;
     }
 }

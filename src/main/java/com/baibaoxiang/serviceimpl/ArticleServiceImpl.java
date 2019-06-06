@@ -139,7 +139,7 @@ public class ArticleServiceImpl implements ArticleService {
         //修改索引
         /*searchService.deleteIndex(record.getNo());
         searchService.addIndex(record);*/
-        return articleMapper.updateByPrimaryKey(record);
+        return articleMapper.updateByPrimaryKeySelective(record);
     }
 
     /**
