@@ -83,7 +83,7 @@
         <filter-class>com.baibaoxiang.filter.CheckLoginFilter</filter-class>
         <init-param>
             <param-name>ignoreCheckURI</param-name>
-            <param-value>png,jpg,js,css</param-value>
+            <param-value>png,jpg,js,css,svg,map</param-value>
         </init-param>
     </filter>
     <filter-mapping>
