@@ -16,6 +16,7 @@ $(function(){
     var nav_w=$(".find_nav_list li").first().width();
     $(".sideline").width(nav_w);
     $(".find_nav_list li").on('click', function(){
+        sessionStorage.setItem("index", $(this).index())
         nav_w=$(this).width();
         $(".sideline").stop(true);
         $(".sideline").animate({left:$(this).position().left},300);
@@ -66,30 +67,6 @@ function navName(c_nav) {
     switch (c_nav) {
         case "推荐":
             sessionStorage.pagecount = "推荐";
-            break;
-        case "攻略":
-            sessionStorage.pagecount = "攻略";
-            break;
-        case "二手书":
-            sessionStorage.pagecount = "二手书";
-            break;
-        case "校内组织":
-            sessionStorage.pagecount = "校内组织";
-            break;
-        case "校内社团":
-            sessionStorage.pagecount = "校内社团";
-            break;
-        case "快递站":
-            sessionStorage.pagecount = "快递站";
-            break;
-        case "原创":
-            sessionStorage.pagecount = "原创";
-            break;
-        case "经济":
-            sessionStorage.pagecount = "经济";
-            break;
-        case "评论":
-            sessionStorage.pagecount = "评论";
             break;
     }
 }
