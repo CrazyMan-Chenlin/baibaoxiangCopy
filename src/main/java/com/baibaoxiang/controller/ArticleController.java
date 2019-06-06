@@ -5,9 +5,7 @@ import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.RedisService;
-import com.baibaoxiang.tool.FastDFSTest;
 import com.baibaoxiang.tool.FastDfsClient;
-import org.csource.fastdfs.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +37,7 @@ public class ArticleController {
     @Autowired
     FastDfsClient fastDfsClient;
 
+    private File file;
 
     /**
      * 按主键查询文章
@@ -152,8 +151,14 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/updateArticle",method = RequestMethod.POST)
-    public void updateByPrimaryKey(@RequestBody Article record) throws Exception {
-        articleService.updateByPrimaryKey(record);
+    public int updateByPrimaryKey(@RequestBody Article record) {
+        try {
+            articleService.updateByPrimaryKey(record);
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     /** 点赞行为
@@ -182,8 +187,7 @@ public class ArticleController {
     @ResponseBody
     //这样接收文件@RequestParam Map<String,String> params,
     public Map<String,Object> uploadArticleImg(@RequestParam MultipartFile file,
-            HttpServletRequest request) throws Exception {
-        FastDfsClient fastDfsClient = new FastDfsClient();
+                                               HttpServletRequest request) throws Exception {
         // 文件类型
         String type = null;
         String uploadFilePath ="";
@@ -198,7 +202,7 @@ public class ArticleController {
                 //判断文件类型是否为空
                 if (type!=null){
                     if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
-                        uploadFilePath = fastDfsClient.uploadFile(bytes, type,null);
+                        uploadFilePath = fastDfsClient.uploadFile(bytes, type);
                         picUrl.append("http://");
                         picUrl.append("47.107.42.150/");
                         picUrl.append( uploadFilePath);
@@ -212,7 +216,7 @@ public class ArticleController {
             map.put("msg","上传失败，请重新上传");
         }
         return map;
-        }
+    }
 
     /**
      * 对权限进行认证

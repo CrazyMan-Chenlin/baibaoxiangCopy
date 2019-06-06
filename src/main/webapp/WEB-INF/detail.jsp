@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="/css/front/style.css"/>
     <link rel="stylesheet" href="/css/front/detail.css"/>
     <script src="/js/front/jquery-3.2.1.js"></script>
-    <script src="/js/front/jquery.history.js"></script>
-    <script src="/js/front/search.js"></script>
 </head>
 <body>
 <div id="nav">
@@ -71,5 +69,6 @@
             $("#content  p").addClass("text-justify");
         })
     })
+
 </script>
 </html>

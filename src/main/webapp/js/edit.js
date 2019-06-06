@@ -48,7 +48,7 @@ $(function() {
         var type = $.trim($("#type").val());
         var message = $("#edit").froalaEditor('html.get', true);
         var area = $("#area").text();
-        var picture = $('.head-img').attr('src');
+        var picture = "/aaaa";
         var author = $("#username").text();
         var date = new Date();
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -91,6 +91,7 @@ $(function() {
         }
         // var author = $("#username").text();
         var date = new Date();
+        //获取当前日期，格式为yyyy-mm-dd
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 
         var data1 ={no:no,title:title,type:type,area:area,message:message,createTime:date1,readNum:"0",likeNum:"0",
@@ -110,8 +111,12 @@ $(function() {
                 contentType:"application/json",
                 data:JSON.stringify(data1),
                 success:function (data) {
-                    alert(data);
-                    // window.location.href="../success.jsp";
+                    if(data==1){
+                        window.location.href="../success.jsp";
+                    }else {
+                        alert("修改失败");
+                    }
+
                 }
             });
         }
@@ -123,8 +128,8 @@ $(function() {
             url:"/articleType",
             type:"get",
             success:function (data) {
-                $("#article_type").children().remove();
                 $.each(data,function (index,item) {
+                    // $("#article_type").children().remove();
                     $("#article_type").append("<li><a href='#' class='type1'>"+item.type+"</a></li>");
                 });
             }
@@ -138,7 +143,4 @@ $(function() {
         //添加到输入框内容
         $("#type").val(type);
     });
-
-
-
 });
