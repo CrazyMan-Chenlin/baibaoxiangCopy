@@ -22,7 +22,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
         </div>
         <div class="form-group">

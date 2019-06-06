@@ -109,6 +109,9 @@ public class ArticleController {
     public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
+        String username = record.getAuthor();
+        Manager manager = managerService.findManagerByUsername(username);
+        record.setAuthor(manager.getName());
         Map<String, String> map = new HashMap<>();
         try {
             articleService.insertSelective(record);
@@ -145,11 +148,16 @@ public class ArticleController {
      * 更新文章
      * @param record
      * @return
-     * @throws Exception
      */
-    @RequestMapping(value = "/",method = RequestMethod.PUT)
-    public void updateByPrimaryKey(@RequestBody Article record) throws Exception {
-        articleService.updateByPrimaryKey(record);
+    @RequestMapping(value = "/updateArticle",method = RequestMethod.POST)
+    public int updateByPrimaryKey(@RequestBody Article record) {
+        try {
+            articleService.updateByPrimaryKey(record);
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     /** 点赞行为
@@ -176,19 +184,38 @@ public class ArticleController {
 
     @RequestMapping(value = "/uploadArticleImg", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> uploadArticleImg(@RequestParam MultipartFile file,  //这样接收文件@RequestParam Map<String,String> params,
-            HttpServletRequest request) throws Exception {
-        Map<String,Object> map=new HashMap<String, Object>(16);
-        String type = "jpg";
-        byte fileByte []= file.getBytes();
+    //这样接收文件@RequestParam Map<String,String> params,
+    public Map<String,Object> uploadArticleImg(@RequestParam MultipartFile file,
+                                               HttpServletRequest request) throws Exception {
+        // 文件类型
+        String type = null;
+        String uploadFilePath ="";
         StringBuffer picUrl = new StringBuffer();
-        String picName = fastDfsClient.uploadFile(fileByte, type);
-        picUrl.append("http://");
-        picUrl.append("47.107.42.150/");
-        picUrl.append( picName);
-        map.put("link",picUrl);
-        return map;
+        Map<String,Object> map=new HashMap<String, Object>(16);
+        try{
+            if (file!=null){
+                // 文件原名称
+                String fileName = file.getOriginalFilename();
+                byte[] bytes = file.getBytes();
+                type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
+                //判断文件类型是否为空
+                if (type!=null){
+                    if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
+                        uploadFilePath = fastDfsClient.uploadFile(bytes, type);
+                        picUrl.append("http://");
+                        picUrl.append("47.107.42.150/");
+                        picUrl.append( uploadFilePath);
+                        map.put("link",picUrl);
+                    }else {
+                        map.put("msg","上传失败，文件必须是jpg类型或者是PNG类型!");
+                    }
+                }
+            }
+        }catch(Exception e){
+            map.put("msg","上传失败，请重新上传");
         }
+        return map;
+    }
 
     /**
      * 对权限进行认证
