@@ -105,16 +105,16 @@ public class ManagerController {
         if(!code.equals(validatecode)){
             map.put("code",0);
             map.put("msg","验证码有误！");
-            modelAndView.setViewName("../login");
+            modelAndView.setViewName("backstage/login");
         }else{
             if(manager == null){
                 map.put("code",0);
                 map.put("msg","用户名无效！");
-                modelAndView.setViewName("../login");
+                modelAndView.setViewName("backstage/login");
             }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
                 map.put("code",0);
                 map.put("msg","密码出错!");
-                modelAndView.setViewName("../login");
+                modelAndView.setViewName("backstage/login");
             }else{
                 //登录成功
                 map.put("code",1);
