@@ -48,7 +48,7 @@ $(function() {
         var type = $.trim($("#type").val());
         var message = $("#edit").froalaEditor('html.get', true);
         var area = $("#area").text();
-        var picture = "/aaaa";
+        var picture = $('.head-img').attr('src');
         var author = $("#username").text();
         var date = new Date();
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -128,8 +128,8 @@ $(function() {
             url:"/articleType",
             type:"get",
             success:function (data) {
+                $("#article_type").children().remove();
                 $.each(data,function (index,item) {
-                    // $("#article_type").children().remove();
                     $("#article_type").append("<li><a href='#' class='type1'>"+item.type+"</a></li>");
                 });
             }
@@ -143,4 +143,7 @@ $(function() {
         //添加到输入框内容
         $("#type").val(type);
     });
+
+
+
 });

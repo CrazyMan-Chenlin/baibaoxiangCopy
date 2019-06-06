@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,27 +21,27 @@
 <p id="username" hidden>${sessionScope.username}</p>
 <p id="area" hidden>${sessionScope.area}</p>
 <p id="articleID" hidden>${article.no}</p>
-<form class="form-horizontal" role="form" id="edit_form" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" id="edit_form" enctype="multipart/form-data" method="post">
     <div class="form-group ">
         <label for="title" class="col-sm-2 control-label">标题</label>
         <div class="col-sm-4">
-        <input type="text" class="form-control" id="title" placeholder="请输入标题" required="required" value="${article.title}">
-    </div>
-</div>
-    <div class="form-group ">
-    <label for="type" class="col-sm-2 control-label">类型</label>
-    <div class="col-sm-4">
-    <input type="text" class="form-control" id="type" placeholder="请输入类型" value="${article.type}" readonly>
-        <div class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
-                选择类型
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" id="article_type">
-            </ul>
+            <input type="text" class="form-control" id="title" placeholder="请输入标题" required="required" value="${article.title}">
         </div>
     </div>
-</div>
+    <div class="form-group ">
+        <label for="type" class="col-sm-2 control-label">类型</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="type" placeholder="请输入类型" value="${article.type}" readonly>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
+                    选择类型
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" id="article_type">
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         <label for="picPath" class="col-sm-2 control-label">选择封面</label>
         <br>
@@ -60,7 +61,12 @@
     <div class="choose">
         <input type="button" class="submitVal" value="发布">
     </div>
-    <input type="button" class="submitVal" value="发布">
+
+    <input type="button" class="change" value="修改" hidden style="background-color: #337ab7;width: 100px;height: 50px;color: white ;margin: 0 auto;">
+
+
+
+
 </form>
 
 

@@ -102,9 +102,11 @@ public class ArticleServiceImpl implements ArticleService {
     private void delKey(String key, String key2, String key3) {
         if (jedisClient.exists(key)) {
             jedisClient.del(key);
-        } else if (jedisClient.exists(key2)) {
+        }
+        if (jedisClient.exists(key2)) {
             jedisClient.del(key2);
-        } else if (jedisClient.exists(key3)) {
+        }
+        if (jedisClient.exists(key3)) {
             jedisClient.del(key3);
         }
     }
