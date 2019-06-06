@@ -230,6 +230,7 @@
             $(".find_nav_list").css("left", sessionStorage.getItem("left2"))
             sessionStorage.setItem("left2", "")
         }
+        
     })
 </script>
 </body>
