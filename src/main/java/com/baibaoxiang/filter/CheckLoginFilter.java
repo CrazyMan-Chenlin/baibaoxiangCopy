@@ -48,7 +48,8 @@ public class CheckLoginFilter implements Filter {
         if (url.endsWith("login") || url.endsWith("loginVerify")
                 || currentUser != null || url.endsWith("userRegister")
                 || url.endsWith("registerVerify") || url.endsWith("checkCode")
-                || isIgnoreURI == true || url.endsWith("/login")) {
+                || isIgnoreURI == true || url.endsWith("/login")
+                || url.endsWith("/")) {
             filterChain.doFilter(req, resp);
             return;
         }
