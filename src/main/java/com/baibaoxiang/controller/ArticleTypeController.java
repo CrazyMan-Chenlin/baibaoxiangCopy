@@ -40,7 +40,7 @@ public class ArticleTypeController {
     }
 
     /**
-     * 查询所有的 文章类型
+     * 查询所有的 文章类型（移动端会调用到）
      * @return
      * @throws Exception
      */
@@ -50,6 +50,19 @@ public class ArticleTypeController {
         List<ArticleType> articleTypes = articleTypeService.selectArticleTypes();
         return articleTypes;
     }
+
+    /**
+     * 查询除了"推荐"外 的所有其他文章类型(管理后台使用)
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "",method = RequestMethod.POST)
+    @ResponseBody
+    public List<ArticleType> findArticleTypesSelective() throws Exception{
+        List<ArticleType> articleTypes = articleTypeService.selectArticleTypesSelective();
+        return articleTypes;
+    }
+
 
     /**
      * 添加类型

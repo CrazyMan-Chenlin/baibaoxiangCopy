@@ -51,7 +51,7 @@ $(function () {
     //查询文章类型
     $("#classification").on('click',function () {
         $.ajax({
-            type : "GET",
+            type : "POST",
             url: "/articleType",
             // dataType:'json',
             success :function (data) {

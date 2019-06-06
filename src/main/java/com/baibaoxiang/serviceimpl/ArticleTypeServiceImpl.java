@@ -70,4 +70,9 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
             return articleTypes;
         }
     }
+
+    @Override
+    public List<ArticleType> selectArticleTypesSelective() throws Exception {
+        return articleTypeMapperCustom.selectArticleTypesSelective();
+    }
 }

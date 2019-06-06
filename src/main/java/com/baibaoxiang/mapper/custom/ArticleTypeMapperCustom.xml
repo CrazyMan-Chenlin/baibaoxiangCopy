@@ -12,4 +12,8 @@
     <select id="selectArticleTypes" resultMap="BaseResultMap">
         SELECT * FROM article_type
     </select>
+
+    <select id="selectArticleTypesSelective" resultMap="BaseResultMap">
+        SELECT * FROM article_type WHERE type != '推荐'
+    </select>
 </mapper>
