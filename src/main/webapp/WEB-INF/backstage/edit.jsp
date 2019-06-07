@@ -25,13 +25,13 @@
     <div class="form-group ">
         <label for="title" class="col-sm-2 control-label">标题</label>
         <div class="col-sm-4">
-        <input type="text" class="form-control" id="title" placeholder="请输入标题" required="required" value="${article.title}">
+            <input type="text" class="form-control" id="title" placeholder="请输入标题" required="required" value="${article.title}">
         </div>
     </div>
     <div class="form-group ">
         <label for="type" class="col-sm-2 control-label">类型</label>
         <div class="col-sm-4">
-        <input type="text" class="form-control" id="type" placeholder="请输入类型" value="${article.type}" readonly>
+            <input type="text" class="form-control" id="type" placeholder="请输入类型" value="${article.type}" readonly>
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
                     选择类型

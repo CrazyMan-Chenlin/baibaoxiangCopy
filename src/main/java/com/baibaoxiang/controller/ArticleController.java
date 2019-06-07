@@ -147,6 +147,7 @@ public class ArticleController {
      * 更新文章
      * @param record
      * @return
+     * @throws Exception
      */
     @RequestMapping(value = "/updateArticle",method = RequestMethod.POST)
     public int updateByPrimaryKey(@RequestBody Article record) {

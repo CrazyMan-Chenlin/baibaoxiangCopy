@@ -14,4 +14,9 @@ public interface ArticleTypeMapperCustom {
      * @return
      */
     List<ArticleType> selectArticleTypes();
+
+    /** 查询除了"推荐"外 的所有其他文章类型
+     * @return
+     */
+    List<ArticleType> selectArticleTypesSelective();
 }

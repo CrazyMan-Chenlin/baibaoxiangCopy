@@ -44,4 +44,10 @@ public interface ArticleTypeService {
      * @throws Exception
      */
     List<ArticleType> selectArticleTypes()throws Exception;
+
+    /** 查询除了"推荐"外 的所有其他文章类型
+     * @return ArticleType列表
+     * @throws Exception
+     */
+    List<ArticleType> selectArticleTypesSelective() throws Exception;
 }
