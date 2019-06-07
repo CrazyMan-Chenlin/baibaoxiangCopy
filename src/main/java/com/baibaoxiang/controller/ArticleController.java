@@ -84,7 +84,6 @@ public class ArticleController {
         }
         Manager manager = managerService.findManagerByUsername(username);
         String area = manager.getArea();
-//        String area="广东第二师范学院花都校区";
         List<Article> articleList = articleService.selectByTypeArea(type, area);
         return articleList;
     }

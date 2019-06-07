@@ -71,7 +71,11 @@ $(function() {
                 contentType:"application/json",
                 data:JSON.stringify(data1),
                 success:function (data) {
-                    window.location.href="../success.jsp";
+                    if (data["msg"]=="发布成功") {
+                        window.location.href="../success.jsp";
+                    }else {
+                        alert("发布失败");
+                    }
                 }
             });
         }
@@ -96,7 +100,6 @@ $(function() {
 
         var data1 ={no:no,title:title,type:type,area:area,message:message,createTime:date1,readNum:"0",likeNum:"0",
             picturePath:picture,top:"4"};
-        alert(message);
         if($.trim(title).length==0||title==""){
             alert("标题未填");
             return false;
