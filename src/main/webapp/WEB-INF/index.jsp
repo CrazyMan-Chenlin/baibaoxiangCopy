@@ -218,19 +218,18 @@
                     window.history.back(-1)
                     $("tbody").html(sessionStorage.getItem("MainContent"))
                     sessionStorage.setItem("MainContent", "")
+                    $(".find_nav_list li").first().removeClass("find_nav_cur");
+                    $(".find_nav_list li").eq(sessionStorage.index).addClass("find_nav_cur")
+                    $(".sideline").css("left", sessionStorage.getItem("left"))
+                    sessionStorage.setItem("left", "")
+                    $(".sideline").css("width", sessionStorage.getItem("width"))
+                    sessionStorage.setItem("width", "")
+                    $(".find_nav_list").css("left", sessionStorage.getItem("left2"))
+                    sessionStorage.setItem("left2", "")
+                }else{
+                    $(".find_nav_list").css("left", 0)
                 }
         })
-        window.onpopstate = function (e) {
-            $(".find_nav_list li").first().removeClass("find_nav_cur");
-            $(".find_nav_list li").eq(sessionStorage.index).addClass("find_nav_cur")
-            $(".sideline").css("left", sessionStorage.getItem("left"))
-            sessionStorage.setItem("left", "")
-            $(".sideline").css("width", sessionStorage.getItem("width"))
-            sessionStorage.setItem("width", "")
-            $(".find_nav_list").css("left", sessionStorage.getItem("left2"))
-            sessionStorage.setItem("left2", "")
-        }
-        
     })
 </script>
 </body>
