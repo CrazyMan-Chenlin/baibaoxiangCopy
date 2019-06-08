@@ -37,9 +37,7 @@
     </div>
 </div>
 <div id="content">
-    <img  src="/images/front/dali.jpg"/>
         ${article.message}
-    <img  src="/images/front/dali.jpg"/>
 </div>
 <div style="text-align: right;margin-right: 1rem;margin-bottom: 0.7rem">
     <span class="text-muted" style="font-size: 0.75rem">点赞</span>
