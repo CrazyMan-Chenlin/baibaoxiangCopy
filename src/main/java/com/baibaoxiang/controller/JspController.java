@@ -112,4 +112,8 @@ public class JspController {
         modelAndView.setViewName("backstage/edit");
         return modelAndView;
     }
+    @RequestMapping(value = "/searchManager")
+    public ModelAndView searchManager() throws Exception {
+       return new ModelAndView("backstage/SearchManager");
+    }
 }
