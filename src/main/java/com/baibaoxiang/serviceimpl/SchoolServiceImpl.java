@@ -26,6 +26,9 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public int insertSchool(School record) throws Exception {
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         return schoolMapper.insert(record);
     }
 
