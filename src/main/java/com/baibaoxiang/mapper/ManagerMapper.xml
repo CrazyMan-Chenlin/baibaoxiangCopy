@@ -71,6 +71,9 @@
   <sql id="Base_Column_List" >
     username, name, password, area, path, title, salt
   </sql>
+  <select id="queryAuthorPicture" resultType="String">
+    select path from manager where name = #{name,jdbcType=VARCHAR}
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baibaoxiang.po.ManagerExample" >
     select
     <if test="distinct" >
