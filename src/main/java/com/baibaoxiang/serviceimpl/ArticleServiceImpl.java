@@ -222,6 +222,11 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public void setTopArticle(String no, Integer top) throws Exception {
+        Article article = articleMapper.selectByPrimaryKey(no);
+        String key = articleInfoKey + ":" + article.getArea();
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         articleMapperCustom.setTopArticle(no,top);
     }
 }
