@@ -6,7 +6,7 @@
   <bean id="builder"
         class="org.apache.solr.client.solrj.impl.HttpSolrClient.Builder">
     <constructor-arg name="baseSolrUrl"
-                     value="http://192.168.111.14:8080/solr/baibaoxiang" />
+                     value="http://47.107.42.150:8080/solr/baibaoxiang" />
   </bean>
   <bean factory-bean="builder" factory-method="build" id="httpSolrClient">
   </bean>

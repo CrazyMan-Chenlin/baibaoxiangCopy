@@ -58,4 +58,10 @@ public interface ManagerService {
      */
     void deleteManagerBatch(String usernames) throws Exception;
 
+    /**
+     * 查询作者头像
+     * @param name
+     * @return
+     */
+    String queryAuthorPicture(String name);
 }

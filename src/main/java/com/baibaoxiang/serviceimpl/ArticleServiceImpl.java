@@ -89,7 +89,7 @@ public class ArticleServiceImpl implements ArticleService {
         String key3 = articleInfoKey + ":" + article.getArea();
         delKey(key, key2, key3);
         //删除索引
-        /*searchService.deleteIndex(no);*/
+        searchService.deleteIndex(no);
         return articleMapper.deleteByPrimaryKey(no);
     }
 
@@ -128,7 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
             delKey(key,key2,key3);
             articleMapper.deleteByPrimaryKey(no[i]);
             //变量删除索引
-            /*searchService.deleteIndex(no[i]);*/
+            searchService.deleteIndex(no[i]);
         }
     }
 
@@ -139,8 +139,8 @@ public class ArticleServiceImpl implements ArticleService {
         String key3 = articleInfoKey + ":" + record.getNo() + ":" + "BASE";
         delKey(key, key2, key3);
         //修改索引
-        /*searchService.deleteIndex(record.getNo());
-        searchService.addIndex(record);*/
+        searchService.deleteIndex(record.getNo());
+        searchService.addIndex(record);
         return articleMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -222,6 +222,11 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public void setTopArticle(String no, Integer top) throws Exception {
+        Article article = articleMapper.selectByPrimaryKey(no);
+        String key = articleInfoKey + ":" + article.getArea();
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         articleMapperCustom.setTopArticle(no,top);
     }
 }
