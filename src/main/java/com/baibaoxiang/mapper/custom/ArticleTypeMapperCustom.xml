@@ -16,4 +16,12 @@
     <select id="selectArticleTypesSelective" resultMap="BaseResultMap">
         SELECT * FROM article_type WHERE type != '推荐'
     </select>
+
+    <select id="selectArticleTypeByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM article_type WHERE type =#{type}
+    </select>
+
+    <delete id="deleteByType" parameterType="java.lang.String" >
+        DELETE FROM article_type WHERE type = #{type}
+    </delete>
 </mapper>
