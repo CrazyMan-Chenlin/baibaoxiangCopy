@@ -75,4 +75,17 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     public List<ArticleType> selectArticleTypesSelective() throws Exception {
         return articleTypeMapperCustom.selectArticleTypesSelective();
     }
+
+    @Override
+    public ArticleType selectArticleTypeByType(String type) throws Exception {
+        return articleTypeMapperCustom.selectArticleTypeByType(type);
+    }
+
+    @Override
+    public void deleteByType(String type) throws Exception {
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        articleTypeMapperCustom.deleteByType(type);
+    }
 }

@@ -19,4 +19,15 @@ public interface ArticleTypeMapperCustom {
      * @return
      */
     List<ArticleType> selectArticleTypesSelective();
+
+    /**
+     * 通过文章类型名称删除
+     */
+    void deleteByType(String type);
+
+    /** 通过文章类型 查询
+     * @param type
+     * @return
+     */
+    ArticleType selectArticleTypeByType(String type);
 }

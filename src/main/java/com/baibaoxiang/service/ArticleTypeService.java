@@ -50,4 +50,16 @@ public interface ArticleTypeService {
      * @throws Exception
      */
     List<ArticleType> selectArticleTypesSelective() throws Exception;
+
+    /** 通过文章类型 查询
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    ArticleType selectArticleTypeByType(String type) throws Exception;
+
+    /** 通过文章的类型 删除
+     * @throws Exception
+     */
+    void deleteByType(String type) throws Exception;
 }

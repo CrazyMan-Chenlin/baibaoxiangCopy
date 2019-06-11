@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -99,16 +101,23 @@ public class ArticleTypeController {
     }
 
     /**
-     * 删除 某文章类型
-     * @param id
-     * @return
+     * 通过类型 删除
+     * @param
+     * @return Map
      * @throws Exception
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteArticleType",method = RequestMethod.POST)
     @ResponseBody
-    public int deleteArticleType(@PathVariable Integer id) throws Exception{
-        int i = articleTypeService.deleteByPrimaryKey(id);
-        return i;
+    public Map<String,String> deleteArticleType(HttpServletRequest request) throws Exception{
+        HashMap<String, String> map = new HashMap<>(16);
+        String type = request.getParameter("type");
+        if(articleTypeService.selectArticleTypeByType(type) == null){
+            map.put("msg","删除失败，数据库没有该类型!");
+        }else{
+            articleTypeService.deleteByType(type);
+            map.put("msg","删除成功");
+        }
+        return map;
     }
 
     /**
