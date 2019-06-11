@@ -30,7 +30,7 @@
     <h5 style="font-size: 1.2rem;color:#141414;line-height:1.5;font-weight: bold">${article.title}</h5>
 </div>
 <div id="message">
-    <div style="float: left;width: 15%"><img src="${authorPicture}" class="rounded-circle"></div>
+    <div style="float: left;width: 15%"><img src="http://47.107.42.150/${authorPicture}" class="rounded-circle"></div>
     <div style="float: left;font-size: 0.8rem;width: 80%;margin-top: 0.1rem" class="text-dark"><span
             style="">${article.author}</span></div>
     <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">${article.createTime} 阅读量：${article.readNum}</span>
