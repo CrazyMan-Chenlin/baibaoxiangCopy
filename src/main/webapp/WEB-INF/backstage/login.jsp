@@ -15,7 +15,7 @@
         <h1>欢迎登陆百宝箱后台管理系统！</h1>
     </div>
 </div>
-<form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/manager1/loginVerify" METHOD="post" id="form">
+<form class="form-horizontal" role="form" action="/manager1/loginVerify" METHOD="post" id="form">
     <div class="form-group">
         <label for="username" class="col-sm-2 control-label">用户名</label>
         <div class="col-sm-6">

@@ -60,6 +60,9 @@ $(function () {
                     $("#name").val("");
                     $("#password").val("");
                     $("#area").val("");
+                },
+                error:function () {
+                    alert("添加失败");
                 }
             });
         }
@@ -74,12 +77,11 @@ $(function () {
                 checked[i]=$(this).parents("td").text();
             });
             var usernames = checked.join(",");
-            // console.log(usernames);
+            console.log(usernames);
             $.ajax({
                 url:"/manager1/deleteBatch",
                 type:"POST",
                 data: {usernames:usernames},
-                async:false,
                 success:function (data) {
                     alert(data["msg"]);
                     $("#query").trigger('click');

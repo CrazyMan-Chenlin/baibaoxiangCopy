@@ -110,12 +110,17 @@ public class ArticleTypeController {
     @ResponseBody
     public Map<String,String> deleteArticleType(HttpServletRequest request) throws Exception{
         HashMap<String, String> map = new HashMap<>(16);
-        String type = request.getParameter("type");
-        if(articleTypeService.selectArticleTypeByType(type) == null){
-            map.put("msg","删除失败，数据库没有该类型!");
-        }else{
-            articleTypeService.deleteByType(type);
-            map.put("msg","删除成功");
+        int i = checkRight(request);
+        if (i==1){
+            String type = request.getParameter("type");
+            if(articleTypeService.selectArticleTypeByType(type) == null){
+                map.put("msg","删除失败，数据库没有该类型!");
+            }else{
+                articleTypeService.deleteByType(type);
+                map.put("msg","删除成功");
+            }
+        }else {
+            map.put("msg","您不是超级管理员");
         }
         return map;
     }

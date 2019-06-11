@@ -221,9 +221,18 @@ public class ManagerController {
                         manager.setName(name);
                         manager.setPath(uploadFilePath);
                         managerService.updateByPrimaryKeySelective(manager);
+                        modelAndView.addObject("msg","修改成功");
                     }else {
                         modelAndView.addObject("msg","上传失败，文件必须是jpg类型或者是PNG类型!");
                     }
+                }else {
+                    request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
+                    String name = request.getParameter("name");
+                    Manager manager = new Manager();
+                    manager.setUsername(username);
+                    manager.setName(name);
+                    managerService.updateByPrimaryKeySelective(manager);
+                    modelAndView.addObject("msg","修改昵称成功");
                 }
             }
         }catch (Exception e){

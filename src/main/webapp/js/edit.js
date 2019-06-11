@@ -129,7 +129,7 @@ $(function() {
     $("#classification").on('click',function () {
         $.ajax({
             url:"/articleType",
-            type:"get",
+            type:"post",
             success:function (data) {
                 $("#article_type").children().remove();
                 $.each(data,function (index,item) {

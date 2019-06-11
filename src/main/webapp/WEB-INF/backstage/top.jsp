@@ -8,7 +8,7 @@
     <title>top</title>
 </head>
 <body>
-    <div class="username"><a href="#">${sessionScope.username}</a></div>
-    <div class="portrait"></div>
+    <span class="quit"><a href="/manager1/logout" target="_parent">退出登录</a></span>
+    <div class="username"><a href="/jsp/personal_Information" target="mainframe">${sessionScope.username}</a></div>
 </body>
 </html>

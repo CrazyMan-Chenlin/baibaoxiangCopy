@@ -70,3 +70,12 @@ li{
     padding: 3px;
     border-radius: 5px;
 }
+.del{
+    text-decoration: none;
+    text-align: center;
+    color: #defffa;
+    background-color: #b74526;
+    font-size: 16px;
+    padding: 3px;
+    border-radius: 5px;
+}

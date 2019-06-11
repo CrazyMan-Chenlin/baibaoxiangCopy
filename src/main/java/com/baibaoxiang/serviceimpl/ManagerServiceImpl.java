@@ -67,7 +67,7 @@ public class ManagerServiceImpl implements ManagerService {
         String arr [] = usernames.split(",");
         String name ;
         for(int i = 0; i < arr.length; i++){
-            name = managerMapper.selectByPrimaryKey(usernames).getName();
+            name = managerMapper.selectByPrimaryKey(arr[i]).getName();
             if (jedisClient.hexists(ManagerInfoKey,name)){
                 jedisClient.hdel(ManagerInfoKey,name);
             }

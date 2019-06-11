@@ -28,7 +28,7 @@ $(function () {
 
     //添加新的分类，仅超级管理员可用
     $(".new").on('click',function () {
-       var newType = $("#new_type").val();
+       var newType = $.trim($("#new_type").val());
        if (newType!=null&&newType!="") {
            $.ajax({
                type:"post",
@@ -47,6 +47,27 @@ $(function () {
        }
 
     });
+
+
+    //删除分类，仅超级管理员可用
+    $(".del").on('click',function () {
+        var delType = $.trim($("#del_type").val());
+        if (delType!=null&&delType!="") {
+            $.ajax({
+                type:"post",
+                url:"/articleType/deleteArticleType",
+                data:{type:delType},
+                success:function (data) {
+                    alert(data["msg"]);
+                    $("input").val("");
+                }
+            });
+        }else {
+            alert("删除类型不能为空");
+        }
+
+    });
+
 
     //查询文章类型
     $("#classification").on('click',function () {

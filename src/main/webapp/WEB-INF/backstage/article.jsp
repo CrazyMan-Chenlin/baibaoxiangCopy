@@ -33,6 +33,7 @@
     </div>
     <br>
         <input type="text" class="input-sm" placeholder="请输入想要添加的分类" id="new_type"><button class="new">添加新分类</button>
+    <input type="text" class="input-sm" placeholder="请输入想要删除的分类" id="del_type"><button class="del">删除分类</button>
     <br><br>
     <div class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">

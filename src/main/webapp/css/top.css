@@ -1,16 +1,7 @@
-/**{*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*}*/
 body{
     background-color: #423841;
 }
 
-/*顶部工具栏*/
-/*.tools{*/
-/*    border-left: #5bc0de 2px solid;*/
-/*    position: relative;*/
-/*}*/
 
 /*右侧图标*/
 /*用户信息*/
@@ -27,7 +18,6 @@ body{
     margin: 7px;
     width: 100px;
     float: right;
-    /*background-color: red;*/
     overflow: hidden;
 }
 
