@@ -53,6 +53,7 @@
             if (searchInput == "") {
                 alert("输入为空")
             } else {
+                $("#content").empty();
                $("#loading").css("display","block")
                 $.post("/search/searchSomething", {query: searchInput},function (data) {
                     if (data == ""|| data == null){
