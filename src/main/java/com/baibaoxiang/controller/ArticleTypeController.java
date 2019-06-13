@@ -4,6 +4,8 @@ import com.baibaoxiang.po.ArticleType;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleTypeService;
 import com.baibaoxiang.service.ManagerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,8 @@ public class ArticleTypeController {
 
     @Autowired
     ManagerService managerService;
+
+    private final static Logger logger = LoggerFactory.getLogger(ArticleTypeController.class);
 
     /**
      * 查询 某个articleType
@@ -115,11 +119,14 @@ public class ArticleTypeController {
             String type = request.getParameter("type");
             if(articleTypeService.selectArticleTypeByType(type) == null){
                 map.put("msg","删除失败，数据库没有该类型!");
+                logger.info("删除失败，数据库没有该类型!");
             }else{
                 articleTypeService.deleteByType(type);
+                logger.info("删除成功");
                 map.put("msg","删除成功");
             }
         }else {
+            logger.info("您不是超级管理员");
             map.put("msg","您不是超级管理员");
         }
         return map;

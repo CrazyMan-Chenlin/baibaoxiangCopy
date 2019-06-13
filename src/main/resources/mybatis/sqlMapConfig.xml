@@ -6,6 +6,9 @@
 
     <!-- 全局配置 settings 需要时再配置 -->
 
+    <settings>
+        <setting name="logPrefix" value="dao."/>
+    </settings>
     <!--  别名配置 -->
     <typeAliases>
         <!-- 批量扫描别名 -->

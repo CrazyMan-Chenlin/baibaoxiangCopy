@@ -6,6 +6,8 @@ import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.RedisService;
 import com.baibaoxiang.tool.FastDfsClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +40,8 @@ public class ArticleController {
     FastDfsClient fastDfsClient;
 
     private File file;
+
+    private final static Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
     /**
      * 按主键查询文章
@@ -116,6 +120,7 @@ public class ArticleController {
             articleService.insertSelective(record);
             map.put("msg","发布成功");
         }catch (Exception e){
+            logger.error("异常抛出exception 文章发布失败 ", e);
             map.put("msg","发布失败");
         }
         return map;
@@ -155,7 +160,7 @@ public class ArticleController {
             articleService.updateByPrimaryKey(record);
             return 1;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("文章更新异常： " + e);
         }
         return 0;
     }
@@ -212,6 +217,7 @@ public class ArticleController {
                 }
             }
         }catch(Exception e){
+            logger.error("图片上传异常：" + e);
             map.put("msg","上传失败，请重新上传");
         }
         return map;

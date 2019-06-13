@@ -4,6 +4,8 @@ import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.tool.FastDfsClient;
 import com.baibaoxiang.tool.RandomValidateCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,7 @@ public class ManagerController {
 
     private File file;
 
+    private final static Logger logger = LoggerFactory.getLogger(ManagerController.class);
     /**
      * 返回登录页面
      *
@@ -77,7 +80,8 @@ public class ManagerController {
             // 输出图片方法
             randomValidateCode.getRandcode(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+
+            logger.error("条形码获取异常：" + e);
         }
     }
 
@@ -236,6 +240,7 @@ public class ManagerController {
                 }
             }
         }catch (Exception e){
+
             modelAndView.addObject("msg","上传失败");
         }
         modelAndView.setViewName("backstage/personal_Information");
