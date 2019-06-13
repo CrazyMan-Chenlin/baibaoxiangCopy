@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 /**
  * @author chenlin
  */
-@Component
-public class FastDfsClient {
 
+public class FastDfsClient {
 	private TrackerClient trackerClient = null;
 	private TrackerServer trackerServer = null;
 	private StorageServer storageServer = null;
@@ -20,6 +19,8 @@ public class FastDfsClient {
 		ClientGlobal.init(path);
 		trackerClient = new TrackerClient();
 		trackerServer = trackerClient.getConnection();
+		//给dfs发送一个消息
+		ProtoCommon.activeTest(trackerServer.getSocket());
 		storageServer = null;
 		storageClient = new StorageClient1(trackerServer, storageServer);
 	}
