@@ -25,6 +25,16 @@
     <link rel="stylesheet" href="/css/front/style.css"/>
     <script src="/js/front/jquery-3.2.1.js"></script>
     <script src="/js/front/js.js"></script>
+    <script  src="/js/front/AreaMessage.js"></script>
+    <script src="/js/front/RequestSchool.js"></script>
+    <script src="/js/front/ModifyType.js"></script>
+    <script src="/js/front/RequestArea.js"></script>
+    <script src="/js/front/WeiXinFit.js"></script>
+    <style>
+        h5{
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
 <div id="showSearch" style="width:100%;position: absolute;z-index: 1">
@@ -36,7 +46,7 @@
                 <!--<span class="navbar-toggler-icon"></span>-->
                 <img src="/images/front/area.svg"/>
             </button>
-            <h5 class="text-white" style="margin: auto">百宝箱</h5>
+            <h5 class="text-white" style="margin: auto">广东第二师范学院(花都校区)</h5>
             <a href="search.html"><img src="/images/front/search.svg"></a>
         </nav>
     </div>
@@ -61,6 +71,8 @@
                     <div>
                         <img class="littleIcon" src="/images/front/love.svg"/>
                         &nbsp;<span>${article.likeNum}</span>
+                        &nbsp; <img class="littleIcon" src="/images/front/read.svg"/>
+                        <span>${article.readNum}</span>
                     </div>
                 </td>
                 <td width="30%">
@@ -104,131 +116,8 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var $chooseSchool = $("#chooseSchool");
-        /*展示地址栏*/
-        $(".navbar-toggler").on("click", function () {
-            if ($chooseSchool.css("left") != '0px') {
-                $chooseSchool.css("display", "block")
-                $($chooseSchool).animate({"left": 0}, 500);
-            }
-        })
-        /*退出地址栏*/
-        $("body").on("click", function (e) {
-            var target = $(e.target);
-            if (!target.is($("#areaName")) && !target.is($("#schoolName"))) {
-                if ($chooseSchool.css("left") == '0px') {
-                    $($chooseSchool).animate({"left": 600}, 500);
-                    setTimeout(function f() {
-                        $chooseSchool.css("display", "none")
-                    }, 500)
-                }
-            }
-        })
-        //ajax请求学校地址
-        $(" #schoolName").change(function () {
-            var schoolName = $("#schoolName").val();
-            $.post("/index/queryAreaName", {schoolName: schoolName}, function (data) {
-                $("#areaName").empty();
-                for (var i in data) {
-                    $("#areaName").append("<option value=" + data[i] + ">" + data[i] + "</option>")
-                }
-                if (schoolName != '广东第二师范学院') {
-                    var schoolName = $("#schoolName").val();
-                    var schoolArea = $("#areaName").val();
-                    $.post("/index/changeAreaArticle", {
-                        area: schoolName + schoolArea,
-                        type: $(".find_nav_cur").text()
-                    }, function (data) {
-                        $(".table tbody").empty();
-                        $.each(data, function (i, article) {
-                            $(".table tbody").append(" <tr>\n" +
-                                "                <td class=\"firstTd\">\n" +
-                                "                    <div class=\"Title\"><a href=\"/detail?no="+article.no+"\">"+article.title+"</a></div>\n" +
-                                "                    <div>\n" +
-                                "                        <img class=\"littleIcon\" src=\"/images/front/love.svg\"/>\n" +
-                                "                        &nbsp;<span>"+article.likeNum+"</span>\n" +
-                                "                    </div>\n" +
-                                "                </td>\n" +
-                                "                <td width=\"30%\">\n" +
-                                "                    <img src=\""+article.picturePath+"\" class=\"rounded \" alt=\"...\"></td>\n" +
-                                "            </tr>")
-                        })
-                    })
-                }
-            });
-        });
-        $(".find_nav_list li ").on('click', function () {
-            $.post("/index/getAreaArticle", {
-                type: $(this).text(),
-                area: $("#schoolName").val() + $("#areaName").val()
-            }, function (data) {
-                $(".table tbody").empty();
-                $.each(data, function (i, article) {
-                    $(".table tbody").append(" <tr>\n" +
-                        "                <td class=\"firstTd\">\n" +
-                        "                    <div class=\"Title\"><a href=\"/detail?no="+article.no+"\">"+article.title+"</a></div>\n" +
-                        "                    <div>\n" +
-                        "                        <img class=\"littleIcon\" src=\"/images/front/love.svg\"/>\n" +
-                        "                        &nbsp;<span>"+article.likeNum+"</span>\n" +
-                        "                    </div>\n" +
-                        "                </td>\n" +
-                        "                <td width=\"30%\">\n" +
-                        "                    <img src=\""+article.picturePath+"\" class=\"rounded \" alt=\"...\"></td>\n" +
-                        "            </tr>")
-                })
-            });
-
-        })
-        $("#areaName").change(function () {
-            var schoolName = $("#schoolName").val();
-            var schoolArea = $("#areaName").val();
-            $.post("/index/changeAreaArticle", {
-                area: schoolName + schoolArea,
-                type: $(".find_nav_cur").text()
-            }, function (data) {
-                $(".table tbody").empty();
-                $.each(data, function (i, article) {
-                    $(".table tbody").append(" <tr>\n" +
-                        "                <td class=\"firstTd\">\n" +
-                        "                    <div class=\"Title\"><a href=\"/detail?no="+article.no+"\">"+article.title+"</a></div>\n" +
-                        "                    <div>\n" +
-                        "                        <img class=\"littleIcon\" src=\"/images/front/love.svg\"/>\n" +
-                        "                        &nbsp;<span>"+article.likeNum+"</span>\n" +
-                        "                    </div>\n" +
-                        "                </td>\n" +
-                        "                <td width=\"30%\">\n" +
-                        "                    <img src=\""+article.picturePath+"\" class=\"rounded \" alt=\"...\"></td>\n" +
-                        "            </tr>")
-                })
-            });
-        })
-        var ua = navigator.userAgent.toLowerCase();
-        var isWeixin = ua.indexOf('micromessenger') != -1;
-        $(".table").on('click', 'a', function () {
-            sessionStorage.setItem("left", $(".sideline").css("left"))
-            sessionStorage.setItem("left2", $(".find_nav_list").css("left"))
-            sessionStorage.setItem("width", $(".sideline").css("width"))
-            var json = new Date().getTime();
-            history.pushState({json}, '', window.location.href + "#" + json);
-            sessionStorage.setItem("MainContent", $("tbody").html())
-        })
-        $(function () {
-            $("#warn").css("display", "block");
-                if (sessionStorage.getItem("MainContent") != null && sessionStorage.getItem("MainContent") != "") {
-                    window.history.back(-1)
-                    $("tbody").html(sessionStorage.getItem("MainContent"))
-                    sessionStorage.setItem("MainContent", "")
-                    $(".find_nav_list li").first().removeClass("find_nav_cur");
-                    $(".find_nav_list li").eq(sessionStorage.index).addClass("find_nav_cur")
-                    $(".sideline").css("left", sessionStorage.getItem("left"))
-                    sessionStorage.setItem("left", "")
-                    $(".sideline").css("width", sessionStorage.getItem("width"))
-                    sessionStorage.setItem("width", "")
-                    $(".find_nav_list").css("left", sessionStorage.getItem("left2"))
-                    sessionStorage.setItem("left2", "")
-                }else{
-                    $(".find_nav_list").css("left", 0)
-                }
+        $(" tbody").on("click",'tr',function () {
+           location.href =$(this).find(" a").attr("href")
         })
     })
 </script>
