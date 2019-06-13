@@ -61,10 +61,11 @@
             setTimeout(function f(){$("#return").css("background-color","#ffffff")},100)
         })
         $(function () {
+            $("#content p:last").css("display","none")
             $("#content img").addClass("rounded")
             $("#content img").addClass("mx-auto")
             $("#content img").addClass("d-block")
-            $("#content  p").addClass("text-justify");
+            $("#content  p").addClass("text-justify")
         })
     })
 
