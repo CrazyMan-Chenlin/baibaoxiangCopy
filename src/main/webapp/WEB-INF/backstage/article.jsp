@@ -32,9 +32,12 @@
         <h3>今日网站点赞量：</h3><h3 id="likeNum"></h3>
     </div>
     <br>
+    <c:if test="${sessionScope.saldfjlskfffds=='sdadwededa'}" >
         <input type="text" class="input-sm" placeholder="请输入想要添加的分类" id="new_type"><button class="new">添加新分类</button>
-    <input type="text" class="input-sm" placeholder="请输入想要删除的分类" id="del_type"><button class="del">删除分类</button>
+        <input type="text" class="input-sm" placeholder="请输入想要删除的分类" id="del_type"><button class="del">删除分类</button>
+    </c:if>
     <br><br>
+
     <div class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
             文章分类

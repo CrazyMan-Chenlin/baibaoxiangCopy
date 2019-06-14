@@ -124,6 +124,11 @@ public class ManagerController {
                 request.getSession().setAttribute("username", username);
                 Manager manager2 = managerService.findManagerByUsername(username);
                 request.getSession().setAttribute("area",manager.getArea());
+                if (checkRight(request)==0){
+                    request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
+                }else{
+                    request.getSession().setAttribute("saldfjlskfffds","sdadwededa");
+                }
                 //添加cookie
                 if(rememberme!=null) {
                     //创建两个Cookie对象
