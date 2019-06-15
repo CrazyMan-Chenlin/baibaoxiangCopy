@@ -45,6 +45,11 @@ public interface ArticleService {
      */
     List<Article> selectAllArticles() throws Exception;
 
+    /** 查询某类型的所有推文  置顶/发布时间 排序
+     * @return
+     * @throws Exception
+     */
+    List<Article> selectByType(String type) throws Exception;
     /**
      * 添加文章
      * @param record

@@ -36,6 +36,11 @@
         SELECT <include refid="Base_Column_List"/> FROM article ORDER BY top ASC,create_time DESC
     </select>
 
+    <!-- 查询某类型的所有推文  置顶/发布时间 排序-->
+    <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM article WHERE type = #{type} ORDER BY top ASC,create_time DESC
+    </select>
+
     <!-- 通过 创建的时间段 找出批量文章的编号-->
     <select id="selectNoByCreateTime" parameterType="java.sql.Date" resultType="java.lang.String" >
         SELECT no FROM article WHERE create_time BETWEEN #{startTime,jdbcType=DATE} AND #{endTime,jdbcType=DATE}

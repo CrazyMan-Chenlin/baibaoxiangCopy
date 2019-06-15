@@ -25,6 +25,12 @@ public interface ArticleMapperCustom {
 
     List<Article> selectAllArticles();
 
+    /** 查询某类型的所有推文
+     * @param type
+     * @return
+     */
+    List<Article> selectByType(String type);
+
     /** 通过 创建的时间段 找出批量文章的编号。
      * @param startTime
      * @param endTime

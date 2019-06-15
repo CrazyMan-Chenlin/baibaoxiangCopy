@@ -56,7 +56,7 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     /**
      * 添加缓存机制
-     * @return
+     * @return·
      * @throws Exception
      */
     @Override

@@ -68,6 +68,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> selectByType(String type) throws Exception {
+        return articleMapperCustom.selectByType(type);
+    }
+
+    @Override
     public int insertSelective(Article record) throws Exception {
         String key = articleInfoKey + ":" + record.getType() + ":" + record.getArea();
         String key2 = articleInfoKey + ":" + record.getArea();

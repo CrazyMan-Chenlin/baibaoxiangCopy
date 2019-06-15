@@ -84,7 +84,7 @@ public class ArticleController {
         String username = (String)session.getAttribute("username");
         int isCheck = checkRight(request);
         if(isCheck==1){
-            return selectAll();
+            return articleService.selectByType(type);
         }
         Manager manager = managerService.findManagerByUsername(username);
         String area = manager.getArea();
@@ -183,6 +183,7 @@ public class ArticleController {
         Integer top = Integer.valueOf(topStr);
         articleService.setTopArticle(no,top);
         map.put("msg","修改成功");
+        logger.info("推文置顶设置成功");
         return map;
     }
 
@@ -213,6 +214,7 @@ public class ArticleController {
                         map.put("link",picUrl);
                     }else {
                         map.put("msg","上传失败，文件必须是jpg类型或者是PNG类型!");
+                        logger.info("上传失败，文件必须是jpg类型或者是PNG类型!");
                     }
                 }
             }
