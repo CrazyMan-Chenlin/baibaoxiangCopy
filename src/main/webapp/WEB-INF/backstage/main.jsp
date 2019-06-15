@@ -12,9 +12,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>欢迎登陆百宝箱后台管理系统！</h1>
-        <p><a class="btn btn-primary btn-lg" role="button">
-            使用说明</a>
-        </p>
+
     </div>
 </div>
 </body>

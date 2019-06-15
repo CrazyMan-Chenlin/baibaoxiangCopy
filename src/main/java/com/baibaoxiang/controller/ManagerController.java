@@ -4,6 +4,8 @@ import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.tool.FastDfsClient;
 import com.baibaoxiang.tool.RandomValidateCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,7 @@ public class ManagerController {
 
     private File file;
 
+    private final static Logger logger = LoggerFactory.getLogger(ManagerController.class);
     /**
      * 返回登录页面
      *
@@ -52,6 +55,7 @@ public class ManagerController {
         modelAndView.setViewName("/backstage/login");
         return modelAndView;
     }
+
 
     /**
      * 获取生成验证码显示到 UI 界面
@@ -77,7 +81,8 @@ public class ManagerController {
             // 输出图片方法
             randomValidateCode.getRandcode(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+
+            logger.error("条形码获取异常：" + e);
         }
     }
 
@@ -105,25 +110,34 @@ public class ManagerController {
         if(!code.equals(validatecode)){
             map.put("code",0);
             map.put("msg","验证码有误！");
+            logger.info("验证码有误");
             modelAndView.setViewName("backstage/login");
         }else{
             if(manager == null){
                 map.put("code",0);
                 map.put("msg","用户名无效！");
+                logger.info("用户名无效！返回登录页");
                 modelAndView.setViewName("backstage/login");
             }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
                 map.put("code",0);
                 map.put("msg","密码出错!");
+                logger.info("密码出错！返回登录页");
                 modelAndView.setViewName("backstage/login");
             }else{
                 //登录成功
                 map.put("code",1);
                 map.put("msg","");
+                logger.info("登录成功!");
                 modelAndView.setViewName("backstage/admin_index");
                 //添加session 将用户名添加到session
                 request.getSession().setAttribute("username", username);
                 Manager manager2 = managerService.findManagerByUsername(username);
                 request.getSession().setAttribute("area",manager.getArea());
+                if (checkRight(request)==0){
+                    request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
+                }else{
+                    request.getSession().setAttribute("saldfjlskfffds","sdadwededa");
+                }
                 //添加cookie
                 if(rememberme!=null) {
                     //创建两个Cookie对象
@@ -153,6 +167,7 @@ public class ManagerController {
     public String logout(HttpSession session) throws Exception {
         session.removeAttribute("username");
         session.invalidate();
+        logger.info("退出登录,返回登录页");
         return "redirect:login";
     }
 
@@ -178,13 +193,16 @@ public class ManagerController {
             int isInsert = managerService.insert(manager);
             if (isInsert==1){
                 map.put("msg","添加成功");
+                logger.info("添加管理员成功");
                 return map;
             }else {
                 map.put("msg","用户名已注册");
+                logger.info("用户名已注册");
                 return map;
             }
         }
         map.put("msg","权限不足");
+        logger.info("权限不足");
         return map;
     }
 
@@ -222,8 +240,10 @@ public class ManagerController {
                         manager.setPath(uploadFilePath);
                         managerService.updateByPrimaryKeySelective(manager);
                         modelAndView.addObject("msg","修改成功");
+                        logger.info("头像信息修改成功");
                     }else {
                         modelAndView.addObject("msg","上传失败，文件必须是jpg类型或者是PNG类型!");
+                        logger.info("上传失败，文件必须是jpg类型或者是PNG类型!");
                     }
                 }else {
                     request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
@@ -233,10 +253,13 @@ public class ManagerController {
                     manager.setName(name);
                     managerService.updateByPrimaryKeySelective(manager);
                     modelAndView.addObject("msg","修改昵称成功");
+                    logger.info("修改昵称成功");
                 }
             }
         }catch (Exception e){
+
             modelAndView.addObject("msg","上传失败");
+            logger.error("上传失败");
         }
         modelAndView.setViewName("backstage/personal_Information");
         return modelAndView;
@@ -260,12 +283,14 @@ public class ManagerController {
         if(!manager.getPassword().equals(md5(salt,oldPassword))){
             map.put("code",0);
             map.put("msg","原密码有误！");
+            logger.info("原密码有误");
         }else{
             //密码正确
             manager.setPassword(md5(salt,newPassword));
             managerService.updateByPrimaryKeySelective(manager);
             map.put("code",1);
             map.put("msg","密码更改成功！");
+            logger.info("密码更新成功");
         }
         return map;
     }
@@ -288,9 +313,11 @@ public class ManagerController {
             manager.setPassword(md5(salt,password));
             managerService.updateByPrimaryKeySelective(manager);
             map.put("msg","修改成功");
+            logger.info("超级管理员修改地区管理员密码 成功");
             return map;
         }
         map.put("msg","权限不足");
+        logger.info("权限不足");
         return map;
     }
 
@@ -367,9 +394,11 @@ public class ManagerController {
             String usernames = request.getParameter("usernames");
             managerService.deleteManagerBatch(usernames);
             map.put("msg","删除成功");
+            logger.info("超级管理员删除地区管理员成功");
             return map;
         }
         map.put("msg","权限不足");
+        logger.info("权限不足");
         return map;
     }
 
@@ -400,6 +429,7 @@ public class ManagerController {
             secretBytes = MessageDigest.getInstance("md5").digest(
                     plainText.getBytes());
         } catch (NoSuchAlgorithmException e) {
+            logger.error("md5加密异常");
             throw new RuntimeErrorException(null, "md5加密异常");
         }
         String md5codeString = new BigInteger(1, secretBytes).toString(16);

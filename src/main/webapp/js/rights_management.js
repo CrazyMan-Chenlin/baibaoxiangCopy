@@ -24,6 +24,8 @@ $(function () {
         var password = prompt("想要修改的密码:");
         if (isChinese(password)){
             alert("不能为中文");
+        }else if(password==""||password==null){
+            return;
         }else {
             $.ajax({
                 type:"post",

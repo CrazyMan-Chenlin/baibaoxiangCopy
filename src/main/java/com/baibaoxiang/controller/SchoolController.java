@@ -4,6 +4,8 @@ import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.po.School;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.SchoolService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,8 @@ public class SchoolController {
     @Autowired
     SchoolService schoolService;
     private String defSchoolName = "广东第二师范学院";
+
+    private final static Logger logger = LoggerFactory.getLogger(SchoolController.class);
 
     /** 通过id 查询学校信息
      * @param id
@@ -64,9 +68,11 @@ public class SchoolController {
         if (isCheck==1){
             schoolService.insertSchool(school);
             map.put("msg","添加成功");
+            logger.info("学校添加成功。");
             return map;
         }
         map.put("msg","权限不足");
+        logger.info("权限不足");
         return map;
     }
 
@@ -85,12 +91,14 @@ public class SchoolController {
             if(no.equals(id)){
                 map.put("code",0);
                 map.put("msg","广东第二师范学院为默认保留学校，不可删除");
+                logger.info("广东第二师范学院为默认保留学校，不可删除");
                 return map;
             }
         }
         schoolService.deleteSchool(id);
         map.put("code", 1);
         map.put("msg", "删除成功");
+        logger.info("删除成功");
         return map;
     }
 
@@ -116,7 +124,7 @@ public class SchoolController {
                     if(no.equals(ids[i])){
                         map.put("code",0);
                         map.put("msg","广东第二师范学院为默认保留学校，不可删除");
-                        System.out.println(map.get("msg"));
+                        logger.info("广东第二师范学院为默认保留学校，不可删除");
                         return map;
                     }
                 }
@@ -124,9 +132,11 @@ public class SchoolController {
             schoolService.deleteSchoolBatch(ids);
             map.put("code", 1);
             map.put("msg", "删除成功");
+            logger.info("删除成功");
             return map;
         }
             map.put("msg","权限不足");
+            logger.info("权限不足");
             return map;
 
     }
@@ -139,10 +149,12 @@ public class SchoolController {
         if(name.equals(defSchoolName)){
             map.put("code", 0);
             map.put("msg", "广东第二师范学院为默认保留学校，不可删除");
+            logger.info("广东第二师范学院为默认保留学校，不可删除");
         }else{
             schoolService.deleteSchoolBySchoolName(name);
             map.put("code", 1);
             map.put("msg", "删除成功");
+            logger.info("删除成功");
         }
         return map;
     }

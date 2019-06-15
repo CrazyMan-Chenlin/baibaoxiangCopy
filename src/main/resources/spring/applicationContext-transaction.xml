@@ -29,7 +29,7 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <!-- 传播行为 -->
-            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED" />
             <tx:method name="delete*" propagation="REQUIRED"/>
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="create*" propagation="REQUIRED"/>
@@ -43,6 +43,11 @@
     <!-- aop -->
     <aop:config>
         <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.baibaoxiang.serviceimpl.*.*(..))"/>
+        <!--切入点：给哪个方法进行增强-->
+        <!--<aop:pointcut id="savepointcut" expression=""></aop:pointcut>-->
+        <!--<aop:aspect ref="beanname">-->
+            <!--<aop:before method="check" pointcut="savepointcut"></aop:before>-->
+        <!--</aop:aspect>-->
     </aop:config>
 
 </beans>
