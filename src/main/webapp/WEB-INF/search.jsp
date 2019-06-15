@@ -53,6 +53,7 @@
             if (searchInput == "") {
                 alert("输入为空")
             } else {
+                $("#content").empty();
                $("#loading").css("display","block")
                 $.post("/search/searchSomething", {query: searchInput},function (data) {
                     if (data == ""|| data == null){
@@ -82,16 +83,20 @@
         var ua = navigator.userAgent.toLowerCase();
         var isWeixin = ua.indexOf('micromessenger') != -1;
         $(".table").on('click','a',function () {
+            if (isWeixin){
                 var json = new Date().getTime();
                 history.pushState({json}, '', window.location.href + "#" + json);
                 sessionStorage.setItem("SearchContent", $("#content").html())
+            }
         })
         $(function () {
+            if (isWeixin){
                 if (sessionStorage.getItem("SearchContent") != null && sessionStorage.getItem("SearchContent") != "") {
                     window.history.back(-1)
                     $("#content").html(sessionStorage.getItem("SearchContent"))
                     sessionStorage.setItem("SearchContent", "")
                 }
+            }
         })
     })
 </script>
