@@ -68,7 +68,7 @@ public class SchoolController {
         if (isCheck==1){
             schoolService.insertSchool(school);
             map.put("msg","添加成功");
-            logger.info("学校添加成功");
+            logger.info("学校添加成功。");
             return map;
         }
         map.put("msg","权限不足");

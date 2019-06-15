@@ -126,7 +126,7 @@ public class ArticleTypeController {
                 map.put("msg","删除成功");
             }
         }else {
-            logger.info("您不是超级管理员");
+            logger.info("您不是超级管理员。");
             map.put("msg","您不是超级管理员");
         }
         return map;

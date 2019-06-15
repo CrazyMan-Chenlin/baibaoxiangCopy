@@ -44,7 +44,7 @@ public class SearchController {
             searchService.deleteAllIndex();
             return 1;
         } catch (Exception e) {
-            logger.error("删除所有索引异常：" + e);
+            logger.error("删除所有索引异常： " + e);
         }
         return 0;
     }

@@ -120,7 +120,7 @@ public class ArticleController {
             articleService.insertSelective(record);
             map.put("msg","发布成功");
         }catch (Exception e){
-            logger.error("异常抛出exception 文章发布失败 ", e);
+            logger.error("异常抛出exception 文章发布失败。 ", e);
             map.put("msg","发布失败");
         }
         return map;
