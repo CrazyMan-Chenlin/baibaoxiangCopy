@@ -32,7 +32,7 @@
         <li><a href="/jsp/personal_Information" target="mainframe">个人资料</a></li>
         <li><a href="/jsp/main" target="mainframe">账号注销</a></li>
         <hr>
-        <li><a href="/jsp/main" target="mainframe">使用说明书</a></li>
+
     </ul>
 </div>
 </body>
