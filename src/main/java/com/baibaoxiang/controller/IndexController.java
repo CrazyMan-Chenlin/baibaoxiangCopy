@@ -36,7 +36,7 @@ public class IndexController {
         model.addObject("areaName",areaName);
         List<ArticleType> articleTypeList = articleTypeService.selectArticleTypes();
         model.addObject("articleTypeList",articleTypeList);
-        List<Article> articleList = articleService.selectTopArticle("广东第二师范学院花都校区");
+        List<Article> articleList = articleService.selectTopArticle("广东第二师范学院花都校区",null,null);
         model.addObject("articleList",articleList);
         return model;
     }
@@ -70,12 +70,12 @@ public class IndexController {
      */
     @RequestMapping(value = "/index/getAreaArticle",method= RequestMethod.POST)
     @ResponseBody
-    public List<Article> getAreaArticle(String area,String type) throws Exception {
+    public List<Article> getAreaArticle(String area,String type,Integer page,Integer rows) throws Exception {
         String str = "推荐";
         if (str.equals(type)){
-            return articleService.selectTopArticle(area);
+            return articleService.selectTopArticle(area,page,rows);
         }
-        return articleService.selectByTypeArea(type,area);
+        return articleService.selectByTypeArea2(type,area,page,rows);
     }
     /**
      * 改变地区时，文章相应改变
@@ -86,11 +86,11 @@ public class IndexController {
      */
     @RequestMapping(value = "/index/changeAreaArticle",method= RequestMethod.POST)
     @ResponseBody
-    public List<Article> changeAreaArticle(String area,String type) throws  Exception{
+    public List<Article> changeAreaArticle(String area,String type,Integer page) throws  Exception{
         String str = "推荐";
         if (str.equals(type)){
-            return articleService.selectTopArticle(area);
+            return articleService.selectTopArticle(area,null,null);
         }
-        return articleService.selectByTypeArea(type,area);
+        return articleService.selectByTypeArea2(type,area,page,null);
     }
  }
