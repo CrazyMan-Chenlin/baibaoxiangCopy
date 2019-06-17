@@ -63,7 +63,7 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> selectByTypeArea2(String type, String area,Integer page,Integer rows) throws Exception {
         //设置分页信息
         if (page==null||page==0) { page = 1; }
-        if (rows==null||rows==0) {rows = 20 ;}
+        if (rows==null||rows==0) { rows = 20 ;}
         PageHelper.startPage(page,rows);
         String key = articleInfoKey + ":" + type + ":" + area;
         if (jedisClient.hexists(key,page.toString())){
@@ -238,7 +238,7 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> selectTopArticle(String area,Integer page, Integer rows) throws Exception {
         //设置分页信息
         if (page==null||page==0) { page = 1; }
-        if (rows==null||rows==0) {rows = 10 ;}
+        if (rows==null||rows==0) {rows = 20 ;}
         PageHelper.startPage(page,rows);
         String key = articleInfoKey + ":" + area;
         if (jedisClient.hexists(key,page.toString())) {
