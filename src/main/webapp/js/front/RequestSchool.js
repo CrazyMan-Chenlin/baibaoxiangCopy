@@ -1,6 +1,7 @@
 $(document).ready(function () {
     //ajax请求学校地址
     $(" #schoolName").change(function () {
+        $("#page").attr("value","2");
         var schoolName = $("#schoolName").val();
         $.post("/index/queryAreaName", {schoolName: schoolName}, function (data) {
             $("#areaName").empty();

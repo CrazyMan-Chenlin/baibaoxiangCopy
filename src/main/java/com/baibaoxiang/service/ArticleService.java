@@ -38,6 +38,7 @@ public interface ArticleService {
      */
     List<Article> selectByTypeArea(String type, String area) throws Exception;
 
+    List<Article> selectByTypeArea2(String type, String area,Integer page,Integer rows) throws Exception;
 
     /** 查询所有的推文 置顶/发布时间 排序
      * @return
@@ -110,7 +111,7 @@ public interface ArticleService {
      * @return
      * @throws Exception
      */
-    List<Article> selectTopArticle(String area) throws Exception;
+    List<Article> selectTopArticle(String area,Integer page, Integer rows ) throws Exception;
 
     /** 设置 文章置顶
      * @param no

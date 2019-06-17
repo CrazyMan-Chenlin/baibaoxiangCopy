@@ -2,6 +2,7 @@ $(document).ready(function () {
     $("#areaName").change(function () {
         var schoolName = $("#schoolName").val();
         var schoolArea = $("#areaName").val();
+        $("#page").attr("value","2");
         $.post("/index/changeAreaArticle", {
             area: schoolName + schoolArea,
             type: $(".find_nav_cur").text()
