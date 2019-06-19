@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $(".find_nav_list li ").on('click', function () {
+        $("#page").attr("value",2);
         $.post("/index/getAreaArticle", {
             type: $(this).text(),
             area: $("#schoolName").val() + $("#areaName").val()
@@ -21,5 +22,6 @@ $(document).ready(function () {
                     "            </tr>")
             })
         });
+
     })
 })

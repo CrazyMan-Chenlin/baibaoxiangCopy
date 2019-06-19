@@ -87,7 +87,7 @@ public class SearchServiceImpl implements SearchService {
         document.addField("title", article.getTitle());
         document.addField("message", article.getMessage());
         document.addField("id", article.getNo());
-        document.addField("create_time", article.getCreateTime());
+        document.addField("create_time", sdf.format(article.getCreateTime()));
         document.addField("like_num", article.getLikeNum());
         document.addField("type", article.getType());
         document.addField("author", article.getAuthor());
