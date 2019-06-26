@@ -8,6 +8,10 @@ import java.util.List;
 public class ArticleExample {
     protected String orderByClause;
 
+    public void setOredCriteria(List<Criteria> oredCriteria) {
+        this.oredCriteria = oredCriteria;
+    }
+
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;

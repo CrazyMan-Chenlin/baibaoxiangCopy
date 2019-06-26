@@ -32,15 +32,19 @@ public class ArticleServiceImpl implements ArticleService {
     private String articleInfoKey = "Article_INFO";
     @Override
     public Article selectByPrimaryKey(String no) throws Exception {
+        System.out.println(no);
         String key = articleInfoKey + ":" + no + ":" + "BASE";
         if (no!=null){
             if (jedisClient.exists(key)){
                 String jsonString = jedisClient.get(key);
-                return  JsonUtils.jsonToPojo(jsonString,Article.class);}
+                return  JsonUtils.jsonToPojo(jsonString,Article.class);
+            }
         }
         Article article = articleMapper.selectByPrimaryKey(no);
-        jedisClient.set(key,JsonUtils.objectToJson(article));
-        jedisClient.expire(key,60*60);
+        if (article!=null) {
+            jedisClient.set(key, JsonUtils.objectToJson(article));
+            jedisClient.expire(key, 60 * 60);
+        }
         return article;
 }
 
@@ -117,8 +121,8 @@ public class ArticleServiceImpl implements ArticleService {
     public int deleteByPrimaryKey(String no) throws Exception {
         Article article = articleMapper.selectByPrimaryKey(no);
         String key = articleInfoKey + ":" + article.getType() + ":" + article.getArea();
-        String key2 = articleInfoKey + ":" + no + ":" + "BASE";
-        String key3 = articleInfoKey + ":" + article.getArea();
+        String key2 = articleInfoKey + ":" + article.getArea();
+        String key3 = articleInfoKey + ":" + no + ":" + "BASE";
         delKey(key, key2, key3);
         //删除索引
         searchService.deleteIndex(no);
@@ -127,25 +131,25 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 抽取删除key的方法
-     * @param key
-     * @param key2
-     * @param key3
+     * @param topKey
+     * @param typeKey
+     * @param noKey
      */
-    private void delKey(String key, String key2, String key3) {
-        Set<String> hkeys = jedisClient.hkeys(key);
+    private void delKey(String topKey, String typeKey, String noKey) {
+        Set<String> hkeys = jedisClient.hkeys(topKey);
         Iterator it = hkeys.iterator();
         while(it.hasNext()){
             String keyStr = (String)it.next();
-            jedisClient.hdel(key,keyStr);
+            jedisClient.hdel(topKey,keyStr);
         }
-        if (jedisClient.exists(key2)) {
-            jedisClient.del(key2);
+        if (jedisClient.exists(noKey)) {
+            jedisClient.del(noKey);
         }
-         hkeys = jedisClient.hkeys(key3);
+         hkeys = jedisClient.hkeys(typeKey);
          it = hkeys.iterator();
         while(it.hasNext()){
             String keyStr = (String)it.next();
-            jedisClient.hdel(key3,keyStr);
+            jedisClient.hdel(typeKey,keyStr);
             }
     }
 
@@ -173,7 +177,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int updateByPrimaryKey(Article record) throws Exception {
         String key = articleInfoKey + ":" + record.getType() + ":" + record.getArea();
-        String key2 = articleInfoKey +  record.getArea();
+        String key2 = articleInfoKey + ":" + record.getArea();
         String key3 = articleInfoKey + ":" + record.getNo() + ":" + "BASE";
         delKey(key, key2, key3);
         //修改索引

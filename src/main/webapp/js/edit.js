@@ -89,9 +89,9 @@ $(function() {
         var message = $("#edit").froalaEditor('html.get', true);
         var area = $("#area").text();
         if ($(".returnPic").attr("src") != ""){
-            var picture = $('.returnPic').attr('src');
-        }else {
             var picture = $('.head-img').attr('src');
+        }else {
+            var picture = $('.returnPic').attr('src');
         }
         // var author = $("#username").text();
         var date = new Date();

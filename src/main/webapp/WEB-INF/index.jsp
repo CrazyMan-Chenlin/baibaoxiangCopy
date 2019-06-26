@@ -55,7 +55,7 @@
     </div>
 </div>
 <div id="Navigation" style="position:fixed;width: 100%;z-index: 2;">
-    <div id="showSearch" style="width:100%;position: absolute;z-index: 1">
+    <div id="showSearch" style="width:100%">
         <div id="nav" class="pos-f-t">
             <nav class="navbar navbar-dark bg-dark" style="height:2.1rem">
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -82,8 +82,9 @@
         </div>
     </div>
 </div>
-<table class="table">
+<table class="table" >
     <a href="#" id="back-to-top" title="Back to top">∧</a>
+    <div style="width: 100%;height: 95px">" "</div>
     <tbody>
     <c:forEach items="${articleList}" var="article">
         <tr>
