@@ -62,4 +62,25 @@ public interface ArticleTypeService {
      * @throws Exception
      */
     void deleteByType(String type) throws Exception;
+
+    /** 文章类型的顺序  加一。
+     * @param oldSequenceNum
+     * @param newSequenceNum
+     * @throws Exception
+     */
+    void updateSequenceNumByAddOne(Integer oldSequenceNum, Integer newSequenceNum) throws Exception;
+
+    /** 文章类型的顺序号 减一。
+     * @param oldSequenceNum
+     * @param newSequenceNum
+     * @throws Exception
+     */
+    void updateSequenceNumBySubOne(Integer oldSequenceNum, Integer newSequenceNum) throws Exception;
+
+    /** 将某id 的文章类型 的顺序号更改
+     * @param id
+     * @param newSequenceNum
+     * @throws Exception
+     */
+    void updateSequenceNumById(Integer newSequenceNum, Integer id) throws Exception;
 }

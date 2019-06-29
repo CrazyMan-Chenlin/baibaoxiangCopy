@@ -102,6 +102,39 @@ public class ArticleTypeController {
     }
 
     /**
+     * 修改文章类型的顺序
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "updateArticleSequenceNum",method = RequestMethod.POST)
+    @ResponseBody
+    public int updateArticleSequenceNum(HttpServletRequest request) throws Exception{
+        String idStr = request.getParameter("id");
+        String oldSequenceNum = request.getParameter("oldSequenceNum");
+        String newSequenceNum = request.getParameter("newSequenceNum");
+        Integer id = Integer.parseInt(idStr);
+        int oldNum = Integer.parseInt(oldSequenceNum);
+        int newNum = Integer.parseInt(newSequenceNum);
+        if(oldNum == 1 || newNum == 1){
+            return 0;
+        }
+        if(oldNum >= newNum){
+            if(oldNum == newNum){
+                return 0;
+            }else{
+                articleTypeService.updateSequenceNumByAddOne(oldNum,newNum);
+                articleTypeService.updateSequenceNumById(newNum,id);
+                return 1;
+            }
+        }else{
+            articleTypeService.updateSequenceNumBySubOne(oldNum,newNum);
+            articleTypeService.updateSequenceNumById(newNum,id);
+            return 1;
+        }
+    }
+
+    /**
      * 通过类型 删除
      * @param
      * @return Map

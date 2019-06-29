@@ -3,6 +3,7 @@
 <mapper namespace="com.baibaoxiang.mapper.ArticleTypeMapper" >
   <resultMap id="BaseResultMap" type="com.baibaoxiang.po.ArticleType" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sequence_num" property="sequenceNum" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, type
+    id, sequence_num, type
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baibaoxiang.po.ArticleTypeExample" >
     select
@@ -97,14 +98,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.baibaoxiang.po.ArticleType" >
-    insert into article_type (id, type)
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR})
+    insert into article_type (id, sequence_num, type
+      )
+    values (#{id,jdbcType=INTEGER}, #{sequenceNum,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.baibaoxiang.po.ArticleType" >
     insert into article_type
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="sequenceNum != null" >
+        sequence_num,
       </if>
       <if test="type != null" >
         type,
@@ -113,6 +119,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sequenceNum != null" >
+        #{sequenceNum,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
@@ -131,6 +140,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.sequenceNum != null" >
+        sequence_num = #{record.sequenceNum,jdbcType=INTEGER},
+      </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=VARCHAR},
       </if>
@@ -142,6 +154,7 @@
   <update id="updateByExample" parameterType="map" >
     update article_type
     set id = #{record.id,jdbcType=INTEGER},
+      sequence_num = #{record.sequenceNum,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -150,6 +163,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.baibaoxiang.po.ArticleType" >
     update article_type
     <set >
+      <if test="sequenceNum != null" >
+        sequence_num = #{sequenceNum,jdbcType=INTEGER},
+      </if>
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
       </if>
@@ -158,7 +174,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baibaoxiang.po.ArticleType" >
     update article_type
-    set type = #{type,jdbcType=VARCHAR}
+    set sequence_num = #{sequenceNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

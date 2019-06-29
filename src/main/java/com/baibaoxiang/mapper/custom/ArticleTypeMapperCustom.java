@@ -1,6 +1,7 @@
 package com.baibaoxiang.mapper.custom;
 
 import com.baibaoxiang.po.ArticleType;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,4 +31,22 @@ public interface ArticleTypeMapperCustom {
      * @return
      */
     ArticleType selectArticleTypeByType(String type);
+
+    /** 将某id 的文章类型 的顺序号更改
+     * @param id
+     * @param newSequenceNum
+     */
+    void updateSequenceNumById (@Param("newSequenceNum") Integer newSequenceNum, @Param("id") Integer id);
+
+    /** 文章类型的顺序号 减一。
+     * @param oldSequenceNum
+     * @param newSequenceNum
+     */
+    void updateSequenceNumBySubOne(@Param("oldSequenceNum") Integer oldSequenceNum, @Param("newSequenceNum") Integer newSequenceNum);
+
+    /** 文章类型的顺序号 加一。
+     * @param oldSequenceNum
+     * @param newSequenceNum
+     */
+    void updateSequenceNumByAddOne(@Param("oldSequenceNum") Integer oldSequenceNum, @Param("newSequenceNum") Integer newSequenceNum);
 }
