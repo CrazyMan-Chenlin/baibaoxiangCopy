@@ -3,10 +3,11 @@
 <mapper namespace="com.baibaoxiang.mapper.custom.ArticleTypeMapperCustom">
     <resultMap id="BaseResultMap" type="com.baibaoxiang.po.ArticleType" >
         <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="sequence_num" property="sequenceNum" jdbcType="INTEGER" />
         <result column="type" property="type" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-      id, type
+        id, sequence_num, type
     </sql>
 
     <select id="selectArticleTypes" resultMap="BaseResultMap">
@@ -24,4 +25,17 @@
     <delete id="deleteByType" parameterType="java.lang.String" >
         DELETE FROM article_type WHERE type = #{type}
     </delete>
+
+    <update id="updateSequenceNumByAddOne" parameterType="java.lang.Integer">
+        UPDATE article_type SET sequence_num = sequence_num + 1 WHERE sequence_num &lt; #{oldSequenceNum,jdbcType=INTEGER} AND sequence_num &gt;= #{newSequenceNum,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSequenceNumBySubOne" parameterType="java.lang.Integer">
+        UPDATE article_type SET sequence_num = sequence_num - 1 WHERE sequence_num &gt; #{oldSequenceNum,jdbcType=INTEGER} AND sequence_num &lt;= #{newSequenceNum,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSequenceNumById" parameterType="java.lang.Integer">
+        UPDATE article_type SET sequence_num = #{newSequenceNum,jdbcType=INTEGER} WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

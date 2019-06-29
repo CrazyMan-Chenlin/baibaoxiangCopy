@@ -88,4 +88,28 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
         }
         articleTypeMapperCustom.deleteByType(type);
     }
+
+    @Override
+    public void updateSequenceNumByAddOne(Integer oldSequenceNum, Integer newSequenceNum) throws Exception {
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        articleTypeMapperCustom.updateSequenceNumByAddOne(oldSequenceNum,newSequenceNum);
+    }
+
+    @Override
+    public void updateSequenceNumBySubOne(Integer oldSequenceNum, Integer newSequenceNum) throws Exception {
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        articleTypeMapperCustom.updateSequenceNumBySubOne(oldSequenceNum,newSequenceNum);
+    }
+
+    @Override
+    public void updateSequenceNumById(Integer newSequenceNum, Integer id) throws Exception {
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        articleTypeMapperCustom.updateSequenceNumById(newSequenceNum, id);
+    }
 }
