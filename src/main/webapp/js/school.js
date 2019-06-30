@@ -14,7 +14,8 @@ $(function () {
                     $("#schools").append("<tr>\n" +
                         "                <td>"+item.name+"</td>\n" +
                         "                <td>"+item.area+"</td>\n" +
-                        "                <td><input type=\"checkbox\" name=\"schoolNo\">"+item.no+"</td>\n" +
+                        "                <td class='itemNo' style='text-align: center'>"+item.no+"</td>\n" +
+                        "                <td><input type=\"checkbox\" name=\"schoolNo\" </td>\n" +
                         "            </tr>");
                 })
             }
@@ -48,7 +49,8 @@ $(function () {
         if(confirm("是否决定删除学校?")){
             var checked=[];
             $("input[name='schoolNo']:checked").each(function (i) {
-                checked[i]=$(this).parents("td").text();
+                checked[i]=$(this).parents().parents().children(".itemNo").text();
+                console.log(checked[i]);
             });
             var ids = checked.join(",");
             $.ajax({

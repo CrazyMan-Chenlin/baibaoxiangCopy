@@ -32,18 +32,30 @@
         <h3>今日网站点赞量：</h3><h3 id="likeNum"></h3>
     </div>
     <br>
-    <c:if test="${sessionScope.saldfjlskfffds=='sdadwededa'}" >
         <input type="text" class="input-sm" placeholder="请输入想要添加的分类" id="new_type"><button class="new">添加新分类</button>
-        <input type="text" class="input-sm" placeholder="请输入想要删除的分类" id="del_type"><button class="del">删除分类</button>
-    </c:if>
+        <%--<input type="text" class="input-sm" placeholder="请输入想要删除的分类" id="del_type"><button class="del">删除分类</button>--%>
+    <br><br>
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>分类名称</th>
+            <th>排序</th>
+            <th>排序修改</th>
+            <th>名称修改</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="types">
+        </tbody>
+    </table>
     <br><br>
 
     <div class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="query_classification">
             文章分类
             <b class="caret"></b>
         </a>
-        <ul class="dropdown-menu" id="articleList">
+        <ul class="dropdown-menu" id="query_articleList">
 
         </ul>
     </div>

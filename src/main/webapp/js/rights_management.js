@@ -12,7 +12,7 @@ $(function () {
                 $.each(data,function (index,item) {
                     $("#information").append("<tr><td class='username'><input type=\"checkbox\" name=\"username\">"+item.username+"</td>\n" +
                         "<td>"+item.name+"</td>\n" +
-                        "<td>"+item.area+"<button type=\"button\" class=\"btn btn-danger\" id=\"edit\">修改密码</button>"+"</td></tr>>");
+                        "<td>"+item.area+"</td>"+"<td><button type=\"button\" class=\"btn btn-danger\" id=\"edit\">修改密码</button>"+"</td></tr>");
                 });
             }
         });
@@ -36,16 +36,37 @@ $(function () {
                 }
             });
         }
-        // console.log(password);
     });
 
+    //查询校区
+    $("#querySchool").on('click',function () {
+        $.ajax({
+            type : "GET",
+            url: "/school/allSchool",
+            success :function (data) {
+                $("#area").children().remove();
+                $.each(data,function (index,item) {
+                    $("#area").append("<option id='opt_area'>"+item.name+item.area+"</option>");
+                });
+            }
+        });
+    });
+
+    //选择校区
+    // $(document).on('click','#opt_area',function () {
+    //     alert(11);
+    //     console.log($(this).text());
+    // });
+    // $("#area").click(function () {
+    //     console.log($("#area").find("option:selected").text());;
+    // });
 
     //添加管理员
     $("#add").on('click',function () {
         var username = $.trim($("#username").val());
         var name = $.trim($("#name").val());
         var password = $.trim($("#password").val());
-        var area = $.trim($("#area").val());
+        var area = $("#area").find("option:selected").text();
         if(isChinese(username)||isChinese(password)){
             alert("用户名或密码不能携带中文");
         }else {

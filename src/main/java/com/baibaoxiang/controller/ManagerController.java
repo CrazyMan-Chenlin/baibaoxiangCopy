@@ -388,7 +388,8 @@ public class ManagerController {
     @RequestMapping(value = "/deleteBatch")
     @ResponseBody
     public Map<String,String> deleteManagerBatch(HttpServletRequest request) throws Exception{
-        int i = checkRight(request);      //该参数判断当前是否超级管理员
+        //该参数判断当前是否超级管理员
+        int i = checkRight(request);
         Map<String,String> map = new HashMap();
         if (i==1){
             String usernames = request.getParameter("usernames");

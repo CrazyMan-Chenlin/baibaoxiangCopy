@@ -94,9 +94,10 @@ public class ArticleTypeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "",method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateType",method = RequestMethod.POST)
     @ResponseBody
-    public int updateArticleType(@RequestBody ArticleType articleType) throws Exception{
+    public int updateArticleType(ArticleType articleType) throws Exception{
+        System.out.println(articleType.getId());
         int i = articleTypeService.updateByPrimaryKey(articleType);
         return i;
     }
@@ -107,7 +108,7 @@ public class ArticleTypeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "updateArticleSequenceNum",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateArticleSequenceNum",method = RequestMethod.POST)
     @ResponseBody
     public int updateArticleSequenceNum(HttpServletRequest request) throws Exception{
         String idStr = request.getParameter("id");

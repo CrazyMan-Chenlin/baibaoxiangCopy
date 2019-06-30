@@ -2,6 +2,69 @@ $(function () {
     //加载今日点赞数
     ReadLikeNumber();
 
+    //加载文章类型
+    getArticleType();
+
+    //调整顺序
+    $(document).on('click','#edit_sort',function () {
+        var oldSequenceNum = $(this).parents().children(".item_sequenceNum").text();
+        var newSequenceNum = $(this).parents().parents().children().children("#sort").val().trim();
+        var id = $(this).parents().parents().children(".item_no").text();
+        if(!isNaN(newSequenceNum)){
+            $.ajax({
+                url: '/articleType/updateArticleSequenceNum',
+                type: 'POST',
+                data:{id:id,oldSequenceNum:oldSequenceNum,newSequenceNum:newSequenceNum},
+                success:function (data) {
+                    if (data==1){
+                        window.location.reload();
+                    } else {
+                        alert("修改失败");
+                    }
+                },
+                error:function () {
+                    alert("修改失败");
+                }
+            });
+        }else {
+            alert("必须是数字！");
+        }
+
+    });
+
+    //修改文章类型
+    $(document).on('click','#edit_name',function () {
+        var id = $(this).parents().parents().children(".item_no").text();
+        var type = $(this).parents().parents().children().children("#item_type").val().trim();
+        var SequenceNum = $(this).parents().parents().children(".item_sequenceNum").text();
+        function ArticleType() {
+            this.id = id;
+            this.type = type;
+            this.SequenceNum = SequenceNum;
+        }
+        var articleType = new ArticleType();
+        if(type!=""){
+            $.ajax({
+                type: 'POST',
+                url: '/articleType/updateType',
+                // data : {articleType: JSON.stringify(articleType)},
+                data: {id:id,type:type,SequenceNum:SequenceNum},
+                cache: false,
+                success: function (data) {
+                    if (data == 1){
+                        window.location.reload();
+                    }else {
+                        alert("修改失败");
+                    }
+                }
+            });
+        }else {
+            alert("输入不能为空");
+        }
+
+    });
+
+
     //删除操作
     $(document).on("click",'.delete',function () {
         if(confirm("是否决定删除?")){
@@ -36,7 +99,8 @@ $(function () {
                data:{TypeNew:newType},
                success:function (data) {
                    if(data==1){
-                       alert("添加成功")
+                       alert("添加成功");
+                       window.location.reload();
                    }else {
                        alert("权限不足")
                    }
@@ -50,8 +114,8 @@ $(function () {
 
 
     //删除分类，仅超级管理员可用
-    $(".del").on('click',function () {
-        var delType = $.trim($("#del_type").val());
+    $(document).on('click','#del',function () {
+        var delType = $(this).parents().parents().children(".item_type").text();
         if (delType!=null&&delType!="") {
             $.ajax({
                 type:"post",
@@ -59,30 +123,26 @@ $(function () {
                 data:{type:delType},
                 success:function (data) {
                     alert(data["msg"]);
-                    $("input").val("");
+                    window.location.reload();
                 }
             });
-        }else {
-            alert("删除类型不能为空");
         }
-
     });
 
 
     //查询文章类型
-    $("#classification").on('click',function () {
+    $("#query_classification").on('click',function () {
         $.ajax({
             type : "POST",
             url: "/articleType",
             // dataType:'json',
             success :function (data) {
-                $("#articleList").children().remove();
+                $("#query_articleList").children().remove();
                 $.each(data,function (index,item) {
-                    $("#articleList").append("<li><a href='#' class='modular'>"+item.type+"</a></li>");
+                    $("#query_articleList").append("<li><a href='#' class='modular'>"+item.type+"</a></li>");
                 });
             }
         });
-
     });
 
     //点击下拉菜单中的元素，请求对应数据
@@ -139,7 +199,6 @@ $(function () {
         };
     });
 
-
 });
 
 function ReadLikeNumber(){
@@ -153,9 +212,28 @@ function ReadLikeNumber(){
         data:{time:time},
         async:false,
         success:function(data){
-            console.log();
             $("#readNum").text(data.readNum);
             $("#likeNum").text(data.likeNum);
+        }
+    });
+}
+
+function getArticleType() {
+    $.ajax({
+        type : "POST",
+        url: "/articleType",
+        success :function (data) {
+            $("#type").children().remove();
+            $.each(data,function (index,item) {
+                $("#types").append("<tr>\n" +
+                    "            <td class=\"item_type\">"+item.type+"</td>\n" +
+                    "            <td class=\"item_no\" hidden>"+item.id+"</td>\n" +
+                    "            <td class=\"item_sequenceNum\">"+item.sequenceNum+"</td>\n" +
+                    "            <td><input type=\"text\" class=\"input-sm\" placeholder=\"请输入想要修改的顺序\" id=\"sort\"></td>\n" +
+                    "            <td><input type=\"text\" class=\"input-sm\" placeholder=\"请输入想要修改的名称\" id=\"item_type\"></td>\n" +
+                    "            <td><button class=\"btn btn-primary\" id='edit_name'>修改名称</button><button class=\"btn btn-warning\" id='edit_sort'>修改顺序</button><button class=\"btn btn-danger\" id=\"del\">删除分类</button></td>\n" +
+                    "        </tr>");
+            });
         }
     });
 }

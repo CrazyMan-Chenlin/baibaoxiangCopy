@@ -28,6 +28,7 @@
             <th>管理员ID</th>
             <th>姓名</th>
             <th>学校</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody id="information">
@@ -57,15 +58,23 @@
                 <input type="password" class="form-control" id="password" placeholder="请输入密码" required>
             </div>
         </div>
-        <div class="form-group">
-            <label for="area" class="col-sm-2 control-label">学校区域</label>
+        <div class="form-group" >
+            <label for="area" class="col-sm-2 control-label">所属校区</label>
+            <%--<div class="col-sm-4">--%>
+                <%--<input type="text" class="form-control" id="area" disabled>--%>
+            <%--</div>--%>
+            <input type="button" id="querySchool" value="查询学校">
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="area" placeholder="请输入学校" required>
+                <select class="form-control" id="area">
+                    <option value="-1" id="opt_area">==请选择==</option>
+                </select>
             </div>
         </div>
+
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-4">
-                <button type="button" class="btn btn-default" id="add">添加</button>
+                <button type="button" class="btn btn-primary" id="add">添加</button>
             </div>
         </div>
     </form>

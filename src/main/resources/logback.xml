@@ -100,7 +100,7 @@
         </encoder>
         <!-- 此日志文件只记录debug级别，不记录大于debug级别的日志 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>DEBUG</level>
+            <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
@@ -122,13 +122,13 @@
         可将mybatis的级别设置为debug，如此一来，日志文件中就会出现mybatis的debug级别日志，
         而其它包则会按root的级别输出日志
     -->
-    <logger name="dao" level="DEBUG" />
-    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="dao" level="INFO" />
+    <logger name="org.springframework" level="INFO"/>
     <!--myibatis log configure-->
     <logger name="com.apache.ibatis" level="TRACE"/>
-    <logger name="java.sql.Connection" level="DEBUG"/>
-    <logger name="java.sql.Statement" level="DEBUG"/>
-    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    <logger name="java.sql.Connection" level="INFO"/>
+    <logger name="java.sql.Statement" level="INFO"/>
+    <logger name="java.sql.PreparedStatement" level="INFO"/>
 
 
     <!-- 生产环境，将此级别配置为适合的级别，以名日志文件太多或影响程序性能 -->
