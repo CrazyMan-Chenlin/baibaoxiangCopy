@@ -3,7 +3,9 @@ package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.ArticleTypeMapper;
 import com.baibaoxiang.mapper.custom.ArticleTypeMapperCustom;
+import com.baibaoxiang.po.ArticleExample;
 import com.baibaoxiang.po.ArticleType;
+import com.baibaoxiang.po.ArticleTypeExample;
 import com.baibaoxiang.service.ArticleTypeService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,8 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     ArticleTypeMapperCustom articleTypeMapperCustom;
     @Autowired
     JedisClient jedisClient;
-    private  String typeInfoKey ="Type_INFO";
-    private String key = typeInfoKey + ":" + "TYPENAME";
+    private final String typeInfoKey ="Type_INFO";
+    private final String key = typeInfoKey + ":" + "TYPENAME";
     @Override
     public ArticleType selectByPrimaryKey(Integer id) throws Exception {
         return articleTypeMapper.selectByPrimaryKey(id);
@@ -65,7 +67,9 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
             String jsonString = jedisClient.get(key);
             return JsonUtils.jsonToList(jsonString,ArticleType.class);
         }else{
-            List<ArticleType> articleTypes = articleTypeMapperCustom.selectArticleTypes();
+            ArticleTypeExample articleTypeExample = new ArticleTypeExample();
+            articleTypeExample.setOrderByClause("sequence_num  asc");
+            List<ArticleType> articleTypes = articleTypeMapper.selectByExample(articleTypeExample);
             jedisClient.set(key,JsonUtils.objectToJson(articleTypes));
             return articleTypes;
         }
