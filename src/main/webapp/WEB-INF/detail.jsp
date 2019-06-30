@@ -65,6 +65,7 @@
             $("#content img").addClass("rounded")
             $("#content img").addClass("mx-auto")
             $("#content img").addClass("d-block")
+            $("#content img").css("width","100%")
             $("#content  p").addClass("text-justify")
         })
     })
