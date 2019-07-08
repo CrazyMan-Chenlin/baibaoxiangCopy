@@ -1,13 +1,15 @@
 package com.baibaoxiang.po;
 
 public class Manager {
-    private String username;
+    private Integer id;
 
     private String name;
 
+    private String username;
+
     private String password;
 
-    private String area;
+    private Integer areano;
 
     private String path;
 
@@ -15,12 +17,12 @@ public class Manager {
 
     private String salt;
 
-    public String getUsername() {
-        return username;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,6 +33,14 @@ public class Manager {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
     public String getPassword() {
         return password;
     }
@@ -39,12 +49,12 @@ public class Manager {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getArea() {
-        return area;
+    public Integer getAreano() {
+        return areano;
     }
 
-    public void setArea(String area) {
-        this.area = area == null ? null : area.trim();
+    public void setAreano(Integer areano) {
+        this.areano = areano;
     }
 
     public String getPath() {
@@ -63,19 +73,6 @@ public class Manager {
         this.title = title == null ? null : title.trim();
     }
 
-    @Override
-    public String toString() {
-        return "Manager{" +
-                "username='" + username + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", area='" + area + '\'' +
-                ", path='" + path + '\'' +
-                ", title='" + title + '\'' +
-                ", salt='" + salt + '\'' +
-                '}';
-    }
-
     public String getSalt() {
         return salt;
     }
@@ -83,5 +80,4 @@ public class Manager {
     public void setSalt(String salt) {
         this.salt = salt == null ? null : salt.trim();
     }
-
 }

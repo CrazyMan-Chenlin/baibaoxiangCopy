@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SchoolMapper {
-    int countByExample(SchoolExample example);
+    long countByExample(SchoolExample example);
 
     int deleteByExample(SchoolExample example);
 
@@ -27,7 +27,4 @@ public interface SchoolMapper {
     int updateByPrimaryKeySelective(School record);
 
     int updateByPrimaryKey(School record);
-
-    List<String> selectDifferentSchoolName() throws Exception;
-
 }

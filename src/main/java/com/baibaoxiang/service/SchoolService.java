@@ -1,4 +1,5 @@
 package com.baibaoxiang.service;
+import com.baibaoxiang.po.Area;
 import com.baibaoxiang.po.School;
 import java.util.List;
 
@@ -54,14 +55,14 @@ public interface SchoolService {
      * @return
      * @throws Exception
      */
-    List<String> selectDifferentSchoolName() throws Exception;
+    List<School> selectDifferentSchoolName() throws Exception;
 
     /**
      * 查询校区
      * @return
      * @throws Exception
      */
-    List<String> selectSchoolArea(String schoolName) throws Exception;
+    List<Area> selectSchoolArea(Integer schoolNo) throws Exception;
 
     /** 通过校名 获取该校名所有校区的编号
      * @param name

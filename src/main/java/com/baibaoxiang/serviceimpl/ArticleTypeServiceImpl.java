@@ -1,6 +1,7 @@
 package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.jedis.JedisClient;
+import com.baibaoxiang.mapper.ArticleMapper;
 import com.baibaoxiang.mapper.ArticleTypeMapper;
 import com.baibaoxiang.mapper.custom.ArticleTypeMapperCustom;
 import com.baibaoxiang.po.ArticleExample;
@@ -9,6 +10,7 @@ import com.baibaoxiang.po.ArticleTypeExample;
 import com.baibaoxiang.service.ArticleTypeService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ import java.util.List;
  * @author sheng
  * @create 2019-05-03-11:25
  */
-
+@Service
 public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     @Autowired
@@ -25,8 +27,9 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     ArticleTypeMapperCustom articleTypeMapperCustom;
     @Autowired
     JedisClient jedisClient;
-    private final String typeInfoKey ="Type_INFO";
-    private final String key = typeInfoKey + ":" + "TYPENAME";
+    @Autowired
+    ArticleMapper articleMapper;
+    private final String key = "Type_INFO:";
     @Override
     public ArticleType selectByPrimaryKey(Integer id) throws Exception {
         return articleTypeMapper.selectByPrimaryKey(id);
@@ -90,7 +93,7 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
         if (jedisClient.exists(key)){
             jedisClient.del(key);
         }
-        articleTypeMapperCustom.deleteByType(type);
+            articleTypeMapperCustom.deleteByType(type);
     }
 
     @Override

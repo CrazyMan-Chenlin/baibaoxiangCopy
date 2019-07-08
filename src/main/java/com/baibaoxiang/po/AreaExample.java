@@ -3,14 +3,14 @@ package com.baibaoxiang.po;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchoolExample {
+public class AreaExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SchoolExample() {
+    public AreaExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -231,6 +231,66 @@ public class SchoolExample {
 
         public Criteria andNameNotBetween(String value1, String value2) {
             addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoIsNull() {
+            addCriterion("schoolNo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoIsNotNull() {
+            addCriterion("schoolNo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoEqualTo(Integer value) {
+            addCriterion("schoolNo =", value, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoNotEqualTo(Integer value) {
+            addCriterion("schoolNo <>", value, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoGreaterThan(Integer value) {
+            addCriterion("schoolNo >", value, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoGreaterThanOrEqualTo(Integer value) {
+            addCriterion("schoolNo >=", value, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoLessThan(Integer value) {
+            addCriterion("schoolNo <", value, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoLessThanOrEqualTo(Integer value) {
+            addCriterion("schoolNo <=", value, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoIn(List<Integer> values) {
+            addCriterion("schoolNo in", values, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoNotIn(List<Integer> values) {
+            addCriterion("schoolNo not in", values, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoBetween(Integer value1, Integer value2) {
+            addCriterion("schoolNo between", value1, value2, "schoolno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolnoNotBetween(Integer value1, Integer value2) {
+            addCriterion("schoolNo not between", value1, value2, "schoolno");
             return (Criteria) this;
         }
     }

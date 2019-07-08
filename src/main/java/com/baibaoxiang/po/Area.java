@@ -1,9 +1,11 @@
 package com.baibaoxiang.po;
 
-public class School {
+public class Area {
     private Integer no;
 
     private String name;
+
+    private Integer schoolno;
 
     public Integer getNo() {
         return no;
@@ -19,5 +21,13 @@ public class School {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getSchoolno() {
+        return schoolno;
+    }
+
+    public void setSchoolno(Integer schoolno) {
+        this.schoolno = schoolno;
     }
 }

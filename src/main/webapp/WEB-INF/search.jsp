@@ -68,7 +68,7 @@
                             $("#content").append("<tr>\n" +
                                 "            <td class=\"firstTd\">\n" +
                                 "                <p><span>"+obj.createTime+"</span>&nbsp;\n" +
-                                "                    <span>"+obj.type+"</span></p>\n" +
+                                "                    <span>"+obj.articleType.type+"</span></p>\n" +
                                 "                <p><a href=\"/detail?no="+obj.no+"\">"+obj.title+"</a></p>\n" +
                                 "                <p><span>"+obj.likeNum+"</span>&nbsp;<img class=\"littleIcon\" src=\"/images/front/love.svg\"/>&nbsp;\n" +
                                 "                    </p>\n" +

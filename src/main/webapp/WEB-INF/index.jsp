@@ -40,16 +40,16 @@
     <div id="school" class="input-group mb-3">
         <span>学校：</span>
         <select id="schoolName" class="custom-select" id="inputGroupSelect02" STYLE="padding-left: 1rem">
-            <c:forEach items="${schoolName}" var="schoolName">
-                <option value="${schoolName}">${schoolName}</option>
+            <c:forEach items="${school}" var="school">
+                <option value="${school.no}">${school.name}</option>
             </c:forEach>
         </select>
     </div>
     <div id="area" class="input-group mb-3">
         <span>校区：</span>
         <select id="areaName" class="custom-select" id="inputGroupSelect03" STYLE="padding-left: 1rem;">
-            <c:forEach items="${areaName}" var="areaName">
-                <option value="${areaName}">${areaName}</option>
+            <c:forEach items="${area}" var="area">
+                <option value="${area.no}">${area.name}</option>
             </c:forEach>
         </select>
     </div>
@@ -73,7 +73,7 @@
                 <div class="find_nav_list">
                     <ul>
                         <c:forEach items="${articleTypeList}" var="articleType">
-                            <li><a href="javascript:void(0)">${articleType.type}</a></li>
+                            <li value="${articleType.id}"><a href="javascript:void(0)">${articleType.type}</a></li>
                         </c:forEach>
                         <li class="sideline"></li>
                     </ul>
@@ -84,7 +84,7 @@
 </div>
 <table class="table" >
     <a href="#" id="back-to-top" title="Back to top">∧</a>
-    <div style="width: 100%;height: 95px">" "</div>
+    <div style="width: 100%;height: 95px"></div>
     <tbody>
     <c:forEach items="${articleList}" var="article">
         <tr>

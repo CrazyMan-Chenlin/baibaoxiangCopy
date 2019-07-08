@@ -28,7 +28,7 @@
 
     <!-- 类型/地区 置顶/发布时间 查询-->
     <select id="selectByTypeArea" resultMap="BaseResultMap" >
-        SELECT <include refid="Base_Column_List"/> FROM article WHERE type = #{type} AND area = #{area}  ORDER BY top ASC,create_time DESC
+        SELECT <include refid="Base_Column_List"/> FROM article WHERE typeNo = #{type} AND areaNo = #{area}  ORDER BY top ASC,create_time DESC
     </select>
 
     <!-- 查询所有的推文 置顶/发布时间 排序-->
@@ -38,7 +38,7 @@
 
     <!-- 查询某类型的所有推文  置顶/发布时间 排序-->
     <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM article WHERE type = #{type} ORDER BY top ASC,create_time DESC
+        SELECT <include refid="Base_Column_List"/> FROM article WHERE typeNo = #{type} ORDER BY top ASC,create_time DESC
     </select>
 
     <!-- 通过 创建的时间段 找出批量文章的编号-->

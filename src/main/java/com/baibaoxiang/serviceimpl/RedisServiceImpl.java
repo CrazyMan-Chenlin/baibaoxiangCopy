@@ -4,6 +4,7 @@ import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.po.DayTotal;
 import com.baibaoxiang.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Set;
  * @author sheng
  * @create 2019-05-27-19:13
  */
+@Service
 public class  RedisServiceImpl implements RedisService {
 
     @Autowired

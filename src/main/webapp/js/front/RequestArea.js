@@ -2,12 +2,13 @@ $(document).ready(function () {
     $("#areaName").change(function () {
         var schoolName = $("#schoolName").val();
         var schoolArea = $("#areaName").val();
+        //设置分页数为2
         $("#page").attr("value","2");
         $.post("/index/changeAreaArticle", {
-            area: schoolName + schoolArea,
-            type: $(".find_nav_cur").text()
+            areaNo: schoolArea,
+            typeNo: $(".find_nav_cur").val()
         }, function (data) {
-            $(" h5").html(schoolName  + "("+schoolArea+")");
+            $(" h5").html($("#schoolName").find("option:selected").text()  + "("+$("#areaName").find("option:selected").text()+")");
             $(".table tbody").empty();
             $.each(data, function (i, article) {
                 $(".table tbody").append("<tr>\n" +

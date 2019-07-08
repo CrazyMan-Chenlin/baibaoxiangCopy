@@ -10,16 +10,18 @@ import com.baibaoxiang.tool.JsonUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.lang.*;
 import java.util.Set;
-
 /**
  * @author sheng
  * @create 2019-04-23-00:19
  */
+@Service
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleMapper articleMapper;
@@ -29,10 +31,9 @@ public class ArticleServiceImpl implements ArticleService {
     JedisClient jedisClient;
     @Autowired
     SearchService searchService;
-    private String articleInfoKey = "Article_INFO";
+    private final String articleInfoKey = "Article_INFO";
     @Override
     public Article selectByPrimaryKey(String no) throws Exception {
-        System.out.println(no);
         String key = articleInfoKey + ":" + no + ":" + "BASE";
         if (no!=null){
             if (jedisClient.exists(key)){
@@ -47,29 +48,37 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return article;
 }
-
     @Override
     public List<String> selectNoByCreateTime(Date startTime, Date endTime) throws Exception {
         return articleMapperCustom.selectNoByCreateTime(startTime,endTime);
     }
 
     @Override
-    public List<Article> selectByTypeArea(String type, String area) throws Exception {
+    public List<Article> selectByTypeArea(Integer typeNo, Integer areaNo) throws Exception {
         ArticleExample articleExample = new ArticleExample();
         articleExample.setOrderByClause("create_time  desc");
         ArticleExample.Criteria criteria = articleExample.createCriteria();
-        criteria.andAreaEqualTo(area);
-        criteria.andTypeEqualTo(type);
+        criteria.andAreanoEqualTo(areaNo);
+        criteria.andTypenoEqualTo(typeNo);
         return articleMapper.selectByExample(articleExample);
     }
 
+    /**
+     * 重载方法
+     * @param areaNo
+     * @param typeNo
+     * @param page
+     * @param rows
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<Article> selectByTypeArea2(String type, String area,Integer page,Integer rows) throws Exception {
+    public List<Article> selectByTypeArea(Integer areaNo, Integer typeNo,Integer page,Integer rows) throws Exception {
         //设置分页信息
         if (page==null||page==0) { page = 1; }
         if (rows==null||rows==0) { rows = 20 ;}
         PageHelper.startPage(page,rows);
-        String key = articleInfoKey + ":" + type + ":" + area;
+        String key = articleInfoKey + ":" + typeNo + ":" + areaNo;
         if (jedisClient.hexists(key,page.toString())){
             String jsonString = jedisClient.hget(key,page.toString());
             return JsonUtils.jsonToList(jsonString,Article.class);
@@ -77,12 +86,14 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleExample articleExample = new ArticleExample();
         articleExample.setOrderByClause("create_time  desc");
         ArticleExample.Criteria criteria = articleExample.createCriteria();
-        criteria.andAreaEqualTo(area);
-        criteria.andTypeEqualTo(type);
+        criteria.andAreanoEqualTo(areaNo);
+        criteria.andTypenoEqualTo(typeNo);
         List<Article> articles = articleMapper.selectByExample(articleExample);
         PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        if (articles!=null&&articles.size()!=0){
         jedisClient.hset(key,page.toString(),JsonUtils.objectToJson(articles));
         jedisClient.expire(key,60*60*6);
+            }
         return pageInfo.getList();
     }
 
@@ -98,19 +109,19 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int insertSelective(Article record) throws Exception {
-        String key = articleInfoKey + ":" + record.getType() + ":" + record.getArea();
-        String key2 = articleInfoKey + ":" + record.getArea();
-        Set<String> hkeys = jedisClient.hkeys(key);
+        String article = articleInfoKey + ":" + record.getArticleType().getId() + ":" + record.getAreano();
+        String topKey = articleInfoKey + ":" + record.getAreano();
+        Set<String> hkeys = jedisClient.hkeys(articleInfoKey);
         Iterator it = hkeys.iterator();
         while(it.hasNext()){
             String keyStr = (String)it.next();
-            jedisClient.hdel(key,keyStr);
+            jedisClient.hdel(articleInfoKey,keyStr);
         }
-         hkeys = jedisClient.hkeys(key2);
+         hkeys = jedisClient.hkeys(topKey);
          it = hkeys.iterator();
         while(it.hasNext()){
             String keyStr = (String)it.next();
-            jedisClient.hdel(key2,keyStr);
+            jedisClient.hdel(topKey,keyStr);
         }
         //添加索引
         searchService.addIndex(record);
@@ -120,11 +131,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int deleteByPrimaryKey(String no) throws Exception {
         Article article = articleMapper.selectByPrimaryKey(no);
-        String key = articleInfoKey + ":" + article.getType() + ":" + article.getArea();
-        String key2 = articleInfoKey + ":" + article.getArea();
-        String key3 = articleInfoKey + ":" + no + ":" + "BASE";
-        delKey(key, key2, key3);
-        //删除索引
+        String typeAreaKey = articleInfoKey + ":" + article.getArticleType().getId() + ":" + article.getAreano();
+        String topKey = articleInfoKey + ":" + article.getAreano();
+        String articleKey = articleInfoKey + ":" + no + ":" + "BASE";
+        delKey(typeAreaKey, topKey, articleKey);
+        //删除索引11
         searchService.deleteIndex(no);
         return articleMapper.deleteByPrimaryKey(no);
     }
@@ -150,24 +161,24 @@ public class ArticleServiceImpl implements ArticleService {
         while(it.hasNext()){
             String keyStr = (String)it.next();
             jedisClient.hdel(typeKey,keyStr);
-            }
+        }
     }
 
     @Override
     public void deleteArticleBatch(String[] no) throws Exception {
         Article article;
-        String key;
-        String key2;
-        String key3;
+        String typeAreaKey;
+        String topKeyc;
+        String articleKey;
         for (int i = 0; i < no.length; i++) {
             article = articleMapper.selectByPrimaryKey(no[i]);
-            key = articleInfoKey + ":" + article.getType() + ":" + article.getArea();
-            if (jedisClient.exists(key)) {
-                jedisClient.del(key);
+            typeAreaKey = articleInfoKey + ":" + article.getArticleType().getId() + ":" + article.getAreano();
+            if (jedisClient.exists(typeAreaKey)) {
+                jedisClient.del(typeAreaKey);
             }
-            key2 = articleInfoKey + articleInfoKey +  article.getArea();
-            key3 = articleInfoKey + ":" + article.getNo() + ":" + "BASE";
-            delKey(key,key2,key3);
+            topKeyc = articleInfoKey + articleInfoKey +  article.getAreano();
+            articleKey = articleInfoKey + ":" + article.getNo() + ":" + "BASE";
+            delKey(typeAreaKey,topKeyc,articleKey);
             articleMapper.deleteByPrimaryKey(no[i]);
             //变量删除索引
             searchService.deleteIndex(no[i]);
@@ -176,10 +187,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int updateByPrimaryKey(Article record) throws Exception {
-        String key = articleInfoKey + ":" + record.getType() + ":" + record.getArea();
-        String key2 = articleInfoKey + ":" + record.getArea();
-        String key3 = articleInfoKey + ":" + record.getNo() + ":" + "BASE";
-        delKey(key, key2, key3);
+        String typeAreaKey = articleInfoKey + ":" + record.getArticleType().getId() + ":" + record.getAreano();
+        String topKeyc = articleInfoKey + ":" + record.getAreano();
+        String articleKey = articleInfoKey + ":" + record.getNo() + ":" + "BASE";
+        //删除缓存
+        delKey(typeAreaKey,topKeyc,articleKey);
         //修改索引
         searchService.deleteIndex(record.getNo());
         searchService.addIndex(record);
@@ -234,17 +246,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 添加缓存机制
-     * @param area
+     * @param areaNo
      * @return
      * @throws Exception
      */
     @Override
-    public List<Article> selectTopArticle(String area,Integer page, Integer rows) throws Exception {
+    public List<Article> selectTopArticle(Integer areaNo,Integer page, Integer rows) throws Exception {
         //设置分页信息
         if (page==null||page==0) { page = 1; }
         if (rows==null||rows==0) {rows = 20 ;}
         PageHelper.startPage(page,rows);
-        String key = articleInfoKey + ":" + area;
+        String key = articleInfoKey + ":" + areaNo;
         if (jedisClient.hexists(key,page.toString())) {
             String jsonString = jedisClient.hget(key,page.toString());
             return JsonUtils.jsonToList(jsonString, Article.class);
@@ -253,12 +265,14 @@ public class ArticleServiceImpl implements ArticleService {
             example.setOrderByClause("top");
             ArticleExample.Criteria criteria = example.createCriteria();
             criteria.andTopNotEqualTo(4);
-            criteria.andAreaEqualTo(area);
+            criteria.andAreanoEqualTo(areaNo);
             List<Article> articles = articleMapper.selectByExample(example);
             //获取分页信息
             PageInfo<Article> pageInfo = new PageInfo<>(articles);
-            jedisClient.hset(key, page.toString(),JsonUtils.objectToJson(articles));
-            jedisClient.expire(key,60*60*6);
+            if (articles!=null&&articles.size()!=0) {
+                jedisClient.hset(key, page.toString(), JsonUtils.objectToJson(articles));
+                jedisClient.expire(key,60*60*6);
+            }
             return pageInfo.getList();
         }
     }
@@ -270,13 +284,18 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void setTopArticle(String no, Integer top) throws Exception {
         Article article = articleMapper.selectByPrimaryKey(no);
-        String key = articleInfoKey + ":" + article.getArea();
-        Set<String> hkeys = jedisClient.hkeys(key);
-        Iterator it = hkeys.iterator();
-        while(it.hasNext()){
-            String keyStr = (String)it.next();
-            jedisClient.hdel(key,keyStr);
+        if (article!=null) {
+            String key = articleInfoKey + ":" + article.getAreano();
+            Set<String> hkeys = jedisClient.hkeys(key);
+            Iterator it = hkeys.iterator();
+            while (it.hasNext()) {
+                String keyStr = (String) it.next();
+                jedisClient.hdel(key, keyStr);
+            }
+            articleMapperCustom.setTopArticle(no,top);
+        }else{
+            throw new RuntimeException();
         }
-        articleMapperCustom.setTopArticle(no,top);
+        
     }
 }
