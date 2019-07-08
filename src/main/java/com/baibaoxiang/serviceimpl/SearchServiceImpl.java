@@ -42,10 +42,10 @@ public class SearchServiceImpl implements SearchService {
             article = new Article();
             article.setNo(solrDocument.get("id").toString());
             article.setTitle(solrDocument.get("title").toString());
-            article.setAuthor(solrDocument.get("author").toString());
+            article.getManager().setName(solrDocument.get("author").toString());
             article.setCreateTime(Date.valueOf(solrDocument.get("create_time").toString()));
             article.setLikeNum(Integer.parseInt(solrDocument.get("like_num").toString()));
-            article.setType((String)solrDocument.get("type"));
+            article.getArticleType().setType((String)solrDocument.get("type").toString());
             searchArticle.add(article);
         }
        return searchArticle;
@@ -74,8 +74,8 @@ public class SearchServiceImpl implements SearchService {
             document.addField("id", article.getNo());
             document.addField("create_time",sdf.format(article.getCreateTime()));
             document.addField("like_num", article.getLikeNum());
-            document.addField("type", article.getType());
-            document.addField("author", article.getAuthor());
+            document.addField("type", article.getArticleType().getType());
+            document.addField("author", article.getManager().getName());
             httpSolrClient.add(document);
         }
         httpSolrClient.commit();
@@ -89,8 +89,8 @@ public class SearchServiceImpl implements SearchService {
         document.addField("id", article.getNo());
         document.addField("create_time", sdf.format(article.getCreateTime()));
         document.addField("like_num", article.getLikeNum());
-        document.addField("type", article.getType());
-        document.addField("author", article.getAuthor());
+        document.addField("type", article.getArticleType().getType());
+        document.addField("author", article.getManager().getName());
         httpSolrClient.add(document);
         httpSolrClient.commit();
     }

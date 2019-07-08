@@ -10,7 +10,7 @@ public interface ManagerMapper {
 
     int deleteByExample(ManagerExample example);
 
-    int deleteByPrimaryKey(String username);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Manager record);
 
@@ -18,7 +18,7 @@ public interface ManagerMapper {
 
     List<Manager> selectByExample(ManagerExample example);
 
-    Manager selectByPrimaryKey(String username);
+    Manager selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Manager record, @Param("example") ManagerExample example);
 
@@ -27,6 +27,4 @@ public interface ManagerMapper {
     int updateByPrimaryKeySelective(Manager record);
 
     int updateByPrimaryKey(Manager record);
-
-    String queryAuthorPicture(String name);
 }

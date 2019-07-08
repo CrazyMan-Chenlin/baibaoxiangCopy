@@ -65,9 +65,11 @@ public class ArticleController {
      */
     @RequestMapping(value = "/type_area",method = RequestMethod.POST)
     public  List<Article> selectByTypeArea(HttpServletRequest request) throws Exception {
-        String type = request.getParameter("type");
-        String area = request.getParameter("area");
-        List<Article> articleList = articleService.selectByTypeArea(type, area);
+        String type = request.getParameter("typeNo");
+        String area = request.getParameter("areaNo");
+        Integer typeNo = Integer.valueOf(type);
+        Integer areaNo = Integer.valueOf(area);
+        List<Article> articleList = articleService.selectByTypeArea(typeNo, areaNo);
         return articleList;
     }
 
@@ -79,16 +81,17 @@ public class ArticleController {
     @RequestMapping(value = "/type",method = RequestMethod.POST)
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
+        Integer typeNo = Integer.valueOf(type);
         //获取session 中的username
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
         int isCheck = checkRight(request);
         if(isCheck==1){
-            return articleService.selectByType(type);
+            return articleService.selectByType(typeNo);
         }
         Manager manager = managerService.findManagerByUsername(username);
-        String area = manager.getArea();
-        List<Article> articleList = articleService.selectByTypeArea(type, area);
+        Integer areaNo = manager.getArea().getNo();
+        List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
         return articleList;
     }
 
@@ -112,9 +115,9 @@ public class ArticleController {
     public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
-        String username = record.getAuthor();
+        String username = record.getManager().getUsername();
         Manager manager = managerService.findManagerByUsername(username);
-        record.setAuthor(manager.getName());
+        record.setManager(manager);
         Map<String, String> map = new HashMap<>();
         try {
             articleService.insertSelective(record);

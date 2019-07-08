@@ -1,5 +1,5 @@
 $(function() {
-    //加载文本编辑器
+    //加载文本编辑器+
     $('#edit').on('froalaEditor.initialized', function (e, editor) {
         if ($('.dataReturn').html()!=""){
             $('#edit').froalaEditor('html.set',$('.dataReturn').html());

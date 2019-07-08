@@ -65,8 +65,8 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public School selectSchoolByNo(Integer no) throws Exception {
-        return schoolMapper.selectByPrimaryKey(no);
+    public School selectSchoolById(Integer id) throws Exception {
+        return schoolMapperCustom.selectSchoolById(id);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SchoolServiceImpl implements SchoolService {
             schoolName = Arrays.asList(split);
             return schoolName;
         } else {
-            schoolName = schoolMapper.selectDifferentSchoolName();
+            schoolName = schoolMapperCustom.selectDifferentSchoolName();
             for (String str : schoolName) {
                 value.append(str);
                 value.append(",");
@@ -100,52 +100,52 @@ public class SchoolServiceImpl implements SchoolService {
         }
     }
 
-    @Override
-    public List<String> selectSchoolArea(String schoolName) throws Exception {
-        // 添加缓存的原则是，不能够影响现在有的业务逻辑
-        // 查询缓存
-        /*删除key 存在于添加和删除area的时候，删除*/
-        List<String> areaName = new ArrayList<>();
-        try {
-            if (schoolName != null) {
-                // 从缓存中查询
-                String areaNameString = jedisClient.get(schoolInfoKey + ":" + schoolName + ":BASE1");
-                if (!"".equals(areaNameString) && areaNameString != null) {
-                    String[] split = areaNameString.split(",");
-                    areaName = Arrays.asList(split);
-                    return areaName;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        SchoolExample example = new SchoolExample();
-        SchoolExample.Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(schoolName);
-        List<School> schools = schoolMapper.selectByExample(example);
-        for (School school : schools) {
-            areaName.add(school.getArea());
-        }
-        /*添加缓存*/
-        try {
-            // 注入redisjedisCluster
-            StringBuilder value = new StringBuilder();
-            if (schoolName != null) {
-                for (String str : areaName) {
-                    value.append(str);
-                    value.append(",");
-                }
-                value.delete(value.length() - 1, value.length());
-                jedisClient.set(schoolInfoKey + ":" + schoolName + ":BASE1", value.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return areaName;
-    }
+//    @Override
+//    public List<String> selectSchoolArea(String schoolName) throws Exception {
+//        // 添加缓存的原则是，不能够影响现在有的业务逻辑
+//        // 查询缓存
+//        /*删除key 存在于添加和删除area的时候，删除*/
+//        List<String> areaName = new ArrayList<>();
+//        try {
+//            if (schoolName != null) {
+//                // 从缓存中查询
+//                String areaNameString = jedisClient.get(schoolInfoKey + ":" + schoolName + ":BASE1");
+//                if (!"".equals(areaNameString) && areaNameString != null) {
+//                    String[] split = areaNameString.split(",");
+//                    areaName = Arrays.asList(split);
+//                    return areaName;
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        SchoolExample example = new SchoolExample();
+//        SchoolExample.Criteria criteria = example.createCriteria();
+//        criteria.andNameEqualTo(schoolName);
+//        List<School> schools = schoolMapper.selectByExample(example);
+//        for (School school : schools) {
+//            areaName.add(school.getArea());
+//        }
+//        /*添加缓存*/
+//        try {
+//            // 注入redisjedisCluster
+//            StringBuilder value = new StringBuilder();
+//            if (schoolName != null) {
+//                for (String str : areaName) {
+//                    value.append(str);
+//                    value.append(",");
+//                }
+//                value.delete(value.length() - 1, value.length());
+//                jedisClient.set(schoolInfoKey + ":" + schoolName + ":BASE1", value.toString());
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return areaName;
+//    }
 
     @Override
     public List<Integer> selectNosBySchoolName(String name) throws Exception {
-        return schoolMapperCustom.seleteNosBySchoolName(name);
+        return schoolMapperCustom.selectNosBySchoolName(name);
     }
 }

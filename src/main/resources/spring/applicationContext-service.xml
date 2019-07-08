@@ -17,4 +17,5 @@
     <bean id="schoolService" class="com.baibaoxiang.serviceimpl.SchoolServiceImpl"/>
     <bean id="jedisClient" class="com.baibaoxiang.jedis.JedisClientPool"/>
     <bean id="redisService" class="com.baibaoxiang.serviceimpl.RedisServiceImpl"/>
+    <bean id="areaService" class="com.baibaoxiang.serviceimpl.AreaServiceImpl"/>
 </beans>
