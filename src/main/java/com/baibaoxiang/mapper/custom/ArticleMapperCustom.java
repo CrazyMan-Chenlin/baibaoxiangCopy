@@ -18,7 +18,6 @@ public interface ArticleMapperCustom {
      * @param typeNo
      * @param areaNo
      * @return
-     *
      */
     List<Article> selectByTypeArea(@Param("typeNo") Integer typeNo, @Param("areaNo") Integer areaNo);
 

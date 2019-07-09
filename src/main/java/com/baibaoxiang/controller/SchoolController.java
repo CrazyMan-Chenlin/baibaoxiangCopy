@@ -40,7 +40,7 @@ public class SchoolController {
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     @ResponseBody
     public School findSchoolById(@PathVariable("id") Integer id) throws Exception{
-        return schoolService.selectSchoolById(id);
+        return schoolService.selectSchoolByNo(id);
     }
 
     /** 查询所有的学校信息

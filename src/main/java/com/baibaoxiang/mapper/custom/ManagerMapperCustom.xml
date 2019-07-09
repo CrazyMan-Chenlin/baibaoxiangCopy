@@ -19,6 +19,7 @@
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="path" jdbcType="VARCHAR" property="path" />
         <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="salt" property="salt" jdbcType="VARCHAR" />
         <association column="areaNo" property="area"
                      select="com.baibaoxiang.mapper.AreaMapper.selectByPrimaryKey">
         </association>
@@ -29,7 +30,7 @@
         <result column="name" jdbcType="VARCHAR" property="name" />
     </resultMap>
     <sql id="Base_Column_List2" >
-    id, name, username, password, areaNo, path, title
+    id, name, username, password, areaNo, path, title, salt
     </sql>
 
     <sql id="Base_Column_List" >
@@ -45,7 +46,7 @@
         SELECT <include refid="Base_Column_List"/> FROM manager WHERE username = #{username}
     </select>
 
-    <select id="findManagerWithPassword" resultMap="BaseResultMap2" parameterType="java.lang.String">
+    <select id="findManagerWithPassword_salt" resultMap="BaseResultMap2" parameterType="java.lang.String">
         SELECT <include refid="Base_Column_List2"/> FROM manager WHERE username = #{username}
     </select>
 

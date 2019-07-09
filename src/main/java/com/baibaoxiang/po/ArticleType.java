@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class ArticleType Serializable{
+public class ArticleType implements Serializable{
     private Integer id;
 
     private Integer sequenceNum;

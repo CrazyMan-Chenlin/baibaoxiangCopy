@@ -3,7 +3,7 @@
 <mapper namespace="com.baibaoxiang.mapper.AreaMapper">
   <resultMap id="BaseResultMap" type="com.baibaoxiang.po.Area">
     <id column="no" jdbcType="INTEGER" property="no" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name" jdbcType="VARCHAR" property="name"/>
       <association column="schoolNo"  property="school"
                    select="com.baibaoxiang.mapper.SchoolMapper.selectByPrimaryKey">
       </association>

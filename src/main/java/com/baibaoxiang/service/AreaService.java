@@ -9,7 +9,6 @@ import java.util.List;
  * @author sheng
  * @create 2019-07-03-16:05
  */
-@Service
 public interface AreaService {
 
     /** 通过id 获取校区信息

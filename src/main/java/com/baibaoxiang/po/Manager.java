@@ -11,7 +11,7 @@ public class Manager {
 
     private String password;
 
-    private String area;
+    private Area area;
 
     private String path;
 

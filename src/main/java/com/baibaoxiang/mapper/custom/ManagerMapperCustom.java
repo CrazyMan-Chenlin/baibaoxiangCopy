@@ -32,5 +32,7 @@ public interface ManagerMapperCustom {
      */
     Manager findManagerNameById(Integer id) throws Exception;
 
+    Manager findManagerWithPassword_salt(String username) throws Exception;
+
 
 }

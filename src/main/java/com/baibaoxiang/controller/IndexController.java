@@ -51,6 +51,7 @@ public class IndexController {
     }
     /**
      * 查询地区名
+     *
      * @param schoolNo
      * @return
      * @throws Exception

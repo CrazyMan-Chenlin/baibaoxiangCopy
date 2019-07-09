@@ -3,6 +3,7 @@ package com.baibaoxiang.service;
 
 import com.baibaoxiang.po.Article;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ public interface ArticleService {
     /**
      * 按文章的类型(type），地区(area)查询文章
      * 顺序依据:置顶号（号数低的在前面），文章发表时间（最近发表的在前面）
-     * @param type,area
+     * @param typeNo,areaNo
      * @return 返回一个Article类型的链表
      * @throws Exception
      */
@@ -116,7 +117,7 @@ public interface ArticleService {
 
     /**
      * 查询所有顶置文章
-     * @param area
+     * @param areaNo
      * @return
      * @throws Exception
      */

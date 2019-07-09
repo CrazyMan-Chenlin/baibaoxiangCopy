@@ -17,7 +17,7 @@ public interface AreaMapperCustom {
      */
     void insertArea(@Param("schoolNo") Integer schoolNo,@Param("name") String name);
 
-    /** 查询所有的校区
+    /**  查询所有的校区
      * @return
      */
     List<Area> findAllAreas();

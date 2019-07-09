@@ -24,7 +24,6 @@ import java.util.Map;
 public class AreaController {
 
     private String defSchoolName = "广东第二师范学院";
-
     @Autowired
     AreaService areaService;
     @Autowired

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author chenlin
  */
-
+@Component
 public class FastDfsClient {
 	private TrackerClient trackerClient = null;
 	private TrackerServer trackerServer = null;

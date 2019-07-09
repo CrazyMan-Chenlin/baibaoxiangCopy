@@ -8,9 +8,9 @@
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
-      <association column="areaNo" property="area"
-                   select="com.baibaoxiang.mapper.AreaMapper.selectByPrimaryKey">
-      </association>
+    <association column="areaNo" property="area"
+                 select="com.baibaoxiang.mapper.AreaMapper.selectByPrimaryKey">
+    </association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >

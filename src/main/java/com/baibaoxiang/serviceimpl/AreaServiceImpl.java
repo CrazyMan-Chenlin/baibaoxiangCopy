@@ -6,6 +6,7 @@ import com.baibaoxiang.mapper.custom.AreaMapperCustom;
 import com.baibaoxiang.po.Area;
 import com.baibaoxiang.service.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author sheng
  * @create 2019-07-03-17:09
  */
+@Service
 public class AreaServiceImpl implements AreaService {
 
     @Autowired

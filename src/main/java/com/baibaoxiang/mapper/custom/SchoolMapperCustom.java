@@ -37,5 +37,5 @@ public interface SchoolMapperCustom {
     /**
      * @return
      */
-    List<String> selectDifferentSchoolName();
+    List<String> selectDifferentSchoolName(String name);
 }

@@ -1,11 +1,16 @@
 package com.baibaoxiang.serviceimpl;
 import com.baibaoxiang.jedis.JedisClient;
+import com.baibaoxiang.mapper.AreaMapper;
 import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.SchoolMapperCustom;
+import com.baibaoxiang.po.Area;
+import com.baibaoxiang.po.AreaExample;
 import com.baibaoxiang.po.School;
 import com.baibaoxiang.po.SchoolExample;
 import com.baibaoxiang.service.SchoolService;
+import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -13,6 +18,7 @@ import java.util.*;
  * @author sheng
  * @create 2019-05-03-15:44
  */
+@Service
 public class SchoolServiceImpl implements SchoolService {
     @Autowired
     JedisClient jedisClient;
@@ -123,6 +129,6 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public List<Integer> selectNosBySchoolName(String name) throws Exception {
-        return schoolMapperCustom.seleteNosBySchoolName(name);
+        return schoolMapperCustom.selectNosBySchoolName(name);
     }
 }
