@@ -37,11 +37,11 @@ public interface SchoolService {
    void deleteSchoolBySchoolName(String name) throws Exception;
 
     /** 查询学校信息 通过校区的编号
-     * @param id
+     * @param no
      * @return
      * @throws Exception
      */
-    School selectSchoolById(Integer id) throws Exception;
+    School selectSchoolByNo(Integer no) throws Exception;
 
     /** 获取所有学校的信息 （超级管理员干的）
      * @return
@@ -54,14 +54,14 @@ public interface SchoolService {
      * @return
      * @throws Exception
      */
-    List<String> selectDifferentSchoolName() throws Exception;
+    List<School> selectDifferentSchoolName() throws Exception;
 
 //    /**
 //     * 查询校区
 //     * @return
 //     * @throws Exception
 //     */
-//    List<String> selectSchoolArea(String schoolName) throws Exception;
+//    List<String> selectSchoolArea(Integer schoolNo) throws Exception;
 
     /** 通过校名 获取该校名所有校区的编号
      * @param name

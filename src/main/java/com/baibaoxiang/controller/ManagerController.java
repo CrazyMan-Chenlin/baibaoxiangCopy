@@ -102,7 +102,7 @@ public class ManagerController {
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> map = new HashMap<String, Object>();
         String rememberme = request.getParameter("rememberme");
-        Manager manager = managerService.findManagerWithPassword_salt(username);
+        Manager manager = managerService.findManagerWithPassword_salt(Integer.parseInt(username));
 
         //获取session中保存的 验证码
         String code = (String)session.getAttribute("randomcode_key");
@@ -132,7 +132,7 @@ public class ManagerController {
                 //添加session 将用户名添加到session
                 request.getSession().setAttribute("username", username);
                 Manager manager2 = managerService.findManagerByUsername(username);
-                request.getSession().setAttribute("area",manager.getArea());
+                request.getSession().setAttribute("area",manager.getAreano());
                 if (checkRight(request)==0){
                     request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
                 }else{
@@ -240,7 +240,6 @@ public class ManagerController {
                         manager.setPath(uploadFilePath);
                         managerService.updateByPrimaryKeySelective(manager);
                         modelAndView.addObject("msg","修改成功");
-                        logger.info("头像信息修改成功");
                     }else {
                         modelAndView.addObject("msg","上传失败，文件必须是jpg类型或者是PNG类型!");
                         logger.info("上传失败，文件必须是jpg类型或者是PNG类型!");
@@ -278,7 +277,7 @@ public class ManagerController {
         String username = (String) session.getAttribute("username");
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
-        Manager manager = managerService.findManagerWithPassword_salt(username);
+        Manager manager = managerService.findManagerWithPassword_salt(Integer.parseInt(username));
         String salt = manager.getSalt();
         if(!manager.getPassword().equals(md5(salt,oldPassword))){
             map.put("code",0);
@@ -308,7 +307,7 @@ public class ManagerController {
         if (i==1){
             String username = request.getParameter("id");
             String password = request.getParameter("password");
-            Manager manager = managerService.findManagerWithPassword_salt(username);
+            Manager manager = managerService.findManagerWithPassword_salt(Integer.parseInt(username));
             String salt = manager.getSalt();
             manager.setPassword(md5(salt,password));
             managerService.updateByPrimaryKeySelective(manager);
@@ -337,7 +336,7 @@ public class ManagerController {
         Manager manager = managerService.findManagerByUsername(username);
         map.put("username",manager.getUsername());
         map.put("name",manager.getName());
-        map.put("area",manager.getArea());
+        map.put("area",manager.getAreano());
         map.put("path",manager.getPath());
         return map;
     }
@@ -378,7 +377,7 @@ public class ManagerController {
      */
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
     public void deleteManager(@PathVariable("username") String username) throws Exception{
-        managerService.deleteByPrimaryKey(username);
+        managerService.deleteByPrimaryKey(Integer.parseInt(username));
     }
 
     /** 批量删除管理员

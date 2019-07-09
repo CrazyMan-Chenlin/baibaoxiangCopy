@@ -1,5 +1,4 @@
 package com.baibaoxiang.po;
-
 import lombok.Data;
 
 @Data
@@ -12,7 +11,7 @@ public class Manager {
 
     private String password;
 
-    private Area area;
+    private String area;
 
     private String path;
 

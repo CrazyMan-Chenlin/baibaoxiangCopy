@@ -38,14 +38,17 @@ public class SearchServiceImpl implements SearchService {
         //3.封装商品列表
         List<Article> searchArticle = new ArrayList<>();
         Article article ;
+        ArticleType articleType;
         for (SolrDocument solrDocument : results){
             article = new Article();
             article.setNo(solrDocument.get("id").toString());
             article.setTitle(solrDocument.get("title").toString());
-            article.getManager().setName(solrDocument.get("author").toString());
+            article.setAuthor(solrDocument.get("author").toString());
             article.setCreateTime(Date.valueOf(solrDocument.get("create_time").toString()));
             article.setLikeNum(Integer.parseInt(solrDocument.get("like_num").toString()));
-            article.getArticleType().setType((String)solrDocument.get("type").toString());
+            articleType = new ArticleType();
+            article.setType((String)solrDocument.get("type"));
+            article.setArticleType(articleType);
             searchArticle.add(article);
         }
        return searchArticle;
@@ -74,15 +77,21 @@ public class SearchServiceImpl implements SearchService {
             document.addField("id", article.getNo());
             document.addField("create_time",sdf.format(article.getCreateTime()));
             document.addField("like_num", article.getLikeNum());
-            document.addField("type", article.getArticleType().getType());
-            document.addField("author", article.getManager().getName());
+            document.addField("type", article.getType());
+            document.addField("author", article.getAuthor());
             httpSolrClient.add(document);
         }
         httpSolrClient.commit();
     }
 
+    /**
+     * 添加索引方法
+     * @param article
+     * @throws Exception
+     */
     @Override
     public void addIndex(Article article) throws Exception {
+        //新建document
         SolrInputDocument document = new SolrInputDocument();
         document.addField("title", article.getTitle());
         document.addField("message", article.getMessage());
@@ -90,7 +99,6 @@ public class SearchServiceImpl implements SearchService {
         document.addField("create_time", sdf.format(article.getCreateTime()));
         document.addField("like_num", article.getLikeNum());
         document.addField("type", article.getArticleType().getType());
-        document.addField("author", article.getManager().getName());
         httpSolrClient.add(document);
         httpSolrClient.commit();
     }

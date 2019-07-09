@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SchoolMapper {
-    int countByExample(SchoolExample example);
+    long countByExample(SchoolExample example);
 
     int deleteByExample(SchoolExample example);
 

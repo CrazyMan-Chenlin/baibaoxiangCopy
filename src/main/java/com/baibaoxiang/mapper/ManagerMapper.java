@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface ManagerMapper {
-    int countByExample(ManagerExample example);
+    long countByExample(ManagerExample example);
 
     int deleteByExample(ManagerExample example);
 

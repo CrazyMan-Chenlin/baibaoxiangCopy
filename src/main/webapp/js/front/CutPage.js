@@ -15,8 +15,8 @@ $(document).ready(function () {
                 type: 'post',
                 url: '/index/getAreaArticle',
                 data: {
-                    type: $(".find_nav_cur").text(),
-                    area: $("#schoolName").val() + $("#areaName").val(),
+                    typeNo: $(".find_nav_cur").val(),
+                    areaNo: $("#areaName").find("option:selected").val(),
                     page: page
                 },
                 beforeSend: function (XMLHttpRequest) {

@@ -7,6 +7,7 @@ import com.baibaoxiang.po.DayTotalKey;
 import com.baibaoxiang.po.ReadLikeNumber;
 import com.baibaoxiang.service.DayTotalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 
@@ -14,6 +15,7 @@ import java.sql.Date;
  * @author sheng
  * @create 2019-05-03-15:44
  */
+@Service
 public class DayTotalServiceImpl implements DayTotalService {
 
     @Autowired

@@ -1,9 +1,10 @@
 package com.baibaoxiang.po;
 
 import lombok.Data;
-
 import java.util.Date;
-
+/**
+ * @author chenlin
+ */
 @Data
 public class Article {
     private String no;
@@ -27,5 +28,4 @@ public class Article {
     private String picturePath;
 
     private String message;
-
 }

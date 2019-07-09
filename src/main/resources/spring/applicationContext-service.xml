@@ -9,13 +9,6 @@
 
     <!-- 包扫描器 -->
     <context:component-scan base-package="com.baibaoxiang.serviceimpl"/>
-    <bean id="fastDfsClient" class="com.baibaoxiang.tool.FastDfsClient"/>
-    <bean id="articleService" class="com.baibaoxiang.serviceimpl.ArticleServiceImpl"/>
-    <bean id="managerService" class="com.baibaoxiang.serviceimpl.ManagerServiceImpl"/>
-    <bean id="articleTypeService" class="com.baibaoxiang.serviceimpl.ArticleTypeServiceImpl"/>
-    <bean id="dayTotalService" class="com.baibaoxiang.serviceimpl.DayTotalServiceImpl"/>
-    <bean id="schoolService" class="com.baibaoxiang.serviceimpl.SchoolServiceImpl"/>
-    <bean id="jedisClient" class="com.baibaoxiang.jedis.JedisClientPool"/>
-    <bean id="redisService" class="com.baibaoxiang.serviceimpl.RedisServiceImpl"/>
-    <bean id="areaService" class="com.baibaoxiang.serviceimpl.AreaServiceImpl"/>
+    <context:component-scan base-package="com.baibaoxiang.tool"/>
+    <context:component-scan base-package="com.baibaoxiang.jedis"/>
 </beans>

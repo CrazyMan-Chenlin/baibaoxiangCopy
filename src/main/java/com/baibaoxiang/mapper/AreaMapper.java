@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface AreaMapper {
-    int countByExample(AreaExample example);
+    long countByExample(AreaExample example);
 
     int deleteByExample(AreaExample example);
 

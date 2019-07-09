@@ -1,9 +1,13 @@
 $(document).ready(function () {
     $(".find_nav_list li ").on('click', function () {
+        //设置分页数为2
         $("#page").attr("value",2);
+        let areaNo = $("#areaName").find("option:selected").val();
+        let typeNo = $(".find_nav_cur").val();
         $.post("/index/getAreaArticle", {
-            type: $(this).text(),
-            area: $("#schoolName").val() + $("#areaName").val()
+            //得到typeNo和areaNo
+            areaNo: areaNo,
+            typeNo: typeNo
         }, function (data) {
             $(".table tbody").empty();
             $.each(data, function (i, article) {

@@ -63,15 +63,13 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/type_area",method = RequestMethod.POST)
+    /*@RequestMapping(value = "/type_area",method = RequestMethod.POST)
     public  List<Article> selectByTypeArea(HttpServletRequest request) throws Exception {
-        String type = request.getParameter("typeNo");
-        String area = request.getParameter("areaNo");
-        Integer typeNo = Integer.valueOf(type);
-        Integer areaNo = Integer.valueOf(area);
-        List<Article> articleList = articleService.selectByTypeArea(typeNo, areaNo);
+        String type = request.getParameter("type");
+        String area = request.getParameter("area");
+        List<Article> articleList = articleService.selectByTypeArea(type, area);
         return articleList;
-    }
+    }*/
 
     /** 按地区，类型查询 并按置顶号，发布时间排序(后台地区管理员应用)
      * @param request
@@ -115,9 +113,9 @@ public class ArticleController {
     public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
-        String username = record.getManager().getUsername();
+        /*String username = record.getAuthor();
         Manager manager = managerService.findManagerByUsername(username);
-        record.setManager(manager);
+        record.setAuthor(manager.getName());*/
         Map<String, String> map = new HashMap<>();
         try {
             articleService.insertSelective(record);

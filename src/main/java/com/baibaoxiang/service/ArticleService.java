@@ -32,13 +32,22 @@ public interface ArticleService {
     /**
      * 按文章的类型(type），地区(area)查询文章
      * 顺序依据:置顶号（号数低的在前面），文章发表时间（最近发表的在前面）
-     * @param typeNo,areaNo
+     * @param type,area
      * @return 返回一个Article类型的链表
      * @throws Exception
      */
     List<Article> selectByTypeArea(Integer typeNo, Integer areaNo) throws Exception;
 
-    List<Article> selectByTypeArea2(Integer typeNo, Integer areaNo,Integer page,Integer rows) throws Exception;
+    /**
+     * 重载selectByTypeArea方法
+     * @param areaNo
+     * @param typeNo
+     * @param page
+     * @param rows
+     * @return
+     * @throws Exception
+     */
+    List<Article> selectByTypeArea(Integer areaNo, Integer typeNo,Integer page,Integer rows) throws Exception;
 
     /** 查询所有的推文 置顶/发布时间 排序
      * @return
@@ -107,7 +116,7 @@ public interface ArticleService {
 
     /**
      * 查询所有顶置文章
-     * @param areaNo
+     * @param area
      * @return
      * @throws Exception
      */

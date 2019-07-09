@@ -22,7 +22,7 @@ public interface ManagerService {
      * @return
      * @throws Exception
      */
-    Manager findManagerWithPassword_salt (String username) throws Exception;
+    Manager findManagerWithPassword_salt (Integer username) throws Exception;
 
     /** 通过权限名 查询所有的地方管理员
      * @param title
@@ -50,7 +50,7 @@ public interface ManagerService {
      * @return
      * @throws Exception
      */
-    int deleteByPrimaryKey(String username) throws Exception;
+    int deleteByPrimaryKey(Integer username) throws Exception;
 
     /** 批量删除管理员
      * @param usernames
@@ -58,10 +58,4 @@ public interface ManagerService {
      */
     void deleteManagerBatch(String usernames) throws Exception;
 
-    /**
-     * 查询作者头像
-     * @param name
-     * @return
-     */
-    String queryAuthorPicture(String name);
 }

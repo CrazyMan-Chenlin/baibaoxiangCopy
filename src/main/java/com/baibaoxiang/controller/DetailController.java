@@ -25,10 +25,8 @@ public class DetailController {
         ModelAndView modelAndView = new ModelAndView("/detail");
         //根据id查文章的具体内容
         Article article = articleService.selectByPrimaryKey(no);
-        String authorPicture = managerService.queryAuthorPicture(article.getAuthor());
         redisService.saveReadNumRedis(no);
         modelAndView.addObject("article",article);
-        modelAndView.addObject("authorPicture",authorPicture);
         return modelAndView;
     }
 }

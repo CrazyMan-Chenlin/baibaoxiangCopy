@@ -23,4 +23,5 @@ public interface JedisClient {
     Map<String, String> hgetAll(String key);
     Set<String> hkeys(String key);
     List<String> hmget(String key, String... fields);
+
 }

@@ -2,20 +2,18 @@ $(document).ready(function () {
     //ajax请求学校地址
     $(" #schoolName").change(function () {
         $("#page").attr("value","2");
-        var schoolName = $("#schoolName").val();
-        $.post("/index/queryAreaName", {schoolName: schoolName}, function (data) {
+        var schoolNo = $("#schoolName").val();
+        $.post("/index/queryAreaName", {schoolNo: schoolNo}, function (data) {
             $("#areaName").empty();
             for (var i in data) {
-                $("#areaName").append("<option value=" + data[i] + ">" + data[i] + "</option>")
+                $("#areaName").append("<option value=" + data[i].no + ">" + data[i].name + "</option>")
             }
-            if (schoolName != '广东第二师范学院') {
-                var schoolName = $("#schoolName").val();
-                var schoolArea = $("#areaName").val();
+                var areaNo = $("#areaName").val();
                 $.post("/index/changeAreaArticle", {
-                    area: schoolName + schoolArea,
-                    type: $(".find_nav_cur").text()
+                    areaNo:  areaNo,
+                    typeNo: $(".find_nav_cur").val()
                 }, function (data) {
-                    $(" h5").html(schoolName + "(" + schoolArea + ")");
+                     $(" h5").html($("#schoolName").find("option:selected").text() + "(" + $("#areaName").find("option:selected").text() + ")");
                     $(".table tbody").empty();
                     $.each(data, function (i, article) {
                         $(".table tbody").append("<tr>\n" +
@@ -33,7 +31,6 @@ $(document).ready(function () {
                             "            </tr>")
                     })
                 })
-            }
         });
     });
 })

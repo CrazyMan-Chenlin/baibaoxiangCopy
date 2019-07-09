@@ -2,12 +2,14 @@ package com.baibaoxiang.po;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class ArticleType {
+public class ArticleType Serializable{
     private Integer id;
 
-    private String type;
-
     private Integer sequenceNum;
+
+    private String type;
 
 }

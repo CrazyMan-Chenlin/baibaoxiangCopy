@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,7 @@
 <div id="nav">
     <div id="return" style="width: 15%;float: left;height: 100%;" onclick="window.history.back(-1)"><img src="/images/front/left.svg"></div>
     <div style="float: left;width: 70%">
-        <p style="font-size: 1.2rem;margin-top: 0.62rem;margin-bottom: 0;color: #141414">${article.type}</p>
+        <p style="font-size: 1.2rem;margin-top: 0.62rem;margin-bottom: 0;color: #141414">${article.articleType.type}</p>
     </div>
     <div style="width: 15%;float: left;height: 100%"><img src="/images/front/share.svg"></div>
 </div>
@@ -30,10 +31,12 @@
     <h5 style="font-size: 1.2rem;color:#141414;line-height:1.5;font-weight: bold">${article.title}</h5>
 </div>
 <div id="message">
-    <div style="float: left;width: 15%"><img src="http://47.107.42.150/${authorPicture}" class="rounded-circle"></div>
+    <div style="float: left;width: 15%"><img src="http://47.107.42.150/${article.manager.path}" class="rounded-circle"></div>
     <div style="float: left;font-size: 0.8rem;width: 80%;margin-top: 0.1rem" class="text-dark"><span
-            style="">${article.author}</span></div>
-    <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">${article.createTime} 阅读量：${article.readNum}</span>
+            style="">${article.manager.name}</span></div>
+    <div style="float: left;font-size: 0.7rem;width: 80%;margin-top: 0.15rem" class="text-muted"><span style="">
+        <fmt:formatDate value="${article.createTime}" pattern="yyyy-MM-dd"/>
+         阅读量：${article.readNum}</span>
     </div>
 </div>
 <div id="content">
@@ -65,6 +68,7 @@
             $("#content img").addClass("rounded")
             $("#content img").addClass("mx-auto")
             $("#content img").addClass("d-block")
+            $("#content img").css("width","100%")
             $("#content  p").addClass("text-justify")
         })
     })
