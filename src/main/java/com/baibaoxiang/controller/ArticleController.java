@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,9 +29,9 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+
     @Autowired
     ManagerService managerService;
-
     @Autowired
     RedisService redisService;
 
@@ -63,7 +62,7 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-  /*  @RequestMapping(value = "/type_area",method = RequestMethod.POST)
+    /*@RequestMapping(value = "/type_area",method = RequestMethod.POST)
     public  List<Article> selectByTypeArea(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
         String area = request.getParameter("area");
@@ -76,21 +75,22 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-   /* @RequestMapping(value = "/type",method = RequestMethod.POST)
+    @RequestMapping(value = "/type",method = RequestMethod.POST)
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
+        Integer typeNo = Integer.valueOf(type);
         //获取session 中的username
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
         int isCheck = checkRight(request);
         if(isCheck==1){
-            return articleService.selectByType(type);
+            return articleService.selectByType(typeNo);
         }
         Manager manager = managerService.findManagerByUsername(username);
-        String area = manager.getArea();
-        List<Article> articleList = articleService.selectByTypeArea(type, area);
+        Integer areaNo = manager.getArea().getNo();
+        List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
         return articleList;
-    }*/
+    }
 
     /** 查询所有的文章
      * @return
@@ -112,7 +112,7 @@ public class ArticleController {
     public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
-       /* String username = record.getAuthor();
+        /*String username = record.getAuthor();
         Manager manager = managerService.findManagerByUsername(username);
         record.setAuthor(manager.getName());*/
         Map<String, String> map = new HashMap<>();

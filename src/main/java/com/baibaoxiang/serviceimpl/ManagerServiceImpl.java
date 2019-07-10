@@ -31,8 +31,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Manager findManagerWithPassword_salt(Integer username) throws Exception {
-        return managerMapper.selectByPrimaryKey(username);
+    public Manager findManagerWithPassword_salt(String username) throws Exception {
+        return managerMapperCustom.findManagerWithPassword_salt(username);
     }
 
     @Override
@@ -57,5 +57,10 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void deleteManagerBatch(String usernames) throws Exception {
 
+    }
+
+    @Override
+    public Manager findManagerNameById(Integer id) throws Exception {
+        return managerMapperCustom.findManagerNameById(id);
     }
 }

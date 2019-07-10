@@ -49,7 +49,7 @@ public class SchoolServiceImpl implements SchoolService {
      * @param schoolNo
      */
     private void deleteKey(Integer schoolNo) {
-      String key = schoolInfoKey + schoolNo;
+        String key = schoolInfoKey + schoolNo;
         if (jedisClient.exists(key)){
             jedisClient.del(key);
         }
@@ -86,7 +86,7 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     public List<School> selectDifferentSchoolName() throws Exception {
         if (jedisClient.exists(schoolInfoKey)) {
-             return JsonUtils.jsonToList(jedisClient.get(schoolInfoKey),School.class);
+            return JsonUtils.jsonToList(jedisClient.get(schoolInfoKey),School.class);
         } else {
             SchoolExample schoolExample = new SchoolExample();
             List<School> schoolName = schoolMapper.selectByExample(schoolExample);
@@ -126,8 +126,9 @@ public class SchoolServiceImpl implements SchoolService {
         }
         return areas;
     }
+
     @Override
     public List<Integer> selectNosBySchoolName(String name) throws Exception {
-        return schoolMapperCustom.seleteNosBySchoolName(name);
+        return schoolMapperCustom.selectNosBySchoolName(name);
     }
 }

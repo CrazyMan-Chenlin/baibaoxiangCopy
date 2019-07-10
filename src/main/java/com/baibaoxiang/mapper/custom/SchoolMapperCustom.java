@@ -10,6 +10,13 @@ import java.util.List;
  */
 public interface SchoolMapperCustom {
 
+    /** 通过id 查询
+     * @param no
+     * @return
+     * @throws Exception
+     */
+    School selectSchoolById(Integer no) throws Exception;
+
     /** 获取所有的校区信息
      * @return
      * @throws Exception
@@ -24,5 +31,11 @@ public interface SchoolMapperCustom {
     /** 通过校名 获取所有校区的编号
      * @param name
      */
-    List<Integer> seleteNosBySchoolName(String name);
+    List<Integer> selectNosBySchoolName(String name);
+
+
+    /**
+     * @return
+     */
+    List<String> selectDifferentSchoolName(String name);
 }

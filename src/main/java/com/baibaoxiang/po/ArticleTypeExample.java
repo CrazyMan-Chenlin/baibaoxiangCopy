@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleTypeExample {
-
     protected String orderByClause;
 
     protected boolean distinct;
@@ -165,66 +164,6 @@ public class ArticleTypeExample {
             return (Criteria) this;
         }
 
-        public Criteria andSequenceNumIsNull() {
-            addCriterion("sequence_num is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumIsNotNull() {
-            addCriterion("sequence_num is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumEqualTo(Integer value) {
-            addCriterion("sequence_num =", value, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumNotEqualTo(Integer value) {
-            addCriterion("sequence_num <>", value, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumGreaterThan(Integer value) {
-            addCriterion("sequence_num >", value, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("sequence_num >=", value, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumLessThan(Integer value) {
-            addCriterion("sequence_num <", value, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumLessThanOrEqualTo(Integer value) {
-            addCriterion("sequence_num <=", value, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumIn(List<Integer> values) {
-            addCriterion("sequence_num in", values, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumNotIn(List<Integer> values) {
-            addCriterion("sequence_num not in", values, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumBetween(Integer value1, Integer value2) {
-            addCriterion("sequence_num between", value1, value2, "sequenceNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNumNotBetween(Integer value1, Integer value2) {
-            addCriterion("sequence_num not between", value1, value2, "sequenceNum");
-            return (Criteria) this;
-        }
-
         public Criteria andTypeIsNull() {
             addCriterion("type is null");
             return (Criteria) this;
@@ -292,6 +231,66 @@ public class ArticleTypeExample {
 
         public Criteria andTypeNotBetween(String value1, String value2) {
             addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumIsNull() {
+            addCriterion("sequence_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumIsNotNull() {
+            addCriterion("sequence_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumEqualTo(Integer value) {
+            addCriterion("sequence_num =", value, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumNotEqualTo(Integer value) {
+            addCriterion("sequence_num <>", value, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumGreaterThan(Integer value) {
+            addCriterion("sequence_num >", value, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sequence_num >=", value, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumLessThan(Integer value) {
+            addCriterion("sequence_num <", value, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumLessThanOrEqualTo(Integer value) {
+            addCriterion("sequence_num <=", value, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumIn(List<Integer> values) {
+            addCriterion("sequence_num in", values, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumNotIn(List<Integer> values) {
+            addCriterion("sequence_num not in", values, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumBetween(Integer value1, Integer value2) {
+            addCriterion("sequence_num between", value1, value2, "sequenceNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSequenceNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("sequence_num not between", value1, value2, "sequenceNum");
             return (Criteria) this;
         }
     }

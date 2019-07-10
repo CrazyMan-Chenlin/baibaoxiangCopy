@@ -18,11 +18,21 @@ public interface ManagerMapperCustom {
     Manager findManagerByUsername(String username) throws Exception;
 
 
-
     /** 通过权限名 查询所有的地方管理员
      * @param title
      * @return List<Manager> 返回所有的地方管理员
      * @throws Exception
      */
     List<Manager> findManagersByTitle(String title) throws Exception;
+
+    /** 通过id 查询管理员昵称
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    Manager findManagerNameById(Integer id) throws Exception;
+
+    Manager findManagerWithPassword_salt(String username) throws Exception;
+
+
 }

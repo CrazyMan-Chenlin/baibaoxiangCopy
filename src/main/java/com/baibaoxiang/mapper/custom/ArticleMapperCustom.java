@@ -15,21 +15,20 @@ public interface ArticleMapperCustom {
 
 
     /**
-     * @param type
-     * @param area
+     * @param typeNo
+     * @param areaNo
      * @return
-     *
      */
-    List<Article> selectByTypeArea(@Param("type") String type, @Param("area") String area);
+    List<Article> selectByTypeArea(@Param("typeNo") Integer typeNo, @Param("areaNo") Integer areaNo);
 
 
     List<Article> selectAllArticles();
 
     /** 查询某类型的所有推文
-     * @param type
+     * @param typeNo
      * @return
      */
-    List<Article> selectByType(String type);
+    List<Article> selectByType(Integer typeNo);
 
     /** 通过 创建的时间段 找出批量文章的编号。
      * @param startTime
@@ -58,6 +57,12 @@ public interface ArticleMapperCustom {
     void updateReadLikeNum(@Param("no") String no, @Param("readNum") Integer readNum, @Param("likeNum") Integer likeNum);
 
 
+    /** 设置置顶
+     * @param no
+     * @param top
+     */
     void setTopArticle(@Param("no") String no,@Param("top") Integer top);
+
+    void insertArticle();
 
 }

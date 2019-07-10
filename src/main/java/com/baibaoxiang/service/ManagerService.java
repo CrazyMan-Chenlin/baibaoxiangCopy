@@ -22,7 +22,7 @@ public interface ManagerService {
      * @return
      * @throws Exception
      */
-    Manager findManagerWithPassword_salt (Integer username) throws Exception;
+    Manager findManagerWithPassword_salt (String username) throws Exception;
 
     /** 通过权限名 查询所有的地方管理员
      * @param title
@@ -57,5 +57,7 @@ public interface ManagerService {
      * @throws Exception
      */
     void deleteManagerBatch(String usernames) throws Exception;
+
+    Manager findManagerNameById(Integer id) throws Exception;
 
 }

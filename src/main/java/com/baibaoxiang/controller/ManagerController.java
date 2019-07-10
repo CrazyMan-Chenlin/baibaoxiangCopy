@@ -102,7 +102,7 @@ public class ManagerController {
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> map = new HashMap<String, Object>();
         String rememberme = request.getParameter("rememberme");
-        Manager manager = managerService.findManagerWithPassword_salt(Integer.parseInt(username));
+        Manager manager = managerService.findManagerWithPassword_salt(username);
 
         //获取session中保存的 验证码
         String code = (String)session.getAttribute("randomcode_key");
@@ -132,7 +132,7 @@ public class ManagerController {
                 //添加session 将用户名添加到session
                 request.getSession().setAttribute("username", username);
                 Manager manager2 = managerService.findManagerByUsername(username);
-                request.getSession().setAttribute("area",manager.getAreano());
+                request.getSession().setAttribute("area",manager.getArea());
                 if (checkRight(request)==0){
                     request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
                 }else{
@@ -277,7 +277,7 @@ public class ManagerController {
         String username = (String) session.getAttribute("username");
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
-        Manager manager = managerService.findManagerWithPassword_salt(Integer.parseInt(username));
+        Manager manager = managerService.findManagerWithPassword_salt(username);
         String salt = manager.getSalt();
         if(!manager.getPassword().equals(md5(salt,oldPassword))){
             map.put("code",0);
@@ -307,7 +307,7 @@ public class ManagerController {
         if (i==1){
             String username = request.getParameter("id");
             String password = request.getParameter("password");
-            Manager manager = managerService.findManagerWithPassword_salt(Integer.parseInt(username));
+            Manager manager = managerService.findManagerWithPassword_salt(username);
             String salt = manager.getSalt();
             manager.setPassword(md5(salt,password));
             managerService.updateByPrimaryKeySelective(manager);
@@ -336,7 +336,7 @@ public class ManagerController {
         Manager manager = managerService.findManagerByUsername(username);
         map.put("username",manager.getUsername());
         map.put("name",manager.getName());
-        map.put("area",manager.getAreano());
+        map.put("area",manager.getArea());
         map.put("path",manager.getPath());
         return map;
     }

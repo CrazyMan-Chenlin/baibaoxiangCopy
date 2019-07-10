@@ -45,10 +45,11 @@ public class SearchServiceImpl implements SearchService {
             article = new Article();
             article.setNo(solrDocument.get("id").toString());
             article.setTitle(solrDocument.get("title").toString());
+            article.setManager((Manager) solrDocument.get("author"));
             article.setCreateTime(Date.valueOf(solrDocument.get("create_time").toString()));
             article.setLikeNum(Integer.parseInt(solrDocument.get("like_num").toString()));
             articleType = new ArticleType();
-            articleType.setType(solrDocument.get("type").toString());
+            article.setArticleType((ArticleType)solrDocument.get("type"));
             article.setArticleType(articleType);
             searchArticle.add(article);
         }
@@ -78,7 +79,8 @@ public class SearchServiceImpl implements SearchService {
             document.addField("id", article.getNo());
             document.addField("create_time",sdf.format(article.getCreateTime()));
             document.addField("like_num", article.getLikeNum());
-            document.addField("type", article.getArticleType().getType());
+            document.addField("type", article.getArticleType());
+            document.addField("author", article.getManager());
             httpSolrClient.add(document);
         }
         httpSolrClient.commit();

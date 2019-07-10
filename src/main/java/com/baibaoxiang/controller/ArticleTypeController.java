@@ -72,7 +72,6 @@ public class ArticleTypeController {
 
     /**
      * 添加类型
-     *
      * @return
      * @throws Exception
      */

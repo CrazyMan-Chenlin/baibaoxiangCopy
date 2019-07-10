@@ -1,5 +1,10 @@
 package com.baibaoxiang.service;
+
+
 import com.baibaoxiang.po.Article;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -55,7 +60,7 @@ public interface ArticleService {
      * @return
      * @throws Exception
      */
-    List<Article> selectByType(String type) throws Exception;
+    List<Article> selectByType(Integer typeNo) throws Exception;
     /**
      * 添加文章
      * @param record

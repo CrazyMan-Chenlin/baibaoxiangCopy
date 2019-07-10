@@ -23,6 +23,7 @@ public interface ArticleTypeMapperCustom {
 
     /**
      * 通过文章类型名称删除
+     *
      */
     void deleteByType(String type);
 
