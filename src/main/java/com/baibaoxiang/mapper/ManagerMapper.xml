@@ -108,7 +108,7 @@
       password, areaNo, path,
       title, salt)
       values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
-      #{password,jdbcType=VARCHAR}, #{areano,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, ${area.no}, #{path,jdbcType=VARCHAR},
       #{title,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baibaoxiang.po.Manager" >
@@ -120,13 +120,13 @@
       <if test="name != null" >
         name,
       </if>
-        <if test="username != null">
-            username,
-        </if>
+      <if test="username != null">
+        username,
+      </if>
       <if test="password != null" >
         password,
       </if>
-      <if test="areano != null" >
+      <if test="area != null" >
         areaNo,
       </if>
       <if test="path != null" >
@@ -146,14 +146,14 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-        <if test="username != null">
-            #{username,jdbcType=VARCHAR},
-        </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="areaNo != null" >
-        #{areano,jdbcType=INTEGER},
+      <if test="area != null" >
+        ${area.no},
       </if>
       <if test="path != null" >
         #{path,jdbcType=VARCHAR},
@@ -187,8 +187,8 @@
       <if test="record.password != null" >
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.areano != null" >
-        areaNo = #{record.areano,jdbcType=INTEGER},
+      <if test="record.area != null" >
+        areaNo = ${area.no},
       </if>
       <if test="record.path != null" >
         path = #{record.path,jdbcType=VARCHAR},
@@ -210,7 +210,7 @@
       name = #{record.name,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      areaNo = #{record.areano,jdbcType=INTEGER},
+      areaNo = ${area.no},
       path = #{record.path,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR}
@@ -230,8 +230,8 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="areano != null" >
-        area = #{areano,jdbcType=INTEGER},
+      <if test="area != null" >
+        ${area.no},
       </if>
       <if test="path != null" >
         path = #{path,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
     set name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
-      areaNo = #{areano,jdbcType=INTEGER},
+      areaNo = ${area.no},
       path = #{path,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR}

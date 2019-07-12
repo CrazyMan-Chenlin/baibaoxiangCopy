@@ -28,10 +28,10 @@ public interface SchoolMapperCustom {
      */
     void deleteSchoolBySchoolName(String name);
 
-    /** 通过校名 获取所有校区的编号
+    /** 通过校名 获取该校名的编号
      * @param name
      */
-    List<Integer> selectNosBySchoolName(String name);
+    Integer selectNoBySchoolName(String name);
 
 
     /**

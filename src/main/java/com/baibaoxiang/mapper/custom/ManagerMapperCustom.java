@@ -34,5 +34,7 @@ public interface ManagerMapperCustom {
 
     Manager findManagerWithPassword_salt(String username) throws Exception;
 
+    void deleteManagerByUsername(String username) throws Exception;
+
 
 }

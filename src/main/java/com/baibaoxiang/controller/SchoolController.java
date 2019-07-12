@@ -51,7 +51,6 @@ public class SchoolController {
     @ResponseBody
     public List<School> findAllSchool() throws Exception{
         return  schoolService.selectAllSchool();
-
     }
 
     /**
@@ -85,14 +84,12 @@ public class SchoolController {
     @ResponseBody
     public Map<String,Object> deleteSchool(@PathVariable("id") Integer id) throws Exception{
         Map<String,Object> map = new HashMap<String,Object>(16);
-        List<Integer> nos = schoolService.selectNosBySchoolName(defSchoolName);
-        for(Integer no : nos){
-            if(no.equals(id)){
-                map.put("code",0);
-                map.put("msg","广东第二师范学院为默认保留学校，不可删除");
-                logger.info("广东第二师范学院为默认保留学校，不可删除");
-                return map;
-            }
+        Integer no = schoolService.selectNoBySchoolName(defSchoolName);
+        if(no.equals(id)){
+            map.put("code",0);
+            map.put("msg","广东第二师范学院为默认保留学校，不可删除");
+            logger.info("广东第二师范学院为默认保留学校，不可删除");
+            return map;
         }
         schoolService.deleteSchool(id);
         map.put("code", 1);

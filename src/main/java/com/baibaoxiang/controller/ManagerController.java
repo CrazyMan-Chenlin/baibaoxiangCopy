@@ -1,7 +1,11 @@
 package com.baibaoxiang.controller;
 
+import com.baibaoxiang.po.Area;
 import com.baibaoxiang.po.Manager;
+import com.baibaoxiang.po.School;
+import com.baibaoxiang.service.AreaService;
 import com.baibaoxiang.service.ManagerService;
+import com.baibaoxiang.service.SchoolService;
 import com.baibaoxiang.tool.FastDfsClient;
 import com.baibaoxiang.tool.RandomValidateCode;
 import org.slf4j.Logger;
@@ -37,6 +41,12 @@ public class ManagerController {
 
     @Autowired
     ManagerService managerService;
+
+    @Autowired
+    AreaService areaService;
+
+    @Autowired
+    SchoolService schoolService;
 
     @Autowired
     FastDfsClient fastDfsClient;
@@ -105,52 +115,52 @@ public class ManagerController {
         Manager manager = managerService.findManagerWithPassword_salt(username);
 
         //获取session中保存的 验证码
-        String code = (String)session.getAttribute("randomcode_key");
+//        String code = (String)session.getAttribute("randomcode_key");
 
-        if(!code.equals(validatecode)){
-            map.put("code",0);
-            map.put("msg","验证码有误！");
-            logger.info("验证码有误");
-            modelAndView.setViewName("backstage/login");
+//        if(!code.equals(validatecode)){
+//            map.put("code",0);
+//            map.put("msg","验证码有误！");
+//            logger.info("验证码有误");
+//            modelAndView.setViewName("backstage/login");
+//        }else{
+//            if(manager == null){
+//                map.put("code",0);
+//                map.put("msg","用户名无效！");
+//                logger.info("用户名无效！返回登录页");
+//                modelAndView.setViewName("backstage/login");
+//            }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
+//                map.put("code",0);
+//                map.put("msg","密码出错!");
+//                logger.info("密码出错！返回登录页");
+//                modelAndView.setViewName("backstage/login");
+//            }else{
+        //登录成功
+        map.put("code",1);
+        map.put("msg","");
+        logger.info("登录成功!");
+        modelAndView.setViewName("backstage/admin_index");
+        //添加session 将用户名添加到session
+        request.getSession().setAttribute("username", username);
+        Manager manager2 = managerService.findManagerByUsername(username);
+        request.getSession().setAttribute("area",manager.getArea());
+        if (checkRight(request)==0){
+            request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
         }else{
-            if(manager == null){
-                map.put("code",0);
-                map.put("msg","用户名无效！");
-                logger.info("用户名无效！返回登录页");
-                modelAndView.setViewName("backstage/login");
-            }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
-                map.put("code",0);
-                map.put("msg","密码出错!");
-                logger.info("密码出错！返回登录页");
-                modelAndView.setViewName("backstage/login");
-            }else{
-                //登录成功
-                map.put("code",1);
-                map.put("msg","");
-                logger.info("登录成功!");
-                modelAndView.setViewName("backstage/admin_index");
-                //添加session 将用户名添加到session
-                request.getSession().setAttribute("username", username);
-                Manager manager2 = managerService.findManagerByUsername(username);
-                request.getSession().setAttribute("area",manager.getArea());
-                if (checkRight(request)==0){
-                    request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
-                }else{
-                    request.getSession().setAttribute("saldfjlskfffds","sdadwededa");
-                }
-                //添加cookie
-                if(rememberme!=null) {
-                    //创建两个Cookie对象
-                    Cookie nameCookie = new Cookie("username", username);
-                    //设置Cookie的有效期为3天
-                    nameCookie.setMaxAge(60 * 60 * 24 * 3);
-                    Cookie pwdCookie = new Cookie("password", password);
-                    pwdCookie.setMaxAge(60 * 60 * 24 * 3);
-                    response.addCookie(nameCookie);
-                    response.addCookie(pwdCookie);
-                }
-            }
+            request.getSession().setAttribute("saldfjlskfffds","sdadwededa");
         }
+//                //添加cookie
+//                if(rememberme!=null) {
+//                    //创建两个Cookie对象
+//                    Cookie nameCookie = new Cookie("username", username);
+//                    //设置Cookie的有效期为3天
+//                    nameCookie.setMaxAge(60 * 60 * 24 * 3);
+//                    Cookie pwdCookie = new Cookie("password", password);
+//                    pwdCookie.setMaxAge(60 * 60 * 24 * 3);
+//                    response.addCookie(nameCookie);
+//                    response.addCookie(pwdCookie);
+//                }
+//            }
+//        }
         modelAndView.addAllObjects(map);
         return  modelAndView;
     }
@@ -181,8 +191,9 @@ public class ManagerController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,String> addManager(@RequestBody Manager manager,HttpServletRequest request) throws Exception{
-        int i = checkRight(request);        //该参数判断当前是否超级管理员
-        Map<String,String> map = new HashMap();
+        //该参数判断当前是否超级管理员
+        int i = checkRight(request);
+        Map<String,String> map = new HashMap(16);
         if (i==1){
             String salt = getRandomSalt();
             manager.setTitle("BBBBB");
@@ -190,6 +201,10 @@ public class ManagerController {
             String s = md5(salt, manager.getPassword());
             manager.setSalt(salt);
             manager.setPassword(s);
+            Area areaById = areaService.findAreaById(manager.getArea().getNo());
+            manager.setArea(areaById);
+
+
             int isInsert = managerService.insert(manager);
             if (isInsert==1){
                 map.put("msg","添加成功");
@@ -365,7 +380,6 @@ public class ManagerController {
     @ResponseBody
     public List<Manager> findManagerByTitle(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String title = request.getParameter("title");
-        System.out.println(title);
         List<Manager> managers = managerService.findManagersByTitle(title);
         return managers;
     }

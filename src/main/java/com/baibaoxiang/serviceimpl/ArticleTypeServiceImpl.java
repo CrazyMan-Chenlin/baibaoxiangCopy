@@ -56,7 +56,7 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
         if (jedisClient.exists(key)){
             jedisClient.del(key);
         }
-        return articleTypeMapper.insert(record);
+        return articleTypeMapper.insertSelective(record);
     }
 
     /**

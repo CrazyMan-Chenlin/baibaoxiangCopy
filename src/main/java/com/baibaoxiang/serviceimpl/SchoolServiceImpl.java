@@ -128,7 +128,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public List<Integer> selectNosBySchoolName(String name) throws Exception {
-        return schoolMapperCustom.selectNosBySchoolName(name);
+    public Integer selectNoBySchoolName(String name) throws Exception {
+        return schoolMapperCustom.selectNoBySchoolName(name);
     }
 }

@@ -60,5 +60,9 @@
         SELECT <include refid="Base_Column_List3"/> FROM manager WHERE id = #{id,jdbcType=INTEGER}
     </select>
 
+    <delete id="deleteManagerByUsername" parameterType="java.lang.String">
+        DELETE FROM manager WHERE username = #{username,jdbcType=VARCHAR}
+    </delete>
+
 
 </mapper>
