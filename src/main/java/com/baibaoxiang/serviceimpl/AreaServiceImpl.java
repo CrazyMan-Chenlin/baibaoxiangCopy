@@ -35,7 +35,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public List<String> findAreaBySchoolName(String name) throws Exception {
+    public List<Area> findAreaBySchoolName(String name) throws Exception {
         return areaMapperCustom.findAreaBySchoolName(name);
     }
 

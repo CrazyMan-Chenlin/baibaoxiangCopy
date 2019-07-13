@@ -59,18 +59,22 @@
             </div>
         </div>
         <div class="form-group" >
-            <label for="area" class="col-sm-2 control-label">所属校区</label>
-            <%--<div class="col-sm-4">--%>
-                <%--<input type="text" class="form-control" id="area" disabled>--%>
-            <%--</div>--%>
+            <label for="school" class="col-sm-2 control-label">所属校区</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="school">
+
+                </select>
+            </div>
             <input type="button" id="querySchool" value="查询学校">
+        </div>
+        <div class="form-group" >
+            <label for="area" class="col-sm-2 control-label">所属地区</label>
             <div class="col-sm-4">
                 <select class="form-control" id="area">
-                    <option value="-1" id="opt_area">==请选择==</option>
+                    <option>==请选择==</option>
                 </select>
             </div>
         </div>
-
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-4">

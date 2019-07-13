@@ -17,8 +17,8 @@
         SELECT * FROM area
     </select>
 
-    <select id="findAreaBySchoolName" resultType="java.lang.String">
-        SELECT area.name FROM area JOIN school ON area.schoolNo = school.no WHERE school.name = #{name,jdbcType=VARCHAR}
+    <select id="findAreaBySchoolName" resultMap="BaseResultMap">
+        SELECT * FROM area JOIN school ON area.schoolNo = school.no WHERE school.name = #{name,jdbcType=VARCHAR}
     </select>
     
 </mapper>

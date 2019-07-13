@@ -33,12 +33,25 @@ public class AreaController {
 
     private final static Logger logger = LoggerFactory.getLogger(SchoolController.class);
 
-    /** 通过id 查询校区
+    /** 查询某校名的 所有校区
+     *
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping( value = "/findAreaBySchoolName" ,method = RequestMethod.POST)
+    @ResponseBody
+    public List<Area> findAreaBySchoolName(HttpServletRequest request) throws Exception {
+        String name = request.getParameter("name");
+        List<Area> areaBySchoolName = areaService.findAreaBySchoolName(name);
+        return areaBySchoolName;
+    }
+
+    /** 通过外键 查询校区
      * @param id
      * @return
      * @throws Exception
      */
-    @RequestMapping( value = "/{id}" ,method = RequestMethod.GET)
+    @RequestMapping( value = "/" ,method = RequestMethod.GET)
     @ResponseBody
     public Area findAreaById(@PathVariable("id") Integer id) throws Exception {
         Area area = areaService.findAreaById(id);
@@ -88,7 +101,7 @@ public class AreaController {
         int isCheck = checkRight(request);
         String idstr = request.getParameter("id");
         Integer id = Integer.parseInt(idstr);
-        List<Integer> nos = schoolService.selectNosBySchoolName(defSchoolName);
+        List<Area> areas = areaService.findAreaBySchoolName(defSchoolName);
         if (isCheck==1){
             //接受前端传来的 ids字符串  将ids拆分成数组
             String str = request.getParameter("ids");
@@ -97,8 +110,8 @@ public class AreaController {
             Integer ids [] = new Integer[arr.length];
             for(int i = 0; i < ids.length; i++){
                 ids[i] = Integer.valueOf(arr[i]);
-                for(Integer no : nos){
-                    if(no.equals(ids[i])){
+                for(Area area : areas){
+                    if(area.getNo().equals(ids[i])){
                         map.put("msg","广东第二师范学院为默认保留学校，不可删除");
                         logger.info("广东第二师范学院为默认保留学校，不可删除");
                         return map;
@@ -125,12 +138,12 @@ public class AreaController {
         int isCheck = checkRight(request);
         Map<String,String> map = new HashMap<>();
 
-        String schoolnoStr = request.getParameter("schoolno");
-        String name = request.getParameter("name");
+        String schoolName = request.getParameter("schoolName");
+        String areaName = request.getParameter("areaName");
+        Integer schoolno = schoolService.selectNoBySchoolName(schoolName);
 
-        Integer schoolno = Integer.valueOf(schoolnoStr);
         if (isCheck==1){
-            areaService.insertArea(schoolno,name);
+            areaService.insertArea(schoolno,areaName);
             map.put("msg","添加成功");
             logger.info("学校添加成功。");
             return map;

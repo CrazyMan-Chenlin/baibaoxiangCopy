@@ -64,10 +64,10 @@ public interface SchoolService {
      */
     List<Area> selectSchoolArea(Integer schoolNo) throws Exception;
 
-    /** 通过校名 获取该校名所有校区的编号
+    /** 通过校名 获取该校名的编号
      * @param name
      * @return
      * @throws Exception
      */
-    List<Integer> selectNosBySchoolName(String name) throws Exception;
+    Integer selectNoBySchoolName(String name) throws Exception;
 }

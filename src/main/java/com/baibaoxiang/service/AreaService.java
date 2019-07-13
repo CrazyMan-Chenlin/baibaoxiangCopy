@@ -29,7 +29,7 @@ public interface AreaService {
      * @return
      * @throws Exception
      */
-    List<String> findAreaBySchoolName(String name) throws Exception;
+    List<Area> findAreaBySchoolName(String name) throws Exception;
 
     /** 更新
      * @param area

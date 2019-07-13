@@ -21,7 +21,7 @@
         DELETE FROM school WHERE name = #{name}
     </delete>
 
-    <select id="selectNosBySchoolName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="selectNoBySchoolName" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT no FROM school WHERE name = #{name}
     </select>
 

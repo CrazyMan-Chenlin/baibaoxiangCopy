@@ -38,45 +38,57 @@ $(function () {
         }
     });
 
-    //查询校区
+    //查询学校
     $("#querySchool").on('click',function () {
         $.ajax({
             type : "GET",
             url: "/school/allSchool",
             success :function (data) {
+                $("#school").children().remove();
                 $("#area").children().remove();
+                $("#school").append("<option>==请选择==</option>");
                 $.each(data,function (index,item) {
-                    $("#area").append("<option id='opt_area'>"+item.name+item.area+"</option>");
+                    $("#school").append("<option id='opt_school' value='"+item.no+"'>"+item.name+"</option>");
                 });
             }
         });
     });
 
-    //选择校区
-    // $(document).on('click','#opt_area',function () {
-    //     alert(11);
-    //     console.log($(this).text());
-    // });
-    // $("#area").click(function () {
-    //     console.log($("#area").find("option:selected").text());;
-    // });
+    //查询地区
+    $("#school").change(function () {
+        var name = $(this).find("option:selected").text();
+        $.ajax({
+            url: '/findAreaBySchoolName',
+            type: 'POST',
+            data:{name:name},
+            success:function (data) {
+                $("#area").children().remove();
+                $.each(data,function (index,item) {
+                    $("#area").append("<option id='opt_area' value='"+item.no+"'>"+item.name+"</option>");
+                });
+            }
+        });
+    });
+
 
     //添加管理员
     $("#add").on('click',function () {
         var username = $.trim($("#username").val());
         var name = $.trim($("#name").val());
         var password = $.trim($("#password").val());
-        var area = $("#area").find("option:selected").text();
+        var area = $("#area").find("option:selected").val();
+        var school = $("#school").find("option:selected").val();
+        alert(area);
         if(isChinese(username)||isChinese(password)){
             alert("用户名或密码不能携带中文");
         }else {
-            var data1 = {username:username,name:name,password:password,area:area};
+            var data1 = {username:username,name:name,password:password,area:{no:area}};
             $.ajax({
                 url:'/manager1',
                 type: "POST",
-                data: JSON.stringify(data1),
                 dataType:"json",
                 contentType:"application/json; charset=utf-8",
+                data: JSON.stringify(data1),
                 success:function (data) {
                     alert(data["msg"]);
                     $("#username").val("");
@@ -125,4 +137,4 @@ function isChinese(temp)
     if (re.test(temp))
         return false ;
     return true ;
-    }
+}

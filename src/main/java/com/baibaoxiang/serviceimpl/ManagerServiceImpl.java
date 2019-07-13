@@ -56,7 +56,10 @@ public class ManagerServiceImpl implements ManagerService {
     }
     @Override
     public void deleteManagerBatch(String usernames) throws Exception {
-
+        String username [] = usernames.split(",");
+        for(int i = 0; i< username.length; i++){
+            managerMapperCustom.deleteManagerByUsername(username[i]);
+        }
     }
 
     @Override

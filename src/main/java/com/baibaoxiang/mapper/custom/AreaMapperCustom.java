@@ -26,5 +26,5 @@ public interface AreaMapperCustom {
      * @param name
      * @return
      */
-    List<String> findAreaBySchoolName(String name);
+    List<Area> findAreaBySchoolName(String name);
 }
