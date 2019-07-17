@@ -150,13 +150,13 @@
       <if test="no != null" >
         no,
       </if>
-      <if test="record.manager != null">
+      <if test="record.manager.id != null">
         author,
       </if>
-      <if test="record.articleType != null">
+      <if test="record.articleType.id != null">
           typeNo,
       </if>
-      <if test="record.area != null">
+      <if test="record.area.no != null">
           areaNo,
       </if>
       <if test="readNum != null" >
@@ -186,7 +186,7 @@
         #{no,jdbcType=VARCHAR},
       </if>
       <if test="record.manager.id != null">
-        ${manager.id},
+        #{author,jdbcType=VARCHAR},
       </if>
       <if test="record.articleType.id != null" >
         #{typeno,jdbcType=VARCHAR},

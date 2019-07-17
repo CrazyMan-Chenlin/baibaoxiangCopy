@@ -9,6 +9,7 @@ import com.baibaoxiang.tool.FastDfsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,8 +23,8 @@ import java.util.List;
  * @author sheng
  * @create 2019-04-26-09:59
  */
-@RestController
-@RequestMapping("/article")
+@Controller
+@RequestMapping(value = "/article")
 public class ArticleController {
 
     @Autowired
@@ -76,16 +77,22 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/type",method = RequestMethod.POST)
+    @ResponseBody
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
         Integer typeNo = Integer.valueOf(type);
         //获取session 中的username
-        HttpSession session = request.getSession();
-        String username = (String)session.getAttribute("username");
+        String username = (String)request.getSession().getAttribute("username");
         int isCheck = checkRight(request);
+
         if(isCheck==1){
-            return articleService.selectByType(typeNo);
+            List<Article> articles = articleService.selectByType(typeNo);
+            for (Article article:articles){
+                System.out.println(article.getTitle());
+            }
+            return articles;
         }
+
         Manager manager = managerService.findManagerByUsername(username);
         Integer areaNo = manager.getArea().getNo();
         List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
@@ -109,13 +116,11 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    public Map<String,String> insert(@RequestBody Article record) throws Exception {
+    public Map<String,String> insert(@RequestBody Article record,@RequestParam String type) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
-        /*String username = record.getAuthor();
-        Manager manager = managerService.findManagerByUsername(username);
-        record.setAuthor(manager.getName());*/
-        Map<String, String> map = new HashMap<>();
+
+        Map<String, String> map = new HashMap<>(16);
         try {
             articleService.insertSelective(record);
             map.put("msg","发布成功");

@@ -102,7 +102,7 @@
   <insert id="insert" parameterType="com.baibaoxiang.po.Area">
     insert into area (no, name, schoolNo
       )
-    values (#{no,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, $(school.no)
+    values (#{no,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{schoolno,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.baibaoxiang.po.Area">
@@ -114,7 +114,7 @@
       <if test="name != null">
         name,
       </if>
-      <if test="school != null">
+      <if test="schoolno != null">
         schoolNo,
       </if>
     </trim>
@@ -145,8 +145,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.school != null">
-        schoolNo = $(school.no),
+      <if test="record.schoolno != null">
+        schoolNo = #{record.schoolno,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">

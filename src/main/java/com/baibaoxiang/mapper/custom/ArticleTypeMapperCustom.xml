@@ -38,4 +38,7 @@
         UPDATE article_type SET sequence_num = #{newSequenceNum,jdbcType=INTEGER} WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
+    <select id="findMaxSequence">
+        SELECT sequence_num+1 FROM article_type ORDER BY sequence_num desc LIMIT 1
+    </select>
 </mapper>

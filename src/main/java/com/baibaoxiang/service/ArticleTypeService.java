@@ -83,4 +83,9 @@ public interface ArticleTypeService {
      * @throws Exception
      */
     void updateSequenceNumById(Integer newSequenceNum, Integer id) throws Exception;
+
+    /**
+     * 查找顺序最大的文章类型
+     */
+    Integer findMaxSequence();
 }

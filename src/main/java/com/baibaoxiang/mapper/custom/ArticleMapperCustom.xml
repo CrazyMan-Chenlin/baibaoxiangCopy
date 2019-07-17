@@ -43,8 +43,8 @@
     </select>
 
     <!-- 查询某类型的所有推文  置顶/发布时间 排序-->
-    <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM article WHERE type = #{type} ORDER BY top ASC,create_time DESC
+    <select id="selectByType"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM article WHERE typeNo = #{typeNo} ORDER BY top ASC,create_time DESC
     </select>
 
     <!-- 通过 创建的时间段 找出批量文章的编号-->

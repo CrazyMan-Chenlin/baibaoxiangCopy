@@ -28,7 +28,7 @@ public interface ArticleMapperCustom {
      * @param typeNo
      * @return
      */
-    List<Article> selectByType(Integer typeNo);
+    List<Article> selectByType(@Param("typeNo") Integer typeNo);
 
     /** 通过 创建的时间段 找出批量文章的编号。
      * @param startTime

@@ -77,13 +77,14 @@ public class ArticleTypeController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public int addArticleType(@RequestParam String TypeNew,HttpServletRequest request) throws Exception{
+    public int addArticleType(@RequestParam String TypeNew) throws Exception{
         int i= 0;
-            if (!TypeNew.equals("")){
-                ArticleType articleType = new ArticleType();
-                articleType.setType(TypeNew);
-                i = articleTypeService.insert(articleType);
-                }
+        if (!TypeNew.equals("")){
+            ArticleType articleType = new ArticleType();
+            articleType.setType(TypeNew);
+//            articleType.setSequenceNum(articleTypeService.findMaxSequence());
+            i = articleTypeService.insert(articleType);
+        }
         return i;
     }
 

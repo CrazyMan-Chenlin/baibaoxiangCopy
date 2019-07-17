@@ -36,5 +36,4 @@ public interface ManagerMapperCustom {
 
     void deleteManagerByUsername(String username) throws Exception;
 
-
 }

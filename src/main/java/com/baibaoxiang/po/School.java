@@ -7,5 +7,4 @@ public class School {
     private Integer no;
 
     private String name;
-
 }

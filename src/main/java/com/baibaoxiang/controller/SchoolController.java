@@ -55,14 +55,18 @@ public class SchoolController {
 
     /**
      * 添加学校
-     * @param school
+     * @param request
      * @throws Exception
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> addSchool(@RequestBody School school,HttpServletRequest request) throws Exception{
-        int isCheck = checkRight(request);//该参数判断当前是否超级管理员
+    public Map<String,String> addSchool(HttpServletRequest request,@RequestParam String name) throws Exception{
+        //该参数判断当前是否超级管理员
+        int isCheck = checkRight(request);
         Map<String,String> map = new HashMap<>();
+//        String name = request.getParameter("name");
+        School school = new School();
+        school.setName(name);
         if (isCheck==1){
             schoolService.insertSchool(school);
             map.put("msg","添加成功");

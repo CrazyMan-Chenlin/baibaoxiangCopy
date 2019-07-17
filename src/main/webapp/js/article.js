@@ -139,7 +139,7 @@ $(function () {
             success :function (data) {
                 $("#query_articleList").children().remove();
                 $.each(data,function (index,item) {
-                    $("#query_articleList").append("<li><a href='#' class='modular'>"+item.type+"</a></li>");
+                    $("#query_articleList").append("<li><a href='#' class='modular' id='"+item.id+"'>"+item.type+"</a></li>");
                 });
             }
         });
@@ -147,11 +147,11 @@ $(function () {
 
     //点击下拉菜单中的元素，请求对应数据
     $(document).on('click','.modular',function () {
-        var data1 = {type:$(this).text()};
+        var data1 = {type:$(this).attr("id")};
+        console.log(data1);
         $.ajax({
             type : "POST",
             url: "/article/type",
-            // dataType:'json',
             contentType:"application/x-www-form-urlencoded; charset=utf-8",
             data:data1,
             success :function (data) {
@@ -162,7 +162,37 @@ $(function () {
                         "<div class='panel panel-default'>"+
                         "<div class='panel-heading'>"+item.title+"</div>"+
                         "<div class='panel-body' id='no' hidden>"+item.no+"</div>"+
-                        "<div>作者："+item.author+" 区域："+item.area+" 类型："+item.type+"</div>"+
+                        "<div>作者："+item.manager.name+" 区域："+item.area.school.name+item.area.name+" 类型："+item.type+"</div>"+
+                        "<div class='panel-footer'><span>点赞数"+item.likeNum+"</span><span>阅读数"+item.readNum+"</span>"+
+                        "<div class='manage'>"+
+                        "<div class='delete'></div>"+
+                        "<a target='mainframe' class='edit' href='/jsp/editArticle'></a>"+
+                        "<div class='up'><div class=\"dropdown\">\n" +
+                        "        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" >\n" +
+                        "            置顶权限\n" +
+                        "            <b class=\"caret\"></b>\n" +
+                        "        </a>\n" +
+                        "        <ul class=\"dropdown-menu\" id=\"level\">\n" +
+                        "<li>1</li><li>2</li><li>3</li><li>4</li> \n" +
+                        "        </ul>\n" +
+                        "    </div></div>"+
+                        "</div>"+
+                        "</div>"+
+                        "</li>"
+                    )
+                });
+            },
+            error:function (data) {
+                //stringify()用于从一个对象解析出字符串
+                $("#articles").children().remove();
+                //JSON.parse用于从一个字符串中解析出json对象
+                $.each(data, function(index, item){//遍历json中每一个单元
+                    $("#articles").append(         //添加新元素（具体内容不重要）
+                        "<li> " +
+                        "<div class='panel panel-default'>"+
+                        "<div class='panel-heading'>"+item.title+"</div>"+
+                        "<div class='panel-body' id='no' hidden>"+item.no+"</div>"+
+                        // "<div>作者："+item.manager.name+" 区域："+item.manager.area.name+" 类型："+item.articleType+"</div>"+
                         "<div class='panel-footer'><span>点赞数"+item.likeNum+"</span><span>阅读数"+item.readNum+"</span>"+
                         "<div class='manage'>"+
                         "<div class='delete'></div>"+

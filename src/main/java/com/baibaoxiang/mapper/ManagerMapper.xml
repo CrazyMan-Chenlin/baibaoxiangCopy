@@ -108,7 +108,7 @@
       password, areaNo, path,
       title, salt)
       values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
-      #{password,jdbcType=VARCHAR}, ${area.no}, #{path,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{record.area.areano,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR},
       #{title,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baibaoxiang.po.Manager" >
@@ -187,8 +187,8 @@
       <if test="record.password != null" >
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.area != null" >
-        areaNo = ${area.no},
+      <if test="record.areano != null" >
+        areaNo = #{record.areano,jdbcType=INTEGER},
       </if>
       <if test="record.path != null" >
         path = #{record.path,jdbcType=VARCHAR},
@@ -210,7 +210,7 @@
       name = #{record.name,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      areaNo = ${area.no},
+      areaNo = #{record.areano,jdbcType=INTEGER},
       path = #{record.path,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR}
@@ -230,8 +230,8 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="area != null" >
-        ${area.no},
+      <if test="areano != null" >
+        area = #{areano,jdbcType=INTEGER},
       </if>
       <if test="path != null" >
         path = #{path,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
     set name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
-      areaNo = ${area.no},
+      areaNo = #{areano,jdbcType=INTEGER},
       path = #{path,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR}

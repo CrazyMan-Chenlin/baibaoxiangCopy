@@ -28,6 +28,7 @@
             <th>管理员ID</th>
             <th>姓名</th>
             <th>学校</th>
+            <th>地区</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -62,10 +63,10 @@
             <label for="school" class="col-sm-2 control-label">所属校区</label>
             <div class="col-sm-4">
                 <select class="form-control" id="school">
-
+                    <option>请点击查询按钮</option>
                 </select>
             </div>
-            <input type="button" id="querySchool" value="查询学校">
+            <div class="col-sm-4" style="text-align: left"><button class="btn btn-warning" id="querySchool">查询学校</button></div>
         </div>
         <div class="form-group" >
             <label for="area" class="col-sm-2 control-label">所属地区</label>
