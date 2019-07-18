@@ -50,6 +50,7 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @ResponseBody
     public Article selectByPrimaryKey(@PathVariable("id") String id) throws Exception{
         Article article = articleService.selectByPrimaryKey(id);
         redisService.saveReadNumRedis(id);
@@ -92,7 +93,6 @@ public class ArticleController {
             }
             return articles;
         }
-
         Manager manager = managerService.findManagerByUsername(username);
         Integer areaNo = manager.getArea().getNo();
         List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
@@ -103,20 +103,22 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "allArticles",method = RequestMethod.GET)
+    @RequestMapping(value = "/allArticles",method = RequestMethod.GET)
+    @ResponseBody
     public List<Article> selectAll() throws Exception{
         List<Article> articleList = articleService.selectAllArticles();
         return articleList;
     }
 
     /**
-     * 添加文章
+     * 添加文章 ,@RequestParam String type
      * @param record
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    public Map<String,String> insert(@RequestBody Article record,@RequestParam String type) throws Exception {
+    @ResponseBody
+    public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
 
@@ -160,6 +162,7 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/updateArticle",method = RequestMethod.POST)
+    @ResponseBody
     public int updateByPrimaryKey(@RequestBody Article record) {
         try {
             articleService.updateByPrimaryKey(record);
@@ -181,6 +184,7 @@ public class ArticleController {
 
 
     @RequestMapping(value="/setTop", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String,String> setTopArticle(HttpServletRequest request) throws Exception{
         String no = request.getParameter("no");
         String topStr = request.getParameter("top");
@@ -192,10 +196,15 @@ public class ArticleController {
         return map;
     }
 
-
+    /**
+     *  这样接收文件@RequestParam Map<String,String> params,
+     * @param file
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/uploadArticleImg", method = RequestMethod.POST)
     @ResponseBody
-    //这样接收文件@RequestParam Map<String,String> params,
     public Map<String,Object> uploadArticleImg(@RequestParam MultipartFile file,
                                                HttpServletRequest request) throws Exception {
         // 文件类型

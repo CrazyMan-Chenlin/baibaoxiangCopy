@@ -102,7 +102,7 @@
   <insert id="insert" parameterType="com.baibaoxiang.po.Area">
     insert into area (no, name, schoolNo
       )
-    values (#{no,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{schoolno,jdbcType=INTEGER}
+    values (#{no,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, $(school.no)
       )
   </insert>
   <insert id="insertSelective" parameterType="com.baibaoxiang.po.Area">
@@ -114,7 +114,7 @@
       <if test="name != null">
         name,
       </if>
-      <if test="schoolno != null">
+      <if test="record.school != null">
         schoolNo,
       </if>
     </trim>
@@ -125,8 +125,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="schoolno != null">
-        #{schoolno,jdbcType=INTEGER},
+      <if test="record.school != null">
+        ${school.no},
       </if>
     </trim>
   </insert>
@@ -145,8 +145,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.schoolno != null">
-        schoolNo = #{record.schoolno,jdbcType=INTEGER},
+      <if test="record.school != null">
+        schoolNo = $(school.no),
       </if>
     </set>
     <if test="_parameter != null">
@@ -157,7 +157,7 @@
     update area
     set no = #{record.no,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      schoolNo = #{record.schoolno,jdbcType=INTEGER}
+      schoolNo = ${school.no}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -168,8 +168,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="schoolno != null">
-        schoolNo = #{schoolno,jdbcType=INTEGER},
+      <if test="record.school != null">
+        schoolNo = ${school.no},
       </if>
     </set>
     where no = #{no,jdbcType=INTEGER}
@@ -177,7 +177,7 @@
   <update id="updateByPrimaryKey" parameterType="com.baibaoxiang.po.Area">
     update area
     set name = #{name,jdbcType=VARCHAR},
-      schoolNo = #{schoolno,jdbcType=INTEGER}
+      schoolNo = ${school.no}
     where no = #{no,jdbcType=INTEGER}
   </update>
 </mapper>

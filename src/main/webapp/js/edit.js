@@ -86,7 +86,8 @@ $(function() {
     $(".change").on('click',function () {
         var no = $("#articleID").text();
         var title = $.trim($("#title").val());
-        var type = $.trim($("#type").val());
+        var type = $.trim($("#typeid").text());
+        var picture = $('.head-img').attr('src');
         var message = $("#edit").froalaEditor('html.get', true);
         var area = $("#area").text();
         if ($(".returnPic").attr("src") != ""){
@@ -99,7 +100,7 @@ $(function() {
         //获取当前日期，格式为yyyy-mm-dd
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 
-        var data1 ={no:no,title:title,type:type,area:area,message:message,createTime:date1,readNum:"0",likeNum:"0",
+        var data1 ={no:no,title:title,articleType:{id:type},area:{no:area},message:message,createTime:date1,readNum:"0",likeNum:"0",
             picturePath:picture,top:"4"};
         if($.trim(title).length==0||title==""){
             alert("标题未填");
@@ -115,12 +116,11 @@ $(function() {
                 contentType:"application/json",
                 data:JSON.stringify(data1),
                 success:function (data) {
-                    if(data==1){
-                        window.location.href="../success.jsp";
-                    }else {
+                    if(data==0){
                         alert("修改失败");
+                        return;
                     }
-
+                    window.location.href="../success.jsp";
                 }
             });
         }

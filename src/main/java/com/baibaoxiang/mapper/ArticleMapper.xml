@@ -139,8 +139,8 @@
       areaNo, read_num, like_num,
       title, create_time, top, 
       picture_path, message)
-      values (#{no,jdbcType=VARCHAR}, #{record.manager.id,jdbcType=INTEGER}, #{record.articleType.id,jdbcType=INTEGER},
-      #{record.area.no,jdbcType=INTEGER}, #{readNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER},
+      values (#{no,jdbcType=VARCHAR}, ${manager.id}, ${articleType.id},
+      ${area.no}, #{readNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER},
       #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{top,jdbcType=INTEGER},
       #{picturePath,jdbcType=VARCHAR}, #{message,jdbcType=LONGVARCHAR})
   </insert>
@@ -150,13 +150,13 @@
       <if test="no != null" >
         no,
       </if>
-      <if test="record.manager.id != null">
+      <if test="manager != null">
         author,
       </if>
-      <if test="record.articleType.id != null">
+      <if test="articleType != null">
           typeNo,
       </if>
-      <if test="record.area.no != null">
+      <if test="area != null">
           areaNo,
       </if>
       <if test="readNum != null" >
@@ -183,16 +183,16 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="no != null" >
+      </if>
         #{no,jdbcType=VARCHAR},
+      <if test="manager != null">
+        ${manager.id},
       </if>
-      <if test="record.manager.id != null">
-        #{author,jdbcType=VARCHAR},
+      <if test="articleType != null" >
+        ${articleType.id},
       </if>
-      <if test="record.articleType.id != null" >
-        #{typeno,jdbcType=VARCHAR},
-      </if>
-      <if test="record.area.no != null" >
-        #{areano,jdbcType=VARCHAR},
+      <if test="area != null" >
+        ${area.no},
       </if>
       <if test="readNum != null" >
         #{readNum,jdbcType=INTEGER},
@@ -229,14 +229,14 @@
       <if test="record.no != null" >
         no = #{record.no,jdbcType=VARCHAR},
       </if>
-      <if test="record.manager.id != null" >
-        author = #{record.manager.id,jdbcType=VARCHAR},
+      <if test="record.manager != null" >
+        author = ${manager.id},
       </if>
-      <if test="record.articleType.id != null">
-          typeNo = #{record.articleType.id,jdbcType=INTEGER},
+      <if test="record.articleType != null">
+          typeNo = ${articleType.id},
       </if>
-      <if test="record.area.no != null">
-          areaNo = #{record.area.no,jdbcType=INTEGER},
+      <if test="record.area != null">
+          areaNo = ${area.no},
       </if>
       <if test="record.readNum != null" >
         read_num = #{record.readNum,jdbcType=INTEGER},
@@ -267,9 +267,9 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update article
     set no = #{record.no,jdbcType=VARCHAR},
-      author = #{record.manager.id,jdbcType=INTEGER},
-      typeNo = #{record.articleType.id,jdbcType=INTEGER},
-      areaNo = #{record.area.no,jdbcType=INTEGER},
+      author = ${manager.id},
+      typeNo = ${articleType.id},
+      areaNo = ${area.no},
       read_num = #{record.readNum,jdbcType=INTEGER},
       like_num = #{record.likeNum,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
@@ -284,9 +284,9 @@
   <update id="updateByExample" parameterType="map" >
     update article
     set no = #{record.no,jdbcType=VARCHAR},
-      author = #{record.manager.id,jdbcType=INTEGER},
-      typeNo = #{record.articleType.id,jdbcType=INTEGER},
-      areaNo = #{record.area.no,jdbcType=INTEGER},
+      author = ${manager.id},
+      typeNo = ${articleType.id},
+      areaNo = ${area.no},
       read_num = #{record.readNum,jdbcType=INTEGER},
       like_num = #{record.likeNum,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
@@ -300,14 +300,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.baibaoxiang.po.Article" >
     update article
     <set >
-      <if test="record.manager.id != null">
-          author = #{record.manager.id,jdbcType=INTEGER},
+      <if test="manager != null">
+          author = ${manager.id},
       </if>
-      <if test="record.articleType.id != null">
-          typeNo = #{record.articleType.id,jdbcType=INTEGER},
+      <if test="articleType != null">
+          typeNo = ${articleType.id},
       </if>
-      <if test="record.area.no != null">
-          areaNo = #{record.area.no,jdbcType=INTEGER},
+      <if test="area != null">
+          areaNo = ${area.no},
       </if>
       <if test="readNum != null" >
         read_num = #{readNum,jdbcType=INTEGER},
@@ -335,9 +335,9 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.baibaoxiang.po.Article" >
     update article
-    set author = #{record.manager.id,jdbcType=INTEGER},
-      typeNo = #{record.articleType.id,jdbcType=INTEGER},
-      areaNo = #{record.area.no,jdbcType=INTEGER},
+    set author = ${manager.id},
+      typeNo = ${articleType.id},
+      areaNo = ${area.no},
       read_num = #{readNum,jdbcType=INTEGER},
       like_num = #{likeNum,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
@@ -349,9 +349,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baibaoxiang.po.Article" >
     update article
-    set author = #{record.manager.id,jdbcType=INTEGER},
-      typeNo = #{record.articleType.id,jdbcType=INTEGER},
-      areaNo = #{record.area.no,jdbcType=INTEGER},
+    set author = ${manager.id},
+      typeNo = ${articleType.id},
+      areaNo = ${area.no},
       read_num = #{readNum,jdbcType=INTEGER},
       like_num = #{likeNum,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},

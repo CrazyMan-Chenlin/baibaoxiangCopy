@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<p id="area" hidden>${sessionScope.areaNo}</p>
+<p id="area" hidden>${article.area.no}</p>
 <p id="articleID" hidden>${article.no}</p>
 <p id="managerID" hidden>${sessionScope.id}</p>
 <form class="form-horizontal" role="form" id="edit_form" enctype="multipart/form-data" method="post">
@@ -31,8 +31,8 @@
     <div class="form-group ">
         <label for="type" class="col-sm-2 control-label">类型</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="type" placeholder="请输入类型" value="${article.type}" readonly>
-            <p id="typeid" hidden>${article.id}</p>
+            <input type="text" class="form-control" id="type" placeholder="请输入类型" value="${article.articleType.type}" readonly>
+            <p id="typeid" hidden>${article.articleType.id}</p>
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="classification">
                     选择类型
