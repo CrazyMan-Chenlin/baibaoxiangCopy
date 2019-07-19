@@ -12,7 +12,9 @@ $(function () {
                 $.each(data,function (index,item) {
                     $("#information").append("<tr><td class='username'><input type=\"checkbox\" name=\"username\">"+item.username+"</td>\n" +
                         "<td>"+item.name+"</td>\n" +
-                        "<td>"+item.area+"</td>"+"<td><button type=\"button\" class=\"btn btn-danger\" id=\"edit\">修改密码</button>"+"</td></tr>");
+                        "<td>"+item.area.school.name+"</td>"+
+                        "<td>"+item.area.name+"</td>"+
+                        "<td><button type=\"button\" class=\"btn btn-danger\" id=\"edit\">修改密码</button>"+"</td></tr>");
                 });
             }
         });
@@ -38,8 +40,10 @@ $(function () {
         }
     });
 
+    // $("#querySchool").trigger();
     //查询学校
-    $("#querySchool").on('click',function () {
+    $("#querySchool").on('click',function (e) {
+        e.preventDefault();
         $.ajax({
             type : "GET",
             url: "/school/allSchool",
@@ -78,7 +82,6 @@ $(function () {
         var password = $.trim($("#password").val());
         var area = $("#area").find("option:selected").val();
         var school = $("#school").find("option:selected").val();
-        alert(area);
         if(isChinese(username)||isChinese(password)){
             alert("用户名或密码不能携带中文");
         }else {
@@ -137,4 +140,4 @@ function isChinese(temp)
     if (re.test(temp))
         return false ;
     return true ;
-}
+    }

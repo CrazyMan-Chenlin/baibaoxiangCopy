@@ -19,4 +19,6 @@ public class Manager {
 
     private String salt;
 
+
+
 }

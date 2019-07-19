@@ -231,7 +231,7 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="area != null" >
-        ${area.no},
+        areaNo = ${area.no},
       </if>
       <if test="path != null" >
         path = #{path,jdbcType=VARCHAR},

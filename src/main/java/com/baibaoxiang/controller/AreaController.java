@@ -94,12 +94,12 @@ public class AreaController {
      * @param request
      * @throws Exception
      */
-    @RequestMapping(value = "deleteAreaBatch", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteAreaBatch", method = RequestMethod.POST)
     public Map<String,String> deleteSchoolBatch(HttpServletRequest request) throws Exception{
         Map<String,String> map = new HashMap<String,String>(16);
         //该参数判断当前是否超级管理员
         int isCheck = checkRight(request);
-        String idstr = request.getParameter("id");
+        String idstr = request.getParameter("ids");
         Integer id = Integer.parseInt(idstr);
         List<Area> areas = areaService.findAreaBySchoolName(defSchoolName);
         if (isCheck==1){
@@ -131,7 +131,7 @@ public class AreaController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "addArea", method = RequestMethod.POST)
+    @RequestMapping(value = "/addArea", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,String> addArea(HttpServletRequest request) throws Exception{
         //该参数判断当前是否超级管理员
@@ -141,16 +141,12 @@ public class AreaController {
         String schoolName = request.getParameter("schoolName");
         String areaName = request.getParameter("areaName");
         Integer schoolno = schoolService.selectNoBySchoolName(schoolName);
-
-        if (isCheck==1){
-            areaService.insertArea(schoolno,areaName);
-            map.put("msg","添加成功");
-            logger.info("学校添加成功。");
-            return map;
-        }
-        map.put("msg","权限不足");
-        logger.info("权限不足");
+        Integer maxAreaNo = areaService.findMaxAreaNo();
+        areaService.insertArea(maxAreaNo.intValue()+1,schoolno,areaName);
+        map.put("msg","添加成功");
+        logger.info("学校添加成功。");
         return map;
+
     }
 
     /**

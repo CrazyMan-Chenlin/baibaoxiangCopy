@@ -50,4 +50,10 @@ public interface ArticleTypeMapperCustom {
      * @param newSequenceNum
      */
     void updateSequenceNumByAddOne(@Param("oldSequenceNum") Integer oldSequenceNum, @Param("newSequenceNum") Integer newSequenceNum);
+
+    /**
+     * 查找最后面的类型主键的顺序
+     * @return
+     */
+    Integer findMaxSequence();
 }

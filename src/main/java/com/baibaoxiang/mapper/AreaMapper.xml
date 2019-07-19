@@ -125,8 +125,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="schoolno != null">
-        #{schoolno,jdbcType=INTEGER},
+      <if test="school != null">
+          ${school.no},
       </if>
     </trim>
   </insert>
@@ -157,7 +157,7 @@
     update area
     set no = #{record.no,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      schoolNo = #{record.schoolno,jdbcType=INTEGER}
+      schoolNo = ${school.no}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -168,8 +168,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="schoolno != null">
-        schoolNo = #{schoolno,jdbcType=INTEGER},
+      <if test="school != null">
+        schoolNo = ${school.no},
       </if>
     </set>
     where no = #{no,jdbcType=INTEGER}
@@ -177,7 +177,7 @@
   <update id="updateByPrimaryKey" parameterType="com.baibaoxiang.po.Area">
     update area
     set name = #{name,jdbcType=VARCHAR},
-      schoolNo = #{schoolno,jdbcType=INTEGER}
+      schoolNo = ${school.no}
     where no = #{no,jdbcType=INTEGER}
   </update>
 </mapper>

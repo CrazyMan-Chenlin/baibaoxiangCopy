@@ -45,6 +45,23 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" id="addSchool">添加学校</button>
+                </div>
+            </div>
+            <br><br><br>
+
+
+            <div class="form-group" >
+                <label for="area" class="col-sm-2 control-label">所属校区</label>
+                <button class="btn btn-warning" id="querySchool" value="查询学校">查询学校</button>
+                <div class="col-sm-6">
+                    <select class="form-control" id="areaSelect">
+                        <option value="-1" id="opt_area" style="color: #b70f07">请点击查询按钮</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="area" class="col-sm-2 control-label">校区/学校地址</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="area" placeholder="请输入校区/学校地址">
@@ -52,7 +69,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-primary" id="add">添加学校</button>
+                    <button type="button" class="btn btn-primary" id="addArea">添加校区</button>
                 </div>
             </div>
         </form>

@@ -9,6 +9,7 @@ import com.baibaoxiang.tool.FastDfsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,8 +23,8 @@ import java.util.List;
  * @author sheng
  * @create 2019-04-26-09:59
  */
-@RestController
-@RequestMapping("/article")
+@Controller
+@RequestMapping(value = "/article")
 public class ArticleController {
 
     @Autowired
@@ -49,6 +50,7 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @ResponseBody
     public Article selectByPrimaryKey(@PathVariable("id") String id) throws Exception{
         Article article = articleService.selectByPrimaryKey(id);
         redisService.saveReadNumRedis(id);
@@ -76,46 +78,53 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/type",method = RequestMethod.POST)
+    @ResponseBody
     public  List<Article> selectByType(HttpServletRequest request) throws Exception {
         String type = request.getParameter("type");
         Integer typeNo = Integer.valueOf(type);
         //获取session 中的username
-        HttpSession session = request.getSession();
-        String username = (String)session.getAttribute("username");
+        String username = (String)request.getSession().getAttribute("username");
         int isCheck = checkRight(request);
+
         if(isCheck==1){
-            return articleService.selectByType(typeNo);
+            List<Article> articles = articleService.selectByType(typeNo);
+            return articles;
+        }else {
+            Manager manager = managerService.findManagerByUsername(username);
+            Integer areaNo = manager.getArea().getNo();
+            List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
+            for (Article article:articleList){
+                System.out.println(article.getTitle());
+            }
+            return articleList;
         }
-        Manager manager = managerService.findManagerByUsername(username);
-        Integer areaNo = manager.getArea().getNo();
-        List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
-        return articleList;
+
     }
 
     /** 查询所有的文章
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "allArticles",method = RequestMethod.GET)
+    @RequestMapping(value = "/allArticles",method = RequestMethod.GET)
+    @ResponseBody
     public List<Article> selectAll() throws Exception{
         List<Article> articleList = articleService.selectAllArticles();
         return articleList;
     }
 
     /**
-     * 添加文章
+     * 添加文章 ,@RequestParam String type
      * @param record
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/",method = RequestMethod.POST)
+    @ResponseBody
     public Map<String,String> insert(@RequestBody Article record) throws Exception {
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         record.setNo(uuid);
-        /*String username = record.getAuthor();
-        Manager manager = managerService.findManagerByUsername(username);
-        record.setAuthor(manager.getName());*/
-        Map<String, String> map = new HashMap<>();
+
+        Map<String, String> map = new HashMap<>(16);
         try {
             articleService.insertSelective(record);
             map.put("msg","发布成功");
@@ -155,6 +164,7 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/updateArticle",method = RequestMethod.POST)
+    @ResponseBody
     public int updateByPrimaryKey(@RequestBody Article record) {
         try {
             articleService.updateByPrimaryKey(record);
@@ -176,6 +186,7 @@ public class ArticleController {
 
 
     @RequestMapping(value="/setTop", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String,String> setTopArticle(HttpServletRequest request) throws Exception{
         String no = request.getParameter("no");
         String topStr = request.getParameter("top");
@@ -187,10 +198,15 @@ public class ArticleController {
         return map;
     }
 
-
+    /**
+     *  这样接收文件@RequestParam Map<String,String> params,
+     * @param file
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/uploadArticleImg", method = RequestMethod.POST)
     @ResponseBody
-    //这样接收文件@RequestParam Map<String,String> params,
     public Map<String,Object> uploadArticleImg(@RequestParam MultipartFile file,
                                                HttpServletRequest request) throws Exception {
         // 文件类型

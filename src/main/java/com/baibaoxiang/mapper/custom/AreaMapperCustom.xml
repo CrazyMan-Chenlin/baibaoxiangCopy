@@ -10,7 +10,7 @@
     </resultMap>
 
     <insert id="insertArea" >
-        INSERT INTO area(schoolNo,name) VALUES (#{schoolNo,jdbcType=INTEGER},#{name,jdbcType=VARCHAR})
+        INSERT INTO area(no,schoolNo,name) VALUES (#{no,jdbcType=INTEGER},#{schoolNo,jdbcType=INTEGER},#{name,jdbcType=VARCHAR})
     </insert>
 
     <select id="findAllAreas" resultMap="BaseResultMap">
@@ -20,5 +20,8 @@
     <select id="findAreaBySchoolName" resultMap="BaseResultMap">
         SELECT * FROM area JOIN school ON area.schoolNo = school.no WHERE school.name = #{name,jdbcType=VARCHAR}
     </select>
-    
+
+    <select id="findMaxAreaNo" resultType="java.lang.Integer">
+        SELECT no FROM area ORDER BY no DESC LIMIT 1
+    </select>
 </mapper>

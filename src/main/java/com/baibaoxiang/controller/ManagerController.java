@@ -2,7 +2,6 @@ package com.baibaoxiang.controller;
 
 import com.baibaoxiang.po.Area;
 import com.baibaoxiang.po.Manager;
-import com.baibaoxiang.po.School;
 import com.baibaoxiang.service.AreaService;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.SchoolService;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.management.RuntimeErrorException;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -115,40 +113,41 @@ public class ManagerController {
         Manager manager = managerService.findManagerWithPassword_salt(username);
 
         //获取session中保存的 验证码
-//        String code = (String)session.getAttribute("randomcode_key");
+        String code = (String)session.getAttribute("randomcode_key");
 
-//        if(!code.equals(validatecode)){
-//            map.put("code",0);
-//            map.put("msg","验证码有误！");
-//            logger.info("验证码有误");
-//            modelAndView.setViewName("backstage/login");
-//        }else{
-//            if(manager == null){
-//                map.put("code",0);
-//                map.put("msg","用户名无效！");
-//                logger.info("用户名无效！返回登录页");
-//                modelAndView.setViewName("backstage/login");
-//            }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
-//                map.put("code",0);
-//                map.put("msg","密码出错!");
-//                logger.info("密码出错！返回登录页");
-//                modelAndView.setViewName("backstage/login");
-//            }else{
-        //登录成功
-        map.put("code",1);
-        map.put("msg","");
-        logger.info("登录成功!");
-        modelAndView.setViewName("backstage/admin_index");
-        //添加session 将用户名添加到session
-        request.getSession().setAttribute("username", username);
-        Manager manager2 = managerService.findManagerByUsername(username);
-        request.getSession().setAttribute("area",manager.getArea());
-        if (checkRight(request)==0){
-            request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
+        if(!code.equals(validatecode)){
+            map.put("code",0);
+            map.put("msg","验证码有误！");
+            logger.info("验证码有误");
+            modelAndView.setViewName("backstage/login");
         }else{
-            request.getSession().setAttribute("saldfjlskfffds","sdadwededa");
-        }
-//                //添加cookie
+            if(manager == null){
+                map.put("code",0);
+                map.put("msg","用户名无效！");
+                logger.info("用户名无效！返回登录页");
+                modelAndView.setViewName("backstage/login");
+            }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
+                map.put("code",0);
+                map.put("msg","密码出错!");
+                logger.info("密码出错！返回登录页");
+                modelAndView.setViewName("backstage/login");
+            }else{
+                //登录成功
+                map.put("code",1);
+                map.put("msg","");
+                logger.info("登录成功!");
+                modelAndView.setViewName("backstage/admin_index");
+                //添加session 将用户名添加到session
+                request.getSession().setAttribute("username", username);
+                Manager manager2 = managerService.findManagerByUsername(username);
+                request.getSession().setAttribute("areaNo",manager.getArea().getNo());
+                request.getSession().setAttribute("id",manager.getId());
+                if (checkRight(request)==0){
+                    request.getSession().setAttribute("saldfjlskfffds","adwddasdsfddac");
+                }else{
+                    request.getSession().setAttribute("saldfjlskfffds","sdadwededa");
+                }
+                //添加cookie
 //                if(rememberme!=null) {
 //                    //创建两个Cookie对象
 //                    Cookie nameCookie = new Cookie("username", username);
@@ -159,8 +158,8 @@ public class ManagerController {
 //                    response.addCookie(nameCookie);
 //                    response.addCookie(pwdCookie);
 //                }
-//            }
-//        }
+            }
+        }
         modelAndView.addAllObjects(map);
         return  modelAndView;
     }
@@ -403,7 +402,7 @@ public class ManagerController {
     public Map<String,String> deleteManagerBatch(HttpServletRequest request) throws Exception{
         //该参数判断当前是否超级管理员
         int i = checkRight(request);
-        Map<String,String> map = new HashMap();
+        Map<String,String> map = new HashMap(16);
         if (i==1){
             String usernames = request.getParameter("usernames");
             managerService.deleteManagerBatch(usernames);

@@ -2,18 +2,18 @@ $(function () {
     //加载滚动条
     $(".left").mCustomScrollbar();
 
-    //查询学校
+    //查询学校地区填充到左侧列表
     $("#query").on('click',function () {
         $.ajax({
             type : "GET",
-            url: "/school/allSchool",
+            url: "/allarea",
             // dataType:'json',
             success :function (data) {
                 $("#schools").children().remove();
                 $.each(data,function (index,item) {
                     $("#schools").append("<tr>\n" +
+                        "                <td>"+item.school.name+"</td>\n" +
                         "                <td>"+item.name+"</td>\n" +
-                        "                <td>"+item.area+"</td>\n" +
                         "                <td class='itemNo' style='text-align: center'>"+item.no+"</td>\n" +
                         "                <td><input type=\"checkbox\" name=\"schoolNo\" </td>\n" +
                         "            </tr>");
@@ -22,18 +22,32 @@ $(function () {
         });
     });
 
+    //查询学校至选择框
+    $("#querySchool").on('click',function (e) {
+        e.preventDefault();
+        $.ajax({
+            type : "GET",
+            url: "/school/allSchool",
+            success :function (data) {
+                $("#areaSelect").children().remove();
+                $("#areaSelect").append("<option>==请选择==</option>");
+                $.each(data,function (index,item) {
+                    $("#areaSelect").append("<option id='opt_school' value='"+item.no+"'>"+item.name+"</option>");
+                });
+            }
+        });
+    });
     
     //添加学校
-    $("#add").on('click',function () {
+    $("#addSchool").on('click',function () {
         var name = $.trim($("#name").val());
-        var area = $.trim($("#area").val());
-        var data1 = {name:name,area:area};
+        console.log(name);
         $.ajax({
-            url:'/school/',
+            url:'/school/insert',
             type: 'POST',
-            data: JSON.stringify(data1),
+            data: {name:name},
             dataType:"json",
-            contentType:"application/json; charset=utf-8",
+            contentType:"application/x-www-form-urlencoded",
             success:function (data) {
                 alert(data["msg"]);
                 $("#name").val("");
@@ -43,24 +57,44 @@ $(function () {
         });
     });
 
-
     //删除学校
     $("#delete").on('click',function () {
         if(confirm("是否决定删除学校?")){
             var checked=[];
             $("input[name='schoolNo']:checked").each(function (i) {
                 checked[i]=$(this).parents().parents().children(".itemNo").text();
-                console.log(checked[i]);
             });
             var ids = checked.join(",");
             $.ajax({
-                url:"/school/deleteBatch",
+                url:"/deleteAreaBatch",
                 type:"POST",
                 data: {ids:ids},
-                async:false,
                 success:function(data) {
-                    alert(data["msg"]);
                     $("#query").trigger('click');
+                },
+                error:function (data) {
+                    $("#query").trigger('click');
+                }
+            });
+        }
+    });
+
+    //添加校区
+    $("#addArea").on('click',function () {
+        let school = $("#areaSelect").find("option:selected").text();
+        let area = $("#area").val().trim();
+        if (school=="请点击查询按钮"||school==null||school=="==请选择=="){
+            alert("未选择学校")
+        }else if(area==null||area==""){
+            alert("区域不能为空");
+        }else {
+            $.ajax({
+                url:"/addArea",
+                type:"POST",
+                data:{schoolName:school,areaName:area},
+                success:function (data) {
+                    alert(data["msg"]);
+                    window.location.reload();
                 }
             });
         }

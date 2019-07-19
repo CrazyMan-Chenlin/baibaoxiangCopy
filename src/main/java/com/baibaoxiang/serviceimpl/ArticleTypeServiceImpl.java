@@ -1,13 +1,15 @@
 package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.jedis.JedisClient;
+import com.baibaoxiang.mapper.AreaMapper;
 import com.baibaoxiang.mapper.ArticleMapper;
 import com.baibaoxiang.mapper.ArticleTypeMapper;
+import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.ArticleTypeMapperCustom;
-import com.baibaoxiang.po.ArticleExample;
-import com.baibaoxiang.po.ArticleType;
-import com.baibaoxiang.po.ArticleTypeExample;
+import com.baibaoxiang.mapper.custom.SchoolMapperCustom;
+import com.baibaoxiang.po.*;
 import com.baibaoxiang.service.ArticleTypeService;
+import com.baibaoxiang.service.SchoolService;
 import com.baibaoxiang.tool.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     JedisClient jedisClient;
     @Autowired
     ArticleMapper articleMapper;
+
     private final String key = "Type_INFO:";
     @Override
     public ArticleType selectByPrimaryKey(Integer id) throws Exception {
@@ -119,4 +122,10 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
         }
         articleTypeMapperCustom.updateSequenceNumById(newSequenceNum, id);
     }
+
+    @Override
+    public Integer findMaxSequence() {
+        return articleTypeMapperCustom.findMaxSequence();
+    }
+
 }

@@ -46,14 +46,15 @@ $(function() {
     $(".submitVal").on('click',function () {
         var title = $.trim($("#title").val());
         var type = $.trim($("#type").val());
+        var typeid = $.trim($("#typeid").text());
         var message = $("#edit").froalaEditor('html.get', true);
         var area = $("#area").text();
         var picture = $('.head-img').attr('src');
-        var author = $("#username").text();
+        var author = $("#managerID").text();
         var date = new Date();
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-        var data1 ={title:title,type:type,area:area,message:message,createTime:date1,readNum:"0",likeNum:"0",
-            picturePath:picture,author:author,top:"4"};
+        var data1 ={title:title,articleType:{id:typeid},area:{no:area},message:message,createTime:date1,readNum:"0",likeNum:"0",
+            picturePath:picture,manager:{id:author},top:"4"};
         if($.trim(title).length==0||title==""){
             alert("标题未填");
             return false;
@@ -85,7 +86,8 @@ $(function() {
     $(".change").on('click',function () {
         var no = $("#articleID").text();
         var title = $.trim($("#title").val());
-        var type = $.trim($("#type").val());
+        var type = $.trim($("#typeid").text());
+        var picture = $('.head-img').attr('src');
         var message = $("#edit").froalaEditor('html.get', true);
         var area = $("#area").text();
         if ($(".returnPic").attr("src") != ""){
@@ -98,7 +100,7 @@ $(function() {
         //获取当前日期，格式为yyyy-mm-dd
         var date1 = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
 
-        var data1 ={no:no,title:title,type:type,area:area,message:message,createTime:date1,readNum:"0",likeNum:"0",
+        var data1 ={no:no,title:title,articleType:{id:type},area:{no:area},message:message,createTime:date1,readNum:"0",likeNum:"0",
             picturePath:picture,top:"4"};
         if($.trim(title).length==0||title==""){
             alert("标题未填");
@@ -114,12 +116,11 @@ $(function() {
                 contentType:"application/json",
                 data:JSON.stringify(data1),
                 success:function (data) {
-                    if(data==1){
-                        window.location.href="../success.jsp";
-                    }else {
+                    if(data==0){
                         alert("修改失败");
+                        return;
                     }
-
+                    window.location.href="../success.jsp";
                 }
             });
         }
@@ -133,7 +134,7 @@ $(function() {
             success:function (data) {
                 $("#article_type").children().remove();
                 $.each(data,function (index,item) {
-                    $("#article_type").append("<li><a href='#' class='type1'>"+item.type+"</a></li>");
+                    $("#article_type").append("<li><a href='#' class='type1' id='"+item.id+"'>"+item.type+"</a></li>");
                 });
             }
         });
@@ -142,7 +143,8 @@ $(function() {
     //添加类型到输入框
     $(document).on('click',".type1",function () {
         //获取下拉框的内容
-        var type = ($(this).text());
+        var type = $(this).text();
+        $("#typeid").text($(this).attr("id"));
         //添加到输入框内容
         $("#type").val(type);
     });

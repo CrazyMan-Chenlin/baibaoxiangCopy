@@ -50,9 +50,14 @@ public interface AreaService {
     void deleteAreaBatch(Integer ids[]) throws Exception;
 
     /** 添加
-     * @param schoolNo,name
+     * @param no,schoolNo,name
      * @throws Exception
      */
-    void insertArea(Integer schoolNo, String name) throws Exception;
+    void insertArea(Integer no,Integer schoolNo, String name) throws Exception;
 
+    /**
+     *
+     * 获取地区表最大一个主键
+     */
+    Integer findMaxAreaNo();
 }

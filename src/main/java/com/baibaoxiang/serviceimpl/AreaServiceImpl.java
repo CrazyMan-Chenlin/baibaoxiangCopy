@@ -57,8 +57,13 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public void insertArea(Integer schoolNo, String name) throws Exception {
-        areaMapperCustom.insertArea(schoolNo,name);
+    public void insertArea(Integer no,Integer schoolNo, String name) throws Exception {
+        areaMapperCustom.insertArea(no,schoolNo,name);
+    }
+
+    @Override
+    public Integer findMaxAreaNo() {
+        return areaMapperCustom.findMaxAreaNo();
     }
 
 

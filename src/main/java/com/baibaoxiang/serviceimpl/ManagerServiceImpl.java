@@ -54,6 +54,7 @@ public class ManagerServiceImpl implements ManagerService {
     public int deleteByPrimaryKey(Integer username) throws Exception {
         return managerMapper.deleteByPrimaryKey(username);
     }
+
     @Override
     public void deleteManagerBatch(String usernames) throws Exception {
         String username [] = usernames.split(",");
