@@ -82,7 +82,7 @@ public class ArticleTypeController {
         if (!TypeNew.equals("")){
             ArticleType articleType = new ArticleType();
             articleType.setType(TypeNew);
-//            articleType.setSequenceNum(articleTypeService.findMaxSequence());
+            articleType.setSequenceNum(articleTypeService.findMaxSequence());
             i = articleTypeService.insert(articleType);
         }
         return i;

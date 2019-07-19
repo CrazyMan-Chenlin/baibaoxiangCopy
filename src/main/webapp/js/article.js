@@ -91,7 +91,7 @@ $(function () {
 
     //添加新的分类，仅超级管理员可用
     $(".new").on('click',function () {
-       var newType = $.trim($("#new_type").val());
+       let newType = $.trim($("#new_type").val());
        if (newType!=null&&newType!="") {
            $.ajax({
                type:"post",
@@ -162,7 +162,7 @@ $(function () {
                         "<div class='panel panel-default'>"+
                         "<div class='panel-heading'>"+item.title+"</div>"+
                         "<div class='panel-body' id='no' hidden>"+item.no+"</div>"+
-                        "<div>作者："+item.manager.name+" 区域："+item.area.school.name+item.area.name+" 类型："+item.type+"</div>"+
+                        "<div>作者："+item.manager.name+" 区域："+item.area.school.name+item.area.name+" 类型："+item.articleType.type+"</div>"+
                         "<div class='panel-footer'><span>点赞数"+item.likeNum+"</span><span>阅读数"+item.readNum+"</span>"+
                         "<div class='manage'>"+
                         "<div class='delete'></div>"+

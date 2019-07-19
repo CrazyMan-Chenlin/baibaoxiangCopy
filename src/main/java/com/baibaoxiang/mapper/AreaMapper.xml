@@ -126,7 +126,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="school != null">
-        ${school.no},
+          ${school.no},
       </if>
     </trim>
   </insert>
