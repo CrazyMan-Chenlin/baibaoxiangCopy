@@ -55,7 +55,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> selectByTypeArea(Integer areaNo, Integer typeNo) throws Exception {
+    public List<Article> selectByTypeArea(Integer typeNo, Integer areaNo) throws Exception {
         ArticleExample articleExample = new ArticleExample();
         articleExample.setOrderByClause("create_time  desc");
         ArticleExample.Criteria criteria = articleExample.createCriteria();
