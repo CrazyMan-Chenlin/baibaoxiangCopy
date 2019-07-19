@@ -8,6 +8,7 @@
 
     <settings>
         <setting name="logPrefix" value="dao."/>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
     <!--  别名配置 -->
     <typeAliases>

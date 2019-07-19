@@ -74,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @throws Exception
      */
     @Override
-    public List<Article> selectByTypeArea(Integer areaNo, Integer typeNo,Integer page,Integer rows) throws Exception {
+    public List<Article> selectByTypeArea(Integer typeNo, Integer areaNo,Integer page,Integer rows) throws Exception {
         //设置分页信息
         if (page==null||page==0) { page = 1; }
         if (rows==null||rows==0) { rows = 20 ;}

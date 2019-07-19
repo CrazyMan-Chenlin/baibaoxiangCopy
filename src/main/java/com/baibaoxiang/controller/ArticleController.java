@@ -88,15 +88,17 @@ public class ArticleController {
 
         if(isCheck==1){
             List<Article> articles = articleService.selectByType(typeNo);
-            for (Article article:articles){
+            return articles;
+        }else {
+            Manager manager = managerService.findManagerByUsername(username);
+            Integer areaNo = manager.getArea().getNo();
+            List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
+            for (Article article:articleList){
                 System.out.println(article.getTitle());
             }
-            return articles;
+            return articleList;
         }
-        Manager manager = managerService.findManagerByUsername(username);
-        Integer areaNo = manager.getArea().getNo();
-        List<Article> articleList = articleService.selectByTypeArea(typeNo,areaNo);
-        return articleList;
+
     }
 
     /** 查询所有的文章
