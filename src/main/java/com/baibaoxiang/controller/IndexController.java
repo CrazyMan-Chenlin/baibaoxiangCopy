@@ -26,7 +26,7 @@ public class IndexController {
      * 展示首页
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     public ModelAndView showIndex() throws Exception {
         List<School> school = schoolService.selectDifferentSchoolName();
         ModelAndView model = new ModelAndView("/index");
