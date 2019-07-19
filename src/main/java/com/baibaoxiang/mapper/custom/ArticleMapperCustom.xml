@@ -14,9 +14,9 @@
                      select="com.baibaoxiang.mapper.ArticleTypeMapper.selectByPrimaryKey">
         </association>
         <association column="author"  property="manager"
-                     select="com.baibaoxiang.mapper.custom.ManagerMapperCustom.findManagerNameById">
+                     select="com.baibaoxiang.mapper.ManagerMapper.selectByPrimaryKey">
         </association>
-        <association column="areaNo"  property="areaNo"
+        <association column="areaNo"  property="area"
                      select="com.baibaoxiang.mapper.AreaMapper.selectByPrimaryKey">
         </association>
     </resultMap>
