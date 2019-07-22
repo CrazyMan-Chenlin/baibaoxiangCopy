@@ -2,6 +2,9 @@ package com.baibaoxiang.po;
 
 import lombok.Data;
 
+/**
+ * @author chenlin
+ */
 @Data
 public class Area {
     private Integer no;
@@ -10,4 +13,5 @@ public class Area {
 
     private School school;
 
+    private Integer schoolno;
 }

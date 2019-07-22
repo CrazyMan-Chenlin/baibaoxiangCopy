@@ -41,7 +41,10 @@ $(function () {
     //添加学校
     $("#addSchool").on('click',function () {
         var name = $.trim($("#name").val());
-        console.log(name);
+        if(name==""){
+            alert("名称不能为空")
+            return;
+        }
         $.ajax({
             url:'/school/insert',
             type: 'POST',

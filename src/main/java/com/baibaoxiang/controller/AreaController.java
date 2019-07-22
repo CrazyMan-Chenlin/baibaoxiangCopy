@@ -51,7 +51,7 @@ public class AreaController {
      * @return
      * @throws Exception
      */
-    @RequestMapping( value = "/" ,method = RequestMethod.GET)
+    @RequestMapping( value = "/{id}" ,method = RequestMethod.GET)
     @ResponseBody
     public Area findAreaById(@PathVariable("id") Integer id) throws Exception {
         Area area = areaService.findAreaById(id);
