@@ -113,25 +113,25 @@ public class ManagerController {
         Manager manager = managerService.findManagerWithPassword_salt(username);
 
         //获取session中保存的 验证码
-//        String code = (String)session.getAttribute("randomcode_key");
-//
-//        if(!code.equals(validatecode)){
-//            map.put("code",0);
-//            map.put("msg","验证码有误！");
-//            logger.info("验证码有误");
-//            modelAndView.setViewName("backstage/login");
-//        }else{
-//            if(manager == null){
-//                map.put("code",0);
-//                map.put("msg","用户名无效！");
-//                logger.info("用户名无效！返回登录页");
-//                modelAndView.setViewName("backstage/login");
-//            }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
-//                map.put("code",0);
-//                map.put("msg","密码出错!");
-//                logger.info("密码出错！返回登录页");
-//                modelAndView.setViewName("backstage/login");
-//            }else{
+        String code = (String)session.getAttribute("randomcode_key");
+
+        if(!code.equals(validatecode)){
+            map.put("code",0);
+            map.put("msg","验证码有误！");
+            logger.info("验证码有误");
+            modelAndView.setViewName("backstage/login");
+        }else{
+            if(manager == null){
+                map.put("code",0);
+                map.put("msg","用户名无效！");
+                logger.info("用户名无效！返回登录页");
+                modelAndView.setViewName("backstage/login");
+            }else if (!manager.getPassword().equals(md5(manager.getSalt(),password))){
+                map.put("code",0);
+                map.put("msg","密码出错!");
+                logger.info("密码出错！返回登录页");
+                modelAndView.setViewName("backstage/login");
+            }else{
                 //登录成功
                 map.put("code",1);
                 map.put("msg","");
@@ -158,8 +158,8 @@ public class ManagerController {
 //                    response.addCookie(nameCookie);
 //                    response.addCookie(pwdCookie);
 //                }
-//            }
-//        }
+            }
+        }
         modelAndView.addAllObjects(map);
         return  modelAndView;
     }
