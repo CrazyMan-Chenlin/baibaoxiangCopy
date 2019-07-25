@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<p id="area" hidden>${article.area.no}</p>
+<p id="area" hidden>${sessionScope.areaNo}</p>
 <p id="articleID" hidden>${article.no}</p>
 <p id="managerID" hidden>${sessionScope.id}</p>
 <form class="form-horizontal" role="form" id="edit_form" enctype="multipart/form-data" method="post">

@@ -4,6 +4,7 @@ import com.baibaoxiang.po.Article;
 import com.baibaoxiang.po.Manager;
 import com.baibaoxiang.service.ArticleService;
 import com.baibaoxiang.service.ManagerService;
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -93,7 +95,7 @@ public class JspController {
         modelAndView.setViewName("backstage/personal_Information");
         String username = (String) session.getAttribute("username");
         Manager managerByUsername = managerService.findManagerByUsername(username);
-        session.setAttribute("path","http://47.107.42.150/"+managerByUsername.getPath());
+        session.setAttribute("path","https://files.baibao-box.com/"+managerByUsername.getPath());
         return modelAndView;
     }
 

@@ -18,7 +18,6 @@ $(function() {
 
     //头像
     $('#picPath').on('change',function(){
-
         // 如果没有选择图片 直接退出
         if(this.files.length <=0){
             return false;
@@ -37,7 +36,19 @@ $(function() {
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success:function(data){
                 $('.returnPic').hide();
-                $('.head-img').attr('src',data.link);
+                var img=new Image();
+                img.src=data.link;
+                img.onload = function () {
+                    var realWidth = img.width;
+                    var realHeight = img.height;
+                    if (realWidth!=300&&realHeight!=200){
+                        alert("图片尺寸必须为300*200px！")
+                        $('#picPath').val("");
+                    } else{
+                        $('.head-img').attr('src',data.link);
+                    }
+                };
+
             }
         })
     });
@@ -64,7 +75,11 @@ $(function() {
         } else if($.trim(area).length==0||area==""){
             alert("地区未填");
             return false;
-        } else {
+        }else if ($('#picPath').val()==""){
+            alert("封面未填");
+            return false;
+        }
+        else {
             $.ajax({
                 type:"POST",
                 url:"/article/",

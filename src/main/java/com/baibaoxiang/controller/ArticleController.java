@@ -224,8 +224,8 @@ public class ArticleController {
                 if (type!=null){
                     if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
                         uploadFilePath = fastDfsClient.uploadFile(bytes, type);
-                        picUrl.append("http://");
-                        picUrl.append("47.107.42.150/");
+                        picUrl.append("https://");
+                        picUrl.append("files.baibao-box.com/");
                         picUrl.append( uploadFilePath);
                         map.put("link",picUrl);
                     }else {

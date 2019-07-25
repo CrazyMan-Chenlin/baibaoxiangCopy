@@ -13,12 +13,10 @@
 <body>
 <div class="information">
     <%--获取用户头像路径--%>
-    <h1>${requestScope.msg}</h1>
-    <p id="path" hidden>${sessionScope.path}</p>
-    <img src="${sessionScope.path}" alt="修改头像" class="img-thumbnail " id="portrait">
+    <img src= "${sessionScope.path}" alt="修改头像" class="img-thumbnail " id="portrait">
     <br><br><br>
     <form class="form-horizontal" action="/manager1/updateNamePicture"  method="POST" enctype="multipart/form-data">
-        <label for="file">更改头像</label><input type="file" name="file"  id="file"><br>
+        <label for="imgfile">更改头像</label><input type="file" name="file"  id="imgfile"><br>
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-8">
