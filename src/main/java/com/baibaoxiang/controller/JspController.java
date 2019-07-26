@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -90,7 +90,7 @@ public class JspController {
     }
 
     @RequestMapping(value = "/personal_Information")
-    public ModelAndView personal_Information(HttpSession session) throws Exception {
+    public ModelAndView personal_Information(HttpSession session,HttpServletRequest request) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("backstage/personal_Information");
         String username = (String) session.getAttribute("username");

@@ -13,19 +13,30 @@
 <body>
 <div class="information">
     <%--获取用户头像路径--%>
-    <img src= "${sessionScope.path}" alt="修改头像" class="img-thumbnail " id="portrait">
+        <h1>${requestScope.msg}</h1>
+        <p id="path" hidden>${sessionScope.path}</p>
+    <img src="${sessionScope.path}" alt="修改头像" class="img-thumbnail " id="portrait">
     <br><br><br>
     <form class="form-horizontal" action="/manager1/updateNamePicture"  method="POST" enctype="multipart/form-data">
-        <label for="imgfile">更改头像</label><input type="file" name="file"  id="imgfile"><br>
+        <%--<label for="file">更改头像</label>--%>
+        <%--<input type="file" name="file" id="file"><br>--%>
+            <div class="form-group">
+                <label for="file" class="col-sm-2 control-label">更改头像</label>
+                <div class="col-md-4">
+                    <input type="file" name="file" id="file">
+                </div>
+                <a href="https://www.uupoop.com/zp/" style="font-size: 16px" target="_blank">在线修改尺寸</a>
+            </div>
+        <br><br>
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="请输入要修改的昵称" required>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
-                <button type="button" class="btn btn-default" id="change">修改</button>
+                <button type="button" class="btn btn-primary" id="change">修改</button>
             </div>
         </div>
 
