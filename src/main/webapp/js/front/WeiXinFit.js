@@ -13,7 +13,7 @@ $(document).ready(function () {
     })
     $(function () {
         if (isWeixin) {
-            $("#warn").css("display", "block");
+           /* $("#warn").css("display", "block");*/
             if (sessionStorage.getItem("MainContent") != null && sessionStorage.getItem("MainContent") != "") {
                 window.history.back(-1)
                 $("tbody").html(sessionStorage.getItem("MainContent"))

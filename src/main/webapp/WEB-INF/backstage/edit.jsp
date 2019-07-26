@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<p id="area" hidden>${article.area.no}</p>
+<p id="area" hidden>${sessionScope.areaNo}</p>
 <p id="articleID" hidden>${article.no}</p>
 <p id="managerID" hidden>${sessionScope.id}</p>
 <form class="form-horizontal" role="form" id="edit_form" enctype="multipart/form-data" method="post">
@@ -53,7 +53,9 @@
                 <img src="${article.picturePath}" alt="封面图片" class="returnPic">
             </c:if>
         </div>
+        <a href="https://www.uupoop.com/zp/" class="col-sm-2" style="font-size: 18px" target="_blank">在线修改尺寸</a>
     </div>
+
     <br>
     <div class="dataReturn" hidden>${article.message}</div>
     <textarea id="edit">

@@ -229,18 +229,21 @@ public class ManagerController {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         String username = (String) session.getAttribute("username");
-        String type = null; // 文件类型
+        // 文件类型
+        String type = null;
         String uploadFilePath ="";
         try{
             if (file!=null){
-                String fileName = file.getOriginalFilename();// 文件原名称
+                // 文件原名称
+                String fileName = file.getOriginalFilename();
                 byte[] bytes = file.getBytes();
                 type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-                if (type!=null){//判断文件类型是否为空
+                //判断文件类型是否为空
+                if (type!=null){
                     if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
                         fastDfsClient.deleteFile(managerService.findManagerByUsername(username).getPath());
                         uploadFilePath = fastDfsClient.uploadFile(bytes, type);
-                        request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
+                        request.getSession().setAttribute("path","https://files.baibao-box.com/"+uploadFilePath);
                         String name = request.getParameter("name");
                         Manager manager = new Manager();
                         manager.setUsername(username);
@@ -259,7 +262,7 @@ public class ManagerController {
                         logger.info("上传失败，文件必须是jpg类型或者是PNG类型!");
                     }
                 }else {
-                    request.getSession().setAttribute("path","http://47.107.42.150/"+uploadFilePath);
+                    request.getSession().setAttribute("path","https://files.baibao-box.com/"+uploadFilePath);
                     String name = request.getParameter("name");
                     Manager manager = new Manager();
                     manager.setUsername(username);

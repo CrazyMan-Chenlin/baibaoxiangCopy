@@ -103,13 +103,13 @@
     </c:forEach>
     </tbody>
 </table>
-<div id="warn" style="position:fixed; bottom:0;z-index:999;margin-bottom: 0;display: none"
+<%--<div id="warn" style="position:fixed; bottom:0;z-index:999;margin-bottom: 0;display: none"
      class="alert alert-warning alert-dismissible fade show" role="alert">
     为了您更好的浏览体验，我们建议您点击右上角，使用浏览器访问
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-</div>
+</div>--%>
 <div id="mess" style="display: none">
     <img src="/images/front/loading.gif" >&nbsp;<span>正在加载数据..</span>
 </div>
