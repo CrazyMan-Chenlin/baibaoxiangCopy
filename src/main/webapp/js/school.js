@@ -12,10 +12,11 @@ $(function () {
                 $("#schools").children().remove();
                 $.each(data,function (index,item) {
                     $("#schools").append("<tr>\n" +
-                        "                <td>"+item.school.name+"</td>\n" +
-                        "                <td>"+item.name+"</td>\n" +
+                        "                <td class='schoolname1'>"+item.school.name+"</td>\n" +
+                        "                <td class='areaname1'>"+item.name+"</td>\n" +
                         "                <td class='itemNo' style='text-align: center'>"+item.no+"</td>\n" +
                         "                <td><input type=\"checkbox\" name=\"schoolNo\" </td>\n" +
+                        "                <td><button id='editSchool' class='btn btn-warning'>编辑</button></td>\n" +
                         "            </tr>");
                 })
             }
@@ -84,8 +85,8 @@ $(function () {
 
     //添加校区
     $("#addArea").on('click',function () {
-        let school = $("#areaSelect").find("option:selected").text();
-        let area = $("#area").val().trim();
+        var school = $("#areaSelect").find("option:selected").text();
+        var area = $("#area").val().trim();
         if (school=="请点击查询按钮"||school==null||school=="==请选择=="){
             alert("未选择学校")
         }else if(area==null||area==""){
@@ -101,5 +102,13 @@ $(function () {
                 }
             });
         }
+    });
+
+    //编辑校区
+    $(document).on('click','#editSchool',function () {
+        var id =$(this).parents().parents().children(".itemNo").text();
+        var areaname = $(this).parents().parents().children(".areaname1").text();
+        var sn = $(this).parents().parents().children(".schoolname1").text();
+
     });
 });

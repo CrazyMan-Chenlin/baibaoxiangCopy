@@ -73,6 +73,7 @@ $(function () {
                 type:'delete',
                 url:'/article/'+no,
                 success:function () {
+                    alert("删除成功");
                     $(".modular").trigger('click');
                 },
                 error:function () {
@@ -91,7 +92,7 @@ $(function () {
 
     //添加新的分类，仅超级管理员可用
     $(".new").on('click',function () {
-       let newType = $.trim($("#new_type").val());
+       var newType = $.trim($("#new_type").val());
        if (newType!=null&&newType!="") {
            $.ajax({
                type:"post",
