@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>百宝箱</title>
+    <title>${article.title}</title>
     <meta name="viewport"
           content=" height = device-height,
                     width = device-width,
@@ -20,7 +20,7 @@
 </head>
 <body>
 <div id="nav">
-    <div id="return" style="width: 15%;float: left;height: 100%;" onclick="window.history.back(-1)"><img src="/images/front/left.svg"></div>
+    <div id="return" style="width: 15%;float: left;height: 100%;" ><img src="/images/front/left.svg"></div>
     <div style="float: left;width: 70%">
         <p style="font-size: 1.2rem;margin-top: 0.62rem;margin-bottom: 0;color: #141414">${article.articleType.type}</p>
     </div>
@@ -55,6 +55,13 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#return").on("click",function () {
+            if(history.length>1){
+                window.history.back(-1)
+            }else{
+                window.location.replace("https://www.baibao-box.com");
+            }
+        })
         $("#love").on("click", function () {
             $("#love").attr("src", "/images/front/love.svg")
             $.get("/article/like/${article.no}")
@@ -72,6 +79,5 @@
             $("#content  p").addClass("text-justify")
         })
     })
-
 </script>
 </html>

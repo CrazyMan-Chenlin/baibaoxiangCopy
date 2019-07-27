@@ -229,6 +229,8 @@ public class ManagerController {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         String username = (String) session.getAttribute("username");
+        String name = request.getParameter("name");
+        Manager manager = managerService.findManagerByUsername(username);
         // 文件类型
         String type = null;
         String uploadFilePath ="";
@@ -241,16 +243,13 @@ public class ManagerController {
                 //判断文件类型是否为空
                 if (type!=null){
                     if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
-                        fastDfsClient.deleteFile(managerService.findManagerByUsername(username).getPath());
+                        fastDfsClient.deleteFile(manager.getPath());
                         uploadFilePath = fastDfsClient.uploadFile(bytes, type);
                         request.getSession().setAttribute("path","https://files.baibao-box.com/"+uploadFilePath);
-                        String name = request.getParameter("name");
-                        Manager manager = new Manager();
                         manager.setUsername(username);
                         //如果传过来的昵称为空，则默认不修改昵称
                         if (name.equals("")){
-                            Manager managerByUsername = managerService.findManagerByUsername(username);
-                            String name1 = managerByUsername.getName();
+                            String name1 = manager.getName();
                             name = name1;
                         }
                         manager.setName(name);
@@ -263,9 +262,6 @@ public class ManagerController {
                     }
                 }else {
                     request.getSession().setAttribute("path","https://files.baibao-box.com/"+uploadFilePath);
-                    String name = request.getParameter("name");
-                    Manager manager = new Manager();
-                    manager.setUsername(username);
                     manager.setName(name);
                     managerService.updateByPrimaryKeySelective(manager);
                     modelAndView.addObject("msg","修改昵称成功");
@@ -273,7 +269,6 @@ public class ManagerController {
                 }
             }
         }catch (Exception e){
-
             modelAndView.addObject("msg","上传失败");
             logger.error("上传失败");
         }

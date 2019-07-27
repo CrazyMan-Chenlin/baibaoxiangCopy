@@ -2,9 +2,12 @@ package com.baibaoxiang.serviceimpl;
 
 import com.baibaoxiang.jedis.JedisClient;
 import com.baibaoxiang.mapper.AreaMapper;
+import com.baibaoxiang.mapper.SchoolMapper;
 import com.baibaoxiang.mapper.custom.AreaMapperCustom;
 import com.baibaoxiang.po.Area;
+import com.baibaoxiang.po.AreaExample;
 import com.baibaoxiang.service.AreaService;
+import com.baibaoxiang.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,9 @@ public class AreaServiceImpl implements AreaService {
     AreaMapper areaMapper;
     @Autowired
     AreaMapperCustom areaMapperCustom;
-
+    @Autowired
+    SchoolService schoolService;
+    private final String schoolInfoKey = "School_INFO:";
     @Override
     public Area findAreaById(Integer id) throws Exception {
         return areaMapper.selectByPrimaryKey(id);
@@ -41,18 +46,43 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public void updateArea(Area area) throws Exception {
+        Integer schoolNo = area.getNo();
+        String key = schoolInfoKey + schoolNo;
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         areaMapper.updateByPrimaryKeySelective(area);
     }
 
     @Override
     public void deleteAreaById(Integer id) throws Exception {
+        //删除缓存
+        Area area = this.findAreaById(id);
+        if (area==null){
+            throw new RuntimeException();
+        }
+        Integer schoolNo = area.getSchool().getNo();
+        String key = schoolInfoKey + schoolNo;
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
         areaMapper.deleteByPrimaryKey(id);
+        AreaExample areaExample = new AreaExample();
+        AreaExample.Criteria criteria = areaExample.createCriteria();
+        criteria.andSchoolnoEqualTo(schoolNo);
+        List<Area> areas = areaMapper.selectByExample(areaExample);
+        if (areas.size() == 0){
+            schoolService.deleteSchool(schoolNo);
+        }
     }
 
     @Override
     public void deleteAreaBatch(Integer[] ids) throws Exception {
+        Area area;
+        Integer schoolNo;
+        String key;
         for(Integer id : ids){
-            areaMapper.deleteByPrimaryKey(id);
+           this.deleteAreaById(id);
         }
     }
 
@@ -65,6 +95,4 @@ public class AreaServiceImpl implements AreaService {
     public Integer findMaxAreaNo() {
         return areaMapperCustom.findMaxAreaNo();
     }
-
-
 }
