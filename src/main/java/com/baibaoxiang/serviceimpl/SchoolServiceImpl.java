@@ -91,6 +91,7 @@ public class SchoolServiceImpl implements SchoolService {
             List<School> schoolName = schoolMapper.selectByExample(schoolExample);
             if (schoolName!=null){
                 jedisClient.set(schoolInfoKey,JsonUtils.objectToJson(schoolName));
+                jedisClient.expire(schoolInfoKey,60*60);
             }
             return schoolName;
         }
@@ -123,6 +124,7 @@ public class SchoolServiceImpl implements SchoolService {
         List<Area> areas = areaMapper.selectByExample(areaExample);
         if (areas!=null){
             jedisClient.set(key,JsonUtils.objectToJson(areas));
+            jedisClient.expire(key,60*60);
         }
         return areas;
     }
