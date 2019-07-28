@@ -12,7 +12,7 @@
     <script src="../../js/school.js"></script>
     <title>学校管理</title>
 </head>
-<body>
+<body ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
 <div class="all">
     <div class="left" data-mcs-theme="minimal-dark">
         <button type="button" class="btn btn-primary" id="query" style="left: 0px">查询学校</button>
@@ -35,7 +35,6 @@
         <button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#myModal">删除所选</button>
 
     </div>
-
 
     <div class="right">
         <form class="form-horizontal" role="form">
@@ -75,8 +74,31 @@
             </div>
         </form>
     </div>
-    <br><br><br>
-
 </div>
+<form class="form-horizontal" role="form" id="edit">
+    <div class="form-group ">
+        <label for="aid" class="col-sm-2 control-label" >学校ID</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="aid" disabled="disabled">
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="editscname" class="col-sm-2 control-label">学校名</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="editscname" placeholder="请输入学校名" required>
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="editaname" class="col-sm-2 control-label" >地区名</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="editaname" placeholder="请输入地区名" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+            <button type="button" class="btn btn-primary" id="confirmChange">确认修改</button>
+        </div>
+    </div>
+</form>
 </body>
 </html>

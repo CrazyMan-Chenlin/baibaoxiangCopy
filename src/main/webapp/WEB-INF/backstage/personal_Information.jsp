@@ -10,7 +10,7 @@
     <script src="../../js/personal_Information.js" ></script>
     <title>我的资料-个人中心</title>
 </head>
-<body>
+<body ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
 <div class="information">
     <%--获取用户头像路径--%>
         <h1>${requestScope.msg}</h1>

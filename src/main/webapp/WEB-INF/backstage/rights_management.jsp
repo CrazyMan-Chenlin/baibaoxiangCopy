@@ -12,7 +12,7 @@
 </head>
 
 
-<body>
+<body ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
 
 <div class="btn_management">
     <button type="button" class="btn btn-primary"  id="query">查询所有管理员</button>

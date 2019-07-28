@@ -17,7 +17,7 @@
     <link href="../css/edit.css" rel="stylesheet" />
 </head>
 
-<body>
+<body ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
 <p id="area" hidden>${sessionScope.areaNo}</p>
 <p id="articleID" hidden>${article.no}</p>
 <p id="managerID" hidden>${sessionScope.id}</p>

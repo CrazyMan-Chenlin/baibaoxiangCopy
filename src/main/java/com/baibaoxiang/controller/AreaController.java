@@ -132,8 +132,6 @@ public class AreaController {
         Map<String,String> map = new HashMap<String,String>(16);
         //该参数判断当前是否超级管理员
         int isCheck = checkRight(request);
-        String idstr = request.getParameter("ids");
-        Integer id = Integer.parseInt(idstr);
         List<Area> areas = areaService.findAreaBySchoolName(defSchoolName);
         if (isCheck==1){
             //接受前端传来的 ids字符串  将ids拆分成数组

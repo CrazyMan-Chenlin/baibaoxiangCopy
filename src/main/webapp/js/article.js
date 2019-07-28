@@ -47,7 +47,6 @@ $(function () {
             $.ajax({
                 type: 'POST',
                 url: '/articleType/updateType',
-                // data : {articleType: JSON.stringify(articleType)},
                 data: {id:id,type:type,SequenceNum:SequenceNum},
                 cache: false,
                 success: function (data) {

@@ -74,6 +74,7 @@ $(function () {
                 type:"POST",
                 data: {ids:ids},
                 success:function(data) {
+                    alert(data["msg"]);
                     $("#query").trigger('click');
                 },
                 error:function (data) {
@@ -109,6 +110,32 @@ $(function () {
         var id =$(this).parents().parents().children(".itemNo").text();
         var areaname = $(this).parents().parents().children(".areaname1").text();
         var sn = $(this).parents().parents().children(".schoolname1").text();
-
+        $("#edit").css("display","none");
+        $("#edit").css("display","block");
+        $("#aid").val(id);
+        $("#editscname").val(sn);
+        $("#editaname").val(areaname);
     });
+
+    $("#confirmChange").click(function () {
+        var id = $("#aid").val();
+        var sn= $("#editscname").val();
+        var areaname= $("#editaname").val();
+        var data1 = {areaId:id,areaName:areaname,schoolName:sn};
+        if(areaname!=""&&sn!=""){
+            $.ajax({
+                type:"POST",
+                url:"/area/updateSchoolAndArea",
+                data:data1,
+                success:function (data) {
+                    alert(data["msg"]);
+                    $("#edit").css("display","none");
+                    $("#query").trigger('click');
+                }
+            });
+        }else {
+            alert("任一一项不能为空");
+        }
+    });
+
 });

@@ -10,7 +10,7 @@
     <script src="../js/editpwd.js" ></script>
     <title>密码管理</title>
 </head>
-<body>
+<body ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
 <div class="edit_form">
     <form class="form-horizontal" role="form">
         <div class="form-group">

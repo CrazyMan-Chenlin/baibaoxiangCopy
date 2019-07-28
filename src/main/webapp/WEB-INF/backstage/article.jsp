@@ -12,7 +12,7 @@
     <script src="../../js/article.js"></script>
     <title>推文管理</title>
 </head>
-<body>
+<body ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
 <div class="container">
     <!--  搜索栏  -->
     <div class="top">
