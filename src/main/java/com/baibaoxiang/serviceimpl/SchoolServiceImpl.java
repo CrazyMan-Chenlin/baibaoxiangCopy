@@ -31,10 +31,7 @@ public class SchoolServiceImpl implements SchoolService {
     private final String schoolInfoKey = "School_INFO:";
     @Override
     public int insertSchool(School record) throws Exception {
-        String key = schoolInfoKey + record.getNo();
-        if (jedisClient.exists(key)){
-            jedisClient.del(key);
-        }
+        deleteKey(record.getNo());
         return schoolMapper.insert(record);
     }
 
@@ -53,13 +50,15 @@ public class SchoolServiceImpl implements SchoolService {
         if (jedisClient.exists(key)){
             jedisClient.del(key);
         }
+        if (jedisClient.exists(schoolInfoKey)){
+            jedisClient.del(schoolInfoKey);
+        }
     }
 
     @Override
     public void deleteSchoolBatch(Integer[] no) throws Exception {
         for (int i = 0; i < no.length; i++) {
-            deleteKey(no[i]);
-            schoolMapper.deleteByPrimaryKey(no[i]);
+           deleteSchool(no[i]);
         }
     }
 
@@ -92,6 +91,7 @@ public class SchoolServiceImpl implements SchoolService {
             List<School> schoolName = schoolMapper.selectByExample(schoolExample);
             if (schoolName!=null){
                 jedisClient.set(schoolInfoKey,JsonUtils.objectToJson(schoolName));
+                jedisClient.expire(schoolInfoKey,60*60);
             }
             return schoolName;
         }
@@ -109,6 +109,7 @@ public class SchoolServiceImpl implements SchoolService {
         // 添加缓存的原则是，不能够影响现在有的业务逻辑
         // 查询缓存
         /*删除key 存在于添加和删除area的时候，删除*/
+
         if (schoolNo==0){
             //如果为空值，则抛出异常
             throw new RuntimeException();
@@ -123,6 +124,7 @@ public class SchoolServiceImpl implements SchoolService {
         List<Area> areas = areaMapper.selectByExample(areaExample);
         if (areas!=null){
             jedisClient.set(key,JsonUtils.objectToJson(areas));
+            jedisClient.expire(key,60*60);
         }
         return areas;
     }

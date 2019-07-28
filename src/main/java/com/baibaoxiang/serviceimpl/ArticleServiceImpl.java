@@ -93,7 +93,7 @@ public class ArticleServiceImpl implements ArticleService {
         PageInfo<Article> pageInfo = new PageInfo<>(articles);
         if (articles!=null&&articles.size()!=0) {
             jedisClient.hset(key, page.toString(), JsonUtils.objectToJson(articles));
-            jedisClient.expire(key, 60 * 60 * 6);
+            jedisClient.expire(key, 60 * 60);
         }
         return pageInfo.getList();
     }
@@ -110,13 +110,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int insertSelective(Article record) throws Exception {
-        String article = articleInfoKey + ":" + record.getArticleType().getId() + ":" + record.getArea().getNo();
+        String areaTypeKey = articleInfoKey + ":" + record.getArticleType().getId() + ":" + record.getArea().getNo();
         String topKey = articleInfoKey + ":" + record.getArea().getNo();
-        Set<String> hkeys = jedisClient.hkeys(articleInfoKey);
+        Set<String> hkeys = jedisClient.hkeys(areaTypeKey);
         Iterator it = hkeys.iterator();
         while(it.hasNext()){
             String keyStr = (String)it.next();
-            jedisClient.hdel(articleInfoKey,keyStr);
+            jedisClient.hdel(areaTypeKey,keyStr);
         }
          hkeys = jedisClient.hkeys(topKey);
          it = hkeys.iterator();
@@ -272,7 +272,7 @@ public class ArticleServiceImpl implements ArticleService {
             PageInfo<Article> pageInfo = new PageInfo<>(articles);
             if (articles!=null&&articles.size()!=0) {
                 jedisClient.hset(key, page.toString(), JsonUtils.objectToJson(articles));
-                jedisClient.expire(key,60*60*6);
+                jedisClient.expire(key,60*60);
             }
             return pageInfo.getList();
         }

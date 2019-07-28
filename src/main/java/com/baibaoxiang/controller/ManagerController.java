@@ -229,25 +229,28 @@ public class ManagerController {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         String username = (String) session.getAttribute("username");
-        String name = request.getParameter("name");
-        Manager manager = managerService.findManagerByUsername(username);
-
-        String type = null; // 文件类型
+        // 文件类型
+        String type = null;
         String uploadFilePath ="";
         try{
             if (file!=null){
-                String fileName = file.getOriginalFilename();// 文件原名称
+                // 文件原名称
+                String fileName = file.getOriginalFilename();
                 byte[] bytes = file.getBytes();
                 type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-                if (type!=null){//判断文件类型是否为空
+                //判断文件类型是否为空
+                if (type!=null){
                     if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
-                        fastDfsClient.deleteFile(manager.getPath());
+                        fastDfsClient.deleteFile(managerService.findManagerByUsername(username).getPath());
                         uploadFilePath = fastDfsClient.uploadFile(bytes, type);
-                        request.getSession().setAttribute("path","https://47.102.207.45/"+uploadFilePath);
+                        request.getSession().setAttribute("path","https://files.baibao-box.com/"+uploadFilePath);
+                        String name = request.getParameter("name");
+                        Manager manager = new Manager();
                         manager.setUsername(username);
                         //如果传过来的昵称为空，则默认不修改昵称
                         if (name.equals("")){
-                            String name1 = manager.getName();
+                            Manager managerByUsername = managerService.findManagerByUsername(username);
+                            String name1 = managerByUsername.getName();
                             name = name1;
                         }
                         manager.setName(name);
@@ -259,7 +262,10 @@ public class ManagerController {
                         logger.info("上传失败，文件必须是jpg类型或者是PNG类型!");
                     }
                 }else {
-                    request.getSession().setAttribute("path","https://47.102.207.45/"+uploadFilePath);
+                    request.getSession().setAttribute("path","https://files.baibao-box.com/"+uploadFilePath);
+                    String name = request.getParameter("name");
+                    Manager manager = new Manager();
+                    manager.setUsername(username);
                     manager.setName(name);
                     managerService.updateByPrimaryKeySelective(manager);
                     modelAndView.addObject("msg","修改昵称成功");
@@ -267,6 +273,7 @@ public class ManagerController {
                 }
             }
         }catch (Exception e){
+
             modelAndView.addObject("msg","上传失败");
             logger.error("上传失败");
         }
