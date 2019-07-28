@@ -142,7 +142,6 @@ public class ArticleController {
      * @throws Exception
      */
     @RequestMapping(value = "/{no}",method = RequestMethod.DELETE)
-    @ResponseBody
     public void deleteByPrimaryKey(@PathVariable("no") String no) throws Exception {
         articleService.deleteByPrimaryKey(no);
     }
@@ -226,7 +225,7 @@ public class ArticleController {
                     if("PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())){
                         uploadFilePath = fastDfsClient.uploadFile(bytes, type);
                         picUrl.append("https://");
-                        picUrl.append("47.102.207.45/");
+                        picUrl.append("files.baibao-box.com/");
                         picUrl.append( uploadFilePath);
                         map.put("link",picUrl);
                     }else {

@@ -67,6 +67,13 @@ public class AreaServiceImpl implements AreaService {
             jedisClient.del(key);
         }
         areaMapper.deleteByPrimaryKey(id);
+        AreaExample areaExample = new AreaExample();
+        AreaExample.Criteria criteria = areaExample.createCriteria();
+        criteria.andSchoolnoEqualTo(schoolNo);
+        List<Area> areas = areaMapper.selectByExample(areaExample);
+        if (areas.size() == 0){
+            schoolService.deleteSchool(schoolNo);
+        }
     }
 
     @Override

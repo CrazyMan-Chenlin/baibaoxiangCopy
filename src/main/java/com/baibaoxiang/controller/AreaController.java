@@ -2,6 +2,7 @@ package com.baibaoxiang.controller;
 
 import com.baibaoxiang.po.Area;
 import com.baibaoxiang.po.Manager;
+import com.baibaoxiang.po.School;
 import com.baibaoxiang.service.AreaService;
 import com.baibaoxiang.service.ManagerService;
 import com.baibaoxiang.service.SchoolService;
@@ -20,7 +21,8 @@ import java.util.Map;
  * @author sheng
  * @create 2019-07-03-17:47
  */
-@Controller(value = "area")
+@Controller
+@RequestMapping("/area")
 public class AreaController {
 
     private String defSchoolName = "广东第二师范学院";
@@ -62,12 +64,44 @@ public class AreaController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/allarea", method = RequestMethod.GET)
+    @RequestMapping(value = "/allArea", method = RequestMethod.GET)
     @ResponseBody
     public List<Area> findAllArea() throws Exception{
         List<Area> areas = areaService.findAllAreas();
         return areas;
     }
+
+    /** 更新学校名和校区名
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updateSchoolAndArea", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> updateSchoolAndArea(HttpServletRequest request) throws Exception{
+        //该参数判断当前是否超级管理员
+       int isCheck = checkRight(request);
+        Map<String,String> map = new HashMap<>();
+        String areaIdStr = request.getParameter("areaId");
+        String areaName = request.getParameter("areaName");
+        String schoolName = request.getParameter("schoolName");
+        Integer areaId = Integer.valueOf(areaIdStr);
+        if (isCheck==1){
+            Area area = areaService.findAreaById(areaId);
+            area.setName(areaName);
+            School school = schoolService.selectSchoolByNo(area.getSchool().getNo());
+            school.setName(schoolName);
+            areaService.updateArea(area);
+            schoolService.updateSchool(school);
+            map.put("msg","修改成功");
+            logger.info("修改成功。");
+            return map;
+        }
+        map.put("msg","权限不足");
+        logger.info("权限不足");
+        return map;
+    }
+
     /** 修改Area信息
      * @param area
      * @throws Exception
@@ -86,7 +120,6 @@ public class AreaController {
         }
         map.put("msg","权限不足");
         logger.info("权限不足");
-        areaService.updateArea(area);
         return map;
     }
 

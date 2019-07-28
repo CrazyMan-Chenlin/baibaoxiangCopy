@@ -70,4 +70,6 @@ public interface SchoolService {
      * @throws Exception
      */
     Integer selectNoBySchoolName(String name) throws Exception;
+
+    void updateSchool(School school) throws Exception;
 }

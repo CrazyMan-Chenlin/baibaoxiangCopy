@@ -133,4 +133,13 @@ public class SchoolServiceImpl implements SchoolService {
     public Integer selectNoBySchoolName(String name) throws Exception {
         return schoolMapperCustom.selectNoBySchoolName(name);
     }
+
+    @Override
+    public void updateSchool(School school) throws Exception {
+        String key = schoolInfoKey + school.getNo();
+        if (jedisClient.exists(key)){
+            jedisClient.del(key);
+        }
+        schoolMapper.updateByPrimaryKey(school);
+    }
 }

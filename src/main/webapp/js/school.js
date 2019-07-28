@@ -6,7 +6,7 @@ $(function () {
     $("#query").on('click',function () {
         $.ajax({
             type : "GET",
-            url: "/allarea",
+            url: "/area/allArea",
             // dataType:'json',
             success :function (data) {
                 $("#schools").children().remove();
@@ -70,7 +70,7 @@ $(function () {
             });
             var ids = checked.join(",");
             $.ajax({
-                url:"/deleteAreaBatch",
+                url:"/area/deleteAreaBatch",
                 type:"POST",
                 data: {ids:ids},
                 success:function(data) {
@@ -93,7 +93,7 @@ $(function () {
             alert("区域不能为空");
         }else {
             $.ajax({
-                url:"/addArea",
+                url:"/area/addArea",
                 type:"POST",
                 data:{schoolName:school,areaName:area},
                 success:function (data) {
