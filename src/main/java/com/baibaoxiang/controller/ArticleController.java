@@ -141,7 +141,8 @@ public class ArticleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/{no}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
+    @ResponseBody
     public void deleteByPrimaryKey(@PathVariable("no") String no) throws Exception {
         articleService.deleteByPrimaryKey(no);
     }
